@@ -134,10 +134,10 @@
                 </a>
                 <ul class="nav-group-sub collapse">
                     <li class="nav-item">
-                        <a href="form_autocomplete.html" class="nav-link">User</a>
+                        <a href="{{route('users.index')}}" class="nav-link">User</a>
                     </li>
                     <li class="nav-item">
-                        <a href="form_checkboxes_radios.html" class="nav-link">Role</a>
+                        <a href="{{route('roles.index')}}" class="nav-link">Role</a>
                     </li>
                     <li class="nav-item">
                         <a href="form_dual_listboxes.html" class="nav-link">Akses</a>

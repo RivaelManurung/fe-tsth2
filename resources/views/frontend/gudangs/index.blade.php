@@ -3,18 +3,23 @@
 @section('content')
     <div class="container-fluid">
         <div class="d-flex justify-content-between mb-3">
-            <h4>Data Gudang</h4>
-            <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#createGudangModal">
-                <i class="icon-database-add me-2"></i> Tambah Gudang
+            <h4></h4>
+            <button type="button" class="btn btn-primary btn-labeled btn-labeled-start mb-2" data-bs-toggle="modal" data-bs-target="#createGudangModal">
+                <span class="btn-labeled-icon bg-black bg-opacity-20">
+                    <i class="icon-database-add"></i>
+                </span> Tambah Gudang
             </button>
         </div>
 
-        <table class="table table-bordered">
+        <div class="card">
+            <div class="card-header">
+                <h5 class="mb-0">Table Gudang</h5>
+            </div>
+            <table class="table datatable-button-html5-basic">
             <thead>
                 <tr>
                     <th>#</th>
                     <th>Nama</th>
-                    <th>Slug</th>
                     <th>Deskripsi</th>
                     <th>Aksi</th>
                 </tr>
@@ -24,15 +29,22 @@
                     <tr>
                         <td>{{ $index + 1 }}</td>
                         <td>{{ $gudang['name'] }}</td>
-                        <td>{{ $gudang['slug'] }}</td>
                         <td>{{ $gudang['description'] }}</td>
-                        <td class="text-center">
-                            <button class="btn btn-info btn-sm" data-bs-toggle="modal"
-                                data-bs-target="#detailGudangModal{{ $gudang['id'] }}"> <i class="ph-eye"></i></button>
-                            <button class="btn btn-warning btn-sm" data-bs-toggle="modal"
-                                data-bs-target="#editGudangModal{{ $gudang['id'] }}"> <i class="ph-pencil"></i></button>
-                            <button class="btn btn-danger btn-sm" data-bs-toggle="modal"
-                                data-bs-target="#deleteGudangModal{{ $gudang['id'] }}"><i class="ph-trash"></i></button>
+                        <td>
+                            <div class="d-inline-flex">
+                                <a href="#" class="text-info me-2" data-bs-toggle="modal"
+                                    data-bs-target="#detailGudangModal{{ $gudang['id'] }}">
+                                    <i class="ph-eye"></i>
+                                </a>
+                                <a href="#" class="text-warning me-2" data-bs-toggle="modal"
+                                    data-bs-target="#editGudangModal{{ $gudang['id'] }}">
+                                    <i class="ph-pencil"></i>
+                                </a>
+                                <a href="#" class="text-danger" data-bs-tossggle="modal"
+                                    data-bs-target="#deleteGudangModal{{ $gudang['id'] }}">
+                                    <i class="ph-trash"></i>
+                                </a>
+                            </div>
                         </td>
                     </tr>
                 @empty
@@ -42,6 +54,7 @@
                 @endforelse
             </tbody>
         </table>
+        </div>
     </div>
 
     @include('frontend.gudangs.create-modal')

@@ -6,8 +6,10 @@ use App\Http\Controllers\BarangCategoryController;
 use App\Http\Controllers\BarangController;
 use App\Http\Controllers\GudangController;
 use App\Http\Controllers\JenisBarangController;
+use App\Http\Controllers\RoleController;
 use App\Http\Controllers\SatuanController;
 use App\Http\Controllers\TransactionTypeController;
+use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
 Route::middleware('auth.token')->group(function () {
@@ -34,6 +36,8 @@ Route::middleware('auth.session')->group(function () {
     Route::resource('jenis-barangs', JenisBarangController::class);
     Route::resource('barang-categories', BarangCategoryController::class);
     Route::resource('transaction-types', TransactionTypeController::class);
+    Route::resource('roles', RoleController::class);
+    Route::resource('users', UserController::class);
 });
 
 Route::get('/error', function () {

@@ -4,48 +4,59 @@
     <div class="container-fluid">
         @include('components.flash-message')
         <div class="d-flex justify-content-between mb-3">
-            <h4>Data Jenis Barang</h4>
-            <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#createJenisBarangModal">
-                <i class="icon-database-add me-2"></i> Tambah Jenis Barang
+            <h4></h4>
+            <button type="button" class="btn btn-primary btn-labeled btn-labeled-start mb-2" data-bs-toggle="modal" data-bs-target="#createJenisModal">
+                <span class="btn-labeled-icon bg-black bg-opacity-20">
+                    <i class="icon-database-add"></i>
+                </span> Tambah Jenis Barang
             </button>
         </div>
 
-        <table class="table table-bordered datatable-button-html5-basic">
-            <thead>
-                <tr>
-                    <th>#</th>
-                    <th>Nama</th>
-                    <th>Slug</th>
-                    <th>Deskripsi</th>
-                    <th>Aksi</th>
-                </tr>
-            </thead>
-            <tbody>
-                @forelse ($jenisBarangs as $index => $jenisBarang)
+        <div class="card">
+            <div class="card-header">
+                <h5 class="mb-0">Table Jenis Barang</h5>
+            </div>
+            <table class="table datatable-button-html5-basic">
+                <thead>
                     <tr>
-                        <td>{{ $index + 1 }}</td>
-                        <td>{{ $jenisBarang['name'] }}</td>
-                        <td>{{ $jenisBarang['slug'] }}</td>
-                        <td>{{ $jenisBarang['description'] ?? '-' }}</td>
-                        <td class="text-center">
-                            <button class="btn btn-info btn-sm" data-bs-toggle="modal"
-                                data-bs-target="#detailJenisBarangModal{{ $jenisBarang['id'] }}"> <i
-                                    class="ph-eye"></i></button>
-                            <button class="btn btn-warning btn-sm" data-bs-toggle="modal"
-                                data-bs-target="#editJenisBarangModal{{ $jenisBarang['id'] }}"> <i
-                                    class="ph-pencil"></i></button>
-                            <button class="btn btn-danger btn-sm" data-bs-toggle="modal"
-                                data-bs-target="#deleteJenisBarangModal{{ $jenisBarang['id'] }}"><i
-                                    class="ph-trash"></i></button>
-                        </td>
+                        <th>#</th>
+                        <th>Nama</th>
+                        <th>Deskripsi</th>
+                        <th>Aksi</th>
                     </tr>
-                @empty
-                    <tr>
-                        <td colspan="5" class="text-center">Tidak ada data ditemukan.</td>
-                    </tr>
-                @endforelse
-            </tbody>
-        </table>
+                </thead>
+                <tbody>
+                    @forelse ($jenisBarangs as $index => $jenisBarang)
+                        <tr>
+                            <td>{{ $index + 1 }}</td>
+                            <td>{{ $jenisBarang['name'] }}</td>
+                            <td>{{ $jenisBarang['description'] ?? '-' }}</td>
+                            <td>
+                                <div class="d-inline-flex">
+                                    <a href="#" class="text-info me-2" data-bs-toggle="modal"
+                                    data-bs-target="#detailJenisBarangModal{{ $jenisBarang['id'] }}">
+                                    <i class="ph-eye"></i>
+                                    </a>
+                                    <a href="#" class="text-warning me-2" data-bs-toggle="modal"
+                                    data-bs-target="#editJenisBarangModal{{ $jenisBarang['id'] }}">
+                                    <i class="ph-pencil"></i>
+                                    </a>
+                                    <a href="#" class="text-danger" data-bs-toggle="modal"
+                                    data-bs-target="#deleteJenisBarangModal{{ $jenisBarang['id'] }}">
+                                    <i class="ph-trash"></i>
+                                </a>
+                                </div>
+                            </td>
+                        </tr>
+                    @empty
+                        <tr>
+                            <td colspan="5" class="text-center">Tidak ada data ditemukan.</td>
+                        </tr>
+                    @endforelse
+                </tbody>
+            </table>
+        </div>
+
     </div>
 
     @include('frontend.jenis-barangs.create-modal')

@@ -1,52 +1,62 @@
 @extends('layouts.main')
 
 @section('content')
-    <div class="container-fluid">
+    {{-- <div class="container-fluid"> --}}
         @include('components.flash-message')
         <div class="d-flex justify-content-between mb-3">
-            <h4>Data Satuan Barang</h4>
-            <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#createSatuanModal">
-                <i class="icon-database-add me-2"></i> Tambah Satuan Barang
+            <h4></h4>
+            <button type="button" class="btn btn-primary btn-labeled btn-labeled-start mb-2" data-bs-toggle="modal" data-bs-target="#createSatuanModal">
+                <span class="btn-labeled-icon bg-black bg-opacity-20">
+                    <i class="icon-database-add"></i>
+                </span> Tambah Satuan Barang
             </button>
         </div>
 
-        <table class="table table-bordered datatable-button-html5-basic">
-            <thead>
-                <tr>
-                    <th>#</th>
-                    <th>Nama</th>
-                    <th>Slug</th>
-                    <th>Deskripsi</th>
-                    <th>Aksi</th>
-                </tr>
-            </thead>
-            <tbody>
-                @forelse ($satuans as $index => $satuan)
-                    <tr>
-                        <td>{{ $index + 1 }}</td>
-                        <td>{{ $satuan['name'] }}</td>
-                        <td>{{ $satuan['slug'] }}</td>
-                        <td>{{ $satuan['description'] ?? '-' }}</td>
-                        <td class="text-center">
-                            <button class="btn btn-info btn-sm" data-bs-toggle="modal"
-                                data-bs-target="#detailSatuanModal{{ $satuan['id'] }}"> <i class="ph-eye"></i></button>
-                            <button class="btn btn-warning btn-sm" data-bs-toggle="modal"
-                                data-bs-target="#editSatuanModal{{ $satuan['id'] }}"> <i class="ph-pencil"></i></button>
-                            <button class="btn btn-danger btn-sm" data-bs-toggle="modal"
-                                data-bs-target="#deleteSatuanModal{{ $satuan['id'] }}"><i class="ph-trash"></i></button>
-                        </td>
-                    </tr>
-                @empty
-                    <tr>
-                        <td colspan="5" class="text-center">Tidak ada data ditemukan.</td>
-                    </tr>
-                @endforelse
-            </tbody>
-        </table>
+
+<!-- Table Satuan -->
+<div class="card">
+    <div class="card-header">
+        <h5 class="mb-0">Table Satuan</h5>
     </div>
+    <table class="table datatable-button-html5-basic">
+        <thead>
+            <tr>
+                <th>No</th>
+                <th>Nama Satuan</th>
+                <th>Deskripsi</th>
+                <th>Aksi</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach ($satuans as $key => $satuan)
+            <tr>
+                <td>{{ $key + 1 }}</td>
+                <td>{{ $satuan['name'] }}</td>
+                <td>{{ $satuan['description'] ?? '-' }}</td>
+                <td>
+                    <div class="d-inline-flex">
+                        <a href="#" class="text-info me-2" data-bs-toggle="modal"
+                            data-bs-target="#detailSatuanModal{{ $satuan['id'] }}">
+                            <i class="ph-eye"></i>
+                        </a>
+                        <a href="#" class="text-warning me-2" data-bs-toggle="modal"
+                            data-bs-target="#editSatuanModal{{ $satuan['id'] }}">
+                            <i class="ph-pencil"></i>
+                        </a>
+                        <a href="#" class="text-danger" data-bs-toggle="modal"
+                            data-bs-target="#deleteSatuanModal{{ $satuan['id'] }}">
+                            <i class="ph-trash"></i>
+                        </a>
+                    </div>
+                </td>
+            </tr>
+            @endforeach
+        </tbody>
+    </table>
+</div>
+    {{-- </div> --}}
 
     @include('frontend.satuan.create-modal')
-
     @foreach ($satuans as $satuan)
         @include('frontend.satuan.detail-modal', ['satuan' => $satuan])
         @include('frontend.satuan.edit-modal', ['satuan' => $satuan])

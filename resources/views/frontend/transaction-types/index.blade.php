@@ -10,8 +10,11 @@
             </button>
         </div>
 
-        <table class="table table-bordered datatable-button-html5-basic">
-            <thead>
+        <div class="card">
+            <div class="card-header">
+                <h5 class="mb-0">Table Jenis Transaksi</h5>
+            </div>
+            <table class="table datatable-button-html5-basic">            <thead>
                 <tr>
                     <th>#</th>
                     <th>Nama</th>
@@ -26,15 +29,21 @@
                         <td>{{ $transactionType['name'] }}</td>
                         <td>{{ $transactionType['slug'] }}</td>
                         <td class="text-center">
-                            <button class="btn btn-info btn-sm" data-bs-toggle="modal"
-                                data-bs-target="#detailTransactionTypeModal{{ $transactionType['id'] }}"> <i
-                                    class="ph-eye"></i></button>
-                            <button class="btn btn-warning btn-sm" data-bs-toggle="modal"
-                                data-bs-target="#editTransactionTypeModal{{ $transactionType['id'] }}"> <i
-                                    class="ph-pencil"></i></button>
-                            <button class="btn btn-danger btn-sm" data-bs-toggle="modal"
-                                data-bs-target="#deleteTransactionTypeModal{{ $transactionType['id'] }}"><i
-                                    class="ph-trash"></i></button>
+                            <div class="d-inline-flex">
+                                <a href="#" class="text-info me-2" data-bs-toggle="modal"
+                                    data-bs-target="#detailTransactionTypeModal{{ $transactionType['id'] }}">
+                                    <i class="ph-eye"></i>
+                                </a>
+                                <a href="#" class="text-warning me-2" data-bs-toggle="modal"
+                                    data-bs-target="#editTransactionTypeModal{{ $transactionType['id'] }}">
+                                    <i class="ph-pencil"></i>
+                                </a>
+                                <a href="#" class="text-danger" data-bs-toggle="modal"
+                                    data-bs-target="#deleteTransactionTypeModal{{ $transactionType['id'] }}">
+                                    <i class="ph-trash"></i>
+                                </a>
+                            </div>
+
                         </td>
                     </tr>
                 @empty
@@ -44,6 +53,7 @@
                 @endforelse
             </tbody>
         </table>
+        </div>
     </div>
 
     @include('frontend.transaction-types.create-modal')
