@@ -21,7 +21,7 @@
                         <th>Aksi</th>
                     </tr>
                 </thead>
-                    <tbody>
+                <tbody>
                     @if (!empty($barangs) && is_iterable($barangs))
                         @foreach ($barangs as $key => $barang)
                             <tr>
@@ -30,7 +30,8 @@
                                 <td>{{ $barang['barang_kode'] ?? '-' }}</td>
                                 <td>
                                     @if (!empty($barang['barang_gambar']))
-                                        <img src="{{ $barang['barang_gambar'] }}" class="img-thumbnail" width="100" alt="Gambar Barang">
+                                        <img src="{{ $barang['barang_gambar'] }}" class="img-thumbnail" width="100"
+                                            alt="Gambar Barang">
                                     @else
                                         <span class="text-muted">Tidak ada gambar</span>
                                     @endif
@@ -52,7 +53,8 @@
                                     @endphp
 
                                     @if ($qrCodeUrl)
-                                        <img src="{{ $qrCodeUrl }}" width="50" alt="QR Code {{ $barang['barang_kode'] }}">
+                                        <img src="{{ $qrCodeUrl }}" width="50"
+                                            alt="QR Code {{ $barang['barang_kode'] }}">
                                     @else
                                         <span class="text-muted">Tidak tersedia</span>
                                     @endif
@@ -85,7 +87,7 @@
         </div>
     </div>
 
-    @include('frontend.barang.create-modal')
+    {{-- @include('frontend.barang.create-modal') --}}
 
     @foreach ($barangs as $barang)
         <!-- Modal View Barang -->
