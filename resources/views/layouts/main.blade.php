@@ -58,9 +58,6 @@
 
     {{-- font awesome  --}}
     <link href="{{ asset('template/assets/icons/fontawesome/styles.min.css') }}" rel="stylesheet" type="text/css">
-    <script src="https://cdn.jsdelivr.net/npm/parsleyjs"></script>
-    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
-    <script src="{{ asset('assets/js/create_barang.js') }}"></script>
 
     <script>
         let scanner = new Instascan.Scanner({

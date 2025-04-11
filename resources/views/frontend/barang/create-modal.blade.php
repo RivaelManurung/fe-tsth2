@@ -1,7 +1,7 @@
 <!-- Modal Create Barang -->
 <div class="modal fade" id="modalCreateBarang" tabindex="-1" aria-labelledby="modalCreateBarangLabel" aria-hidden="true">
     <div class="modal-dialog modal-lg">
-        <form id="formCreateBarang" action="{{ route('barangs.store') }}" method="POST" data-parsley-validate>
+        <form id="formCreateBarang" method="POST" data-parsley-validate>
             @csrf
             <div class="modal-content">
                 <div class="modal-header">
@@ -12,10 +12,7 @@
 
                     <div class="col-md-6">
                         <label class="form-label">Nama Barang</label>
-                        <input type="text" class="form-control" name="barang_nama">
-                        @error('barang_nama')
-                            <div class="text-dangr">{{ $message }}</div>
-                        @enderror
+                        <input type="text" class="form-control" name="barang_nama" required>
                     </div>
 
                     <div class="col-md-6">
@@ -92,6 +89,7 @@
         </form>
     </div>
 </div>
+
 <script src="https://cdn.jsdelivr.net/npm/parsleyjs"></script>
 <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 
@@ -222,7 +220,7 @@
 
                     // Refresh data
                     window.location
-                .reload(); // Bisa kamu ganti jadi fetch ulang table jika pakai AJAX
+                        .reload(); // Bisa kamu ganti jadi fetch ulang table jika pakai AJAX
                 })
                 .catch(error => {
                     hideProgress();
