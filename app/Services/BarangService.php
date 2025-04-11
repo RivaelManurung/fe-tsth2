@@ -44,4 +44,10 @@ class BarangService
         $token = session('token');
         return $this->repository->delete($id, $token);
     }
+    public function regenerateQRCodeAll()
+    {
+        $token = session('token');
+        return $this->repository->regenerateQRCodeAll($token);
+    }
+
 }

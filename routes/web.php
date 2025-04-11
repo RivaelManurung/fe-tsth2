@@ -31,6 +31,8 @@ Route::middleware('auth.session')->group(function () {
     })->name('user_profile');
 
     Route::resource('barangs', BarangController::class);
+    Route::get('/barang/refresh-qrcodes', [BarangController::class, 'refreshQRCodes'])->name('barang.refresh-qrcodes');
+
     Route::resource('satuans', SatuanController::class);
     Route::resource('gudangs', GudangController::class);
     Route::resource('jenis-barangs', JenisBarangController::class);

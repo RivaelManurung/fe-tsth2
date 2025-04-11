@@ -4,7 +4,7 @@
         @include('components.flash-message')
         <div class="d-flex justify-content-between mb-3">
             <h4></h4>
-            <button type="button" class="btn btn-primary btn-labeled btn-labeled-start mb-2" data-bs-toggle="modal"data-bs-target="#createCategoryModal">
+            <button type="button" class="btn btn-primary btn-labeled btn-labeled-start mb-2" data-bs-toggle="modal"data-bs-target="#createBarangCategoryModal">
                 <span class="btn-labeled-icon bg-black bg-opacity-20">
                     <i class="icon-database-add"></i>
                 </span> Tambah Kategori Barang

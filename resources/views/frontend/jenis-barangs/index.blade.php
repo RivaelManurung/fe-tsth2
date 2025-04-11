@@ -5,7 +5,7 @@
         @include('components.flash-message')
         <div class="d-flex justify-content-between mb-3">
             <h4></h4>
-            <button type="button" class="btn btn-primary btn-labeled btn-labeled-start mb-2" data-bs-toggle="modal" data-bs-target="#createJenisModal">
+            <button type="button" class="btn btn-primary btn-labeled btn-labeled-start mb-2" data-bs-toggle="modal" data-bs-target="#createJenisBarangModal">
                 <span class="btn-labeled-icon bg-black bg-opacity-20">
                     <i class="icon-database-add"></i>
                 </span> Tambah Jenis Barang
@@ -26,9 +26,10 @@
                     </tr>
                 </thead>
                 <tbody>
-                    @forelse ($jenisBarangs as $index => $jenisBarang)
+                    @php $i = 1; @endphp
+                    @forelse ($jenisBarangs as $jenisBarang)
                         <tr>
-                            <td>{{ $index + 1 }}</td>
+                            <td>{{ $i++ }}</td>
                             <td>{{ $jenisBarang['name'] }}</td>
                             <td>{{ $jenisBarang['description'] ?? '-' }}</td>
                             <td>
