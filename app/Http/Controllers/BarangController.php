@@ -104,4 +104,21 @@ class BarangController extends Controller
             return redirect()->back()->with('error', 'Gagal menghapus barang: ' . $th->getMessage());
         }
     }
+    public function refreshQRCodes()
+    {
+        try {
+            $response = $this->barang_service->regenerateQRCodeAll();
+
+            if (isset($response['success']) || isset($response['message'])) {
+                return redirect()->back()->with('success', 'QR Code berhasil diperbarui.');
+            } else {
+                return redirect()->back()->with('error', 'Gagal memperbarui QR Code.');
+            }
+        } catch (\Throwable $th) {
+            return redirect()->back()->with('error', 'Terjadi kesalahan: ' . $th->getMessage());
+        }
+    }
+
+
+
 }

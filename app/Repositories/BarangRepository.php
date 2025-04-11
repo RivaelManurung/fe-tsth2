@@ -53,4 +53,20 @@ class BarangRepository
     {
         return Http::withToken($token)->delete("{$this->baseUrl}/{$id}")->json();
     }
+    public function regenerateQRCodeAll($token)
+    {
+        $url = config('api.base_url') . '/generate-qrcodes';
+        $response = Http::withToken($token)->get($url);
+
+        logger()->info('QR Refresh Response:', [
+            'status' => $response->status(),
+            'body' => $response->body()
+        ]);
+
+        return $response->json();
+    }
+
+
+
 }
+
