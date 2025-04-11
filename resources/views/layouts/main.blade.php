@@ -54,9 +54,13 @@
     <script src="{{ asset('template/assets/demo/charts/pages/dashboard/pies.js') }}"></script>
     <script src="{{ asset('template/assets/demo/data/dashboard/bullets.json') }}"></script>
     <!-- /theme JS files -->
+    <script src="https://cdn.jsdelivr.net/npm/parsleyjs@2.9.3/dist/parsley.min.js"></script>
 
     {{-- font awesome  --}}
     <link href="{{ asset('template/assets/icons/fontawesome/styles.min.css') }}" rel="stylesheet" type="text/css">
+    <script src="https://cdn.jsdelivr.net/npm/parsleyjs"></script>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script src="{{ asset('assets/js/create_barang.js') }}"></script>
 
     <script>
         let scanner = new Instascan.Scanner({
@@ -85,6 +89,34 @@
         document.getElementById('close-btn').addEventListener('click', function() {
             document.getElementById('scanner-container').style.display = 'none';
             scanner.stop(); // Matikan kamera saat ditutup
+        });
+
+        document.addEventListener('DOMContentLoaded', function() {
+            const fileInput = document.querySelector('input[name="barang_gambar"]');
+            const base64Input = document.querySelector('input[name="barang_gambar_base64"]');
+            const form = document.querySelector('#modalCreateBarang form');
+
+            fileInput.addEventListener('change', function() {
+                const file = this.files[0];
+                if (file && file.type.startsWith('image/')) {
+                    const reader = new FileReader();
+                    reader.onload = function(e) {
+                        // e.target.result is the base64 string (including the data:image part)
+                        base64Input.value = e.target.result;
+                    };
+                    reader.readAsDataURL(file);
+                } else {
+                    base64Input.value = '';
+                }
+            });
+
+            form.addEventListener('submit', function(e) {
+                const file = fileInput.files[0];
+                if (file && !base64Input.value) {
+                    e.preventDefault(); // cancel submit
+                    alert('Mohon tunggu, gambar masih diproses...');
+                }
+            });
         });
     </script>
     <script>

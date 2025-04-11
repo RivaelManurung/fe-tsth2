@@ -21,12 +21,14 @@
                     <div class="col-md-6 text-center">
                         <p class="fw-bold">QR Code</p>
                         @php
-                            $qrCodeBaseUrl = 'http://127.0.0.1:8090/storage/qr_code/';
+                            $qrCodeBaseUrl = rtrim(config('api.qr_code'), '/') . '/qr_code/';
                             $qrCodeFormats = ['png', 'jpg', 'jpeg'];
                             $qrCodeUrl = null;
+
                             foreach ($qrCodeFormats as $format) {
                                 $tempUrl = $qrCodeBaseUrl . $barang['barang_kode'] . '.' . $format;
-                                if (@getimagesize($tempUrl)) {
+                                $headers = @get_headers($tempUrl);
+                                if ($headers && strpos($headers[0], '200')) {
                                     $qrCodeUrl = $tempUrl;
                                     break;
                                 }

@@ -5,7 +5,8 @@
         @include('components.flash-message')
         <div class="d-flex justify-content-between mb-3">
             <h4></h4>
-            <button type="button" class="btn btn-primary btn-labeled btn-labeled-start mb-2" data-bs-toggle="modal" data-bs-target="#createJenisBarangModal">
+            <button type="button" class="btn btn-primary btn-labeled btn-labeled-start mb-2" data-bs-toggle="modal"
+                data-bs-target="#createJenisBarangModal">
                 <span class="btn-labeled-icon bg-black bg-opacity-20">
                     <i class="icon-database-add"></i>
                 </span> Tambah Jenis Barang
@@ -26,26 +27,25 @@
                     </tr>
                 </thead>
                 <tbody>
-                    @php $i = 1; @endphp
-                    @forelse ($jenisBarangs as $jenisBarang)
+                    @forelse ($jenisBarangs as $index => $jenisBarang)
                         <tr>
-                            <td>{{ $i++ }}</td>
+                            <td>{{ $index + 1 }}</td>
                             <td>{{ $jenisBarang['name'] }}</td>
                             <td>{{ $jenisBarang['description'] ?? '-' }}</td>
                             <td>
                                 <div class="d-inline-flex">
                                     <a href="#" class="text-info me-2" data-bs-toggle="modal"
-                                    data-bs-target="#detailJenisBarangModal{{ $jenisBarang['id'] }}">
-                                    <i class="ph-eye"></i>
+                                        data-bs-target="#detailJenisBarangModal{{ $jenisBarang['id'] }}">
+                                        <i class="ph-eye"></i>
                                     </a>
                                     <a href="#" class="text-warning me-2" data-bs-toggle="modal"
-                                    data-bs-target="#editJenisBarangModal{{ $jenisBarang['id'] }}">
-                                    <i class="ph-pencil"></i>
+                                        data-bs-target="#editJenisBarangModal{{ $jenisBarang['id'] }}">
+                                        <i class="ph-pencil"></i>
                                     </a>
                                     <a href="#" class="text-danger" data-bs-toggle="modal"
-                                    data-bs-target="#deleteJenisBarangModal{{ $jenisBarang['id'] }}">
-                                    <i class="ph-trash"></i>
-                                </a>
+                                        data-bs-target="#deleteJenisBarangModal{{ $jenisBarang['id'] }}">
+                                        <i class="ph-trash"></i>
+                                    </a>
                                 </div>
                             </td>
                         </tr>

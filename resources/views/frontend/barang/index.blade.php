@@ -15,7 +15,7 @@
                 data-bs-target="#modalCreateBarang">
                 <span class="btn-labeled-icon bg-black bg-opacity-20">
                     <i class="icon-database-add"></i>
-                </span> Tambah Satuan Barang
+                </span> Tambah Barang
             </button>
         </div>
     </div>
@@ -38,12 +38,11 @@
                     </tr>
                 </thead>
                 <tbody>
-
-                    @foreach ($barangs as $key => $barang)
-                        <tr class="text-center">
+                    @forelse ($barangs as $key => $barang)
+                        <tr>
                             <td>{{ $key + 1 }}</td>
-                            <td>{{ $barang['barang_nama'] }}</td>
-                            <td>{{ $barang['barang_kode'] }}</td>
+                            <td>{{ $barang['barang_nama'] ?? '-' }}</td>
+                            <td>{{ $barang['barang_kode'] ?? '-' }}</td>
                             <td>
                                 @if (!empty($barang['barang_gambar']))
                                     <img src="{{ $barang['barang_gambar'] }}" class="img-thumbnail" width="100"
@@ -54,12 +53,14 @@
                             </td>
                             <td>
                                 @php
-                                    $qrCodeBaseUrl = 'http://127.0.0.1:8090/storage/qr_code/';
+                                    $qrCodeBaseUrl = rtrim(config('api.qr_code'), '/') . '/qr_code/';
                                     $qrCodeFormats = ['png', 'jpg', 'jpeg'];
                                     $qrCodeUrl = null;
+
                                     foreach ($qrCodeFormats as $format) {
                                         $tempUrl = $qrCodeBaseUrl . $barang['barang_kode'] . '.' . $format;
-                                        if (@getimagesize($tempUrl)) {
+                                        $headers = @get_headers($tempUrl);
+                                        if ($headers && strpos($headers[0], '200')) {
                                             $qrCodeUrl = $tempUrl;
                                             break;
                                         }
@@ -67,19 +68,12 @@
                                 @endphp
 
                                 @if ($qrCodeUrl)
-                                    <div class="d-flex flex-column">
-                                        <img src="{{ $qrCodeUrl }}" width="60" height="60" class="mb-2"
-                                            alt="QR Code">
-                                        <button type="button" class="btn btn-sm btn-outline-secondary" width="60"
-                                            height="60" onclick="printQRCode('{{ $qrCodeUrl }}')">
-                                            <i class="ph-printer"></i> Print
-                                        </button>
-                                    </div>
+                                    <img src="{{ $qrCodeUrl }}" width="50"
+                                        alt="QR Code {{ $barang['barang_kode'] }}">
                                 @else
                                     <span class="text-muted">Tidak tersedia</span>
                                 @endif
                             </td>
-
                             <td>
                                 <div class="d-inline-flex">
                                     <a href="#" class="text-info me-2" data-bs-toggle="modal"
@@ -87,7 +81,7 @@
                                         <i class="ph-eye"></i>
                                     </a>
                                     <a href="#" class="text-primary me-2" data-bs-toggle="modal"
-                                        data-bs-target="#updateBarang{{ $barang['id'] }}" title="Edit">
+                                        data-bs-target="#updateBarangModal  {{ $barang['id'] }}" title="Edit">
                                         <i class="ph-pencil"></i>
                                     </a>
                                     <a href="#" class="text-danger" data-bs-toggle="modal"
@@ -97,14 +91,16 @@
                                 </div>
                             </td>
                         </tr>
-                    @endforeach
-
+                    @empty
+                        <tr>
+                            <td colspan="6" class="text-center text-muted">Data barang belum tersedia.</td>
+                        </tr>
+                    @endforelse
                 </tbody>
             </table>
         </div>
     </div>
 
-    {{-- Modals --}}
     @include('frontend.barang.create-modal')
 
 
@@ -114,3 +110,4 @@
         @include('frontend.barang.delete-modal', ['barang' => $barang])
     @endforeach
 @endsection
+
