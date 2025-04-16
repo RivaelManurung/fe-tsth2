@@ -81,7 +81,7 @@
                                         <i class="ph-eye"></i>
                                     </a>
                                     <a href="#" class="text-primary me-2" data-bs-toggle="modal"
-                                        data-bs-target="#updateBarangModal  {{ $barang['id'] }}" title="Edit">
+                                        data-bs-target="#editBarangModal{{ $barang['id'] }}" title="Edit">
                                         <i class="ph-pencil"></i>
                                     </a>
                                     <a href="#" class="text-danger" data-bs-toggle="modal"

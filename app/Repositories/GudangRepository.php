@@ -23,15 +23,41 @@ class GudangRepository
         return Http::withToken($token)->get("{$this->baseUrl}/{$id}");
     }
 
+    public function getOperators($token)
+    {
+        $url = config('api.base_url') . '/user/operators';
+        return Http::withToken($token)->get($url);
+    }
+
 
     public function store(array $data, $token)
     {
-        return Http::withToken($token)->post($this->baseUrl, $data);
+        $response = Http::withToken($token)->post($this->baseUrl, $data);
+        // Periksa apakah response API sukses
+        if ($response->successful()) {
+            return $response->json();
+        } else {
+            // Tangani jika request gagal
+            throw new \Exception('Error creating Gudang: ' . $response->body());
+        }
     }
+
+    // public function update($id, array $data, $token)
+    // {
+    //     return Http::withToken($token)->put("{$this->baseUrl}/{$id}", $data);
+    // }
 
     public function update($id, array $data, $token)
     {
-        return Http::withToken($token)->put("{$this->baseUrl}/{$id}", $data);
+        $response = Http::withToken($token)->put("{$this->baseUrl}/{$id}", $data);
+
+        // Periksa apakah response API sukses
+        if ($response->successful()) {
+            return $response->json();
+        } else {
+            // Tangani jika request gagal
+            throw new \Exception('Error updating Gudang: ' . $response->body());
+        }
     }
 
     public function delete($id, $token)

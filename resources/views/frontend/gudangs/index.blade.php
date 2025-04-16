@@ -2,9 +2,11 @@
 
 @section('content')
     <div class="container-fluid">
+        @include('components.flash-message')
         <div class="d-flex justify-content-between mb-3">
             <h4></h4>
-            <button type="button" class="btn btn-primary btn-labeled btn-labeled-start mb-2" data-bs-toggle="modal" data-bs-target="#createGudangModal">
+            <button type="button" class="btn btn-primary btn-labeled btn-labeled-start mb-2" data-bs-toggle="modal"
+                data-bs-target="#createGudangModal">
                 <span class="btn-labeled-icon bg-black bg-opacity-20">
                     <i class="icon-database-add"></i>
                 </span> Tambah Gudang
@@ -16,44 +18,46 @@
                 <h5 class="mb-0">Table Gudang</h5>
             </div>
             <table class="table datatable-button-html5-basic">
-            <thead>
-                <tr>
-                    <th>#</th>
-                    <th>Nama</th>
-                    <th>Deskripsi</th>
-                    <th>Aksi</th>
-                </tr>
-            </thead>
-            <tbody>
-                @forelse ($gudangs as $index => $gudang)
+                <thead>
                     <tr>
-                        <td>{{ $index + 1 }}</td>
-                        <td>{{ $gudang['name'] }}</td>
-                        <td>{{ $gudang['description'] }}</td>
-                        <td>
-                            <div class="d-inline-flex">
-                                <a href="#" class="text-info me-2" data-bs-toggle="modal"
-                                    data-bs-target="#detailGudangModal{{ $gudang['id'] }}">
-                                    <i class="ph-eye"></i>
-                                </a>
-                                <a href="#" class="text-warning me-2" data-bs-toggle="modal"
-                                    data-bs-target="#editGudangModal{{ $gudang['id'] }}">
-                                    <i class="ph-pencil"></i>
-                                </a>
-                                <a href="#" class="text-danger" data-bs-tossggle="modal"
-                                    data-bs-target="#deleteGudangModal{{ $gudang['id'] }}">
-                                    <i class="ph-trash"></i>
-                                </a>
-                            </div>
-                        </td>
+                        <th>#</th>
+                        <th>Nama</th>
+                        <th>Deskripsi</th>
+                        <th>Aksi</th>
                     </tr>
-                @empty
-                    <tr>
-                        <td colspan="6" class="text-center">Tidak ada data ditemukan.</td>
-                    </tr>
-                @endforelse
-            </tbody>
-        </table>
+                </thead>
+                <tbody>
+                    @forelse ($gudangs as $index => $gudang)
+                        <tr>
+                            <td>{{ $index + 1 }}</td>
+                            <td>{{ $gudang['name'] }}</td>
+                            <td>{{ $gudang['description'] }}</td>
+                            <td>
+                                <div class="d-inline-flex">
+                                    <a href="#" class="text-info me-2" data-bs-toggle="modal"
+                                        data-bs-target="#detailGudangModal{{ $gudang['id'] }}">
+                                        <i class="ph-eye"></i>
+                                    </a>
+                                    <a href="#" class="text-warning me-2" data-bs-toggle="modal"
+                                        data-bs-target="#editGudangModal{{ $gudang['id'] }}">
+                                        <i class="ph-pencil"></i>
+                                    </a>
+                                    <a href="#" class="text-danger" data-bs-toggle="modal"
+                                        data-bs-target="#deleteGudangModal{{ $gudang['id'] }}">
+                                        <i class="ph-trash"></i>
+                                    </a>
+
+                                    </a>
+                                </div>
+                            </td>
+                        </tr>
+                    @empty
+                        <tr>
+                            <td colspan="6" class="text-center">Tidak ada data ditemukan.</td>
+                        </tr>
+                    @endforelse
+                </tbody>
+            </table>
         </div>
     </div>
 

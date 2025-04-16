@@ -28,32 +28,35 @@ class BarangRepository
         return Http::withToken($token)->post($this->baseUrl, $data)->json();
     }
 
+
     public function update($id, array $data, $token)
     {
-        $hasFile = isset($data['barang_gambar']) && $data['barang_gambar'] instanceof \Illuminate\Http\UploadedFile;
+        $response = Http::withToken($token)
+            ->put("{$this->baseUrl}/{$id}", $data);
 
-        $request = Http::withToken($token)->asMultipart();
-        $payload = collect($data)->map(function ($value, $key) {
-            return is_array($value) ? json_encode($value) : $value;
-        })->toArray();
+        logger()->info('Payload update:', $data);
+        logger()->info('Response update:', [
+            'status' => $response->status(),
+            'body' => $response->body()
+        ]);
 
-        if (!$hasFile) {
-            unset($payload['barang_gambar']);
+        if ($response->successful()) {
+            return $response->json();
         }
-        logger()->info('Payload update:', $payload);
 
-        $payload['_method'] = 'PUT';
-
-        return $request
-            ->post("{$this->baseUrl}/{$id}", $payload)
-            ->json();
+        return [
+            'error' => true,
+            'status' => $response->status(),
+            'message' => $response->body()
+        ];
     }
+
 
     public function delete($id, $token)
     {
         return Http::withToken($token)->delete("{$this->baseUrl}/{$id}")->json();
     }
-    
+
     public function regenerateQRCodeAll($token)
     {
         $url = config('api.base_url') . '/generate-qrcodes';
@@ -66,8 +69,4 @@ class BarangRepository
 
         return $response->json();
     }
-
-
-
 }
-

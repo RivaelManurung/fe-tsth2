@@ -59,94 +59,6 @@
     {{-- font awesome  --}}
     <link href="{{ asset('template/assets/icons/fontawesome/styles.min.css') }}" rel="stylesheet" type="text/css">
 
-    <script>
-        let scanner = new Instascan.Scanner({
-            video: document.getElementById('preview')
-        });
-
-        scanner.addListener('scan', function(content) {
-            document.getElementById('qrcode-result').value = content;
-            alert("QR Code Terdeteksi: " + content);
-        });
-
-        document.getElementById('scan-btn').addEventListener('click', function() {
-            document.getElementById('scanner-container').style.display = 'flex';
-
-            Instascan.Camera.getCameras().then(function(cameras) {
-                if (cameras.length > 0) {
-                    scanner.start(cameras[0]); // Gunakan kamera pertama
-                } else {
-                    alert('Tidak ada kamera yang ditemukan.');
-                }
-            }).catch(function(e) {
-                console.error(e);
-            });
-        });
-
-        document.getElementById('close-btn').addEventListener('click', function() {
-            document.getElementById('scanner-container').style.display = 'none';
-            scanner.stop(); // Matikan kamera saat ditutup
-        });
-
-        document.addEventListener('DOMContentLoaded', function() {
-            const fileInput = document.querySelector('input[name="barang_gambar"]');
-            const base64Input = document.querySelector('input[name="barang_gambar_base64"]');
-            const form = document.querySelector('#modalCreateBarang form');
-
-            fileInput.addEventListener('change', function() {
-                const file = this.files[0];
-                if (file && file.type.startsWith('image/')) {
-                    const reader = new FileReader();
-                    reader.onload = function(e) {
-                        // e.target.result is the base64 string (including the data:image part)
-                        base64Input.value = e.target.result;
-                    };
-                    reader.readAsDataURL(file);
-                } else {
-                    base64Input.value = '';
-                }
-            });
-
-            form.addEventListener('submit', function(e) {
-                const file = fileInput.files[0];
-                if (file && !base64Input.value) {
-                    e.preventDefault(); // cancel submit
-                    alert('Mohon tunggu, gambar masih diproses...');
-                }
-            });
-        });
-    </script>
-    <script>
-        const swalCombineElement = document.querySelector('#sweet_combine');
-        if (swalCombineElement) {
-            swalCombineElement.addEventListener('click', function() {
-                Swal.fire({
-                    title: 'Are you sure?',
-                    text: "Do you want to logout?",
-                    icon: 'warning',
-                    showCancelButton: true,
-                    confirmButtonText: 'Yes, logout!',
-                    cancelButtonText: 'No, cancel!',
-                    buttonsStyling: false,
-                    customClass: {
-                        confirmButton: 'btn btn-success',
-                        cancelButton: 'btn btn-danger'
-                    }
-                }).then(function(result) {
-                    if (result.isConfirmed) {
-                        // Jika pilih Yes, kirimkan form logout
-                        document.querySelector('#logoutForm').submit(); // Form logout akan disubmit
-                    } else if (result.dismiss === Swal.DismissReason.cancel) {
-                        Swal.fire(
-                            'Cancelled',
-                            'You are still logged in.',
-                            'error'
-                        );
-                    }
-                });
-            });
-        }
-    </script>
 </head>
 
 <body>
@@ -228,5 +140,65 @@
     <!-- /demo config -->
 
 </body>
+{{-- 
+<script>
+    const swalCombineElement = document.querySelector('#sweet_combine');
+    if (swalCombineElement) {
+        swalCombineElement.addEventListener('click', function() {
+            Swal.fire({
+                title: 'Are you sure?',
+                text: "Do you want to logout?",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonText: 'Yes, logout!',
+                cancelButtonText: 'No, cancel!',
+                buttonsStyling: false,
+                customClass: {
+                    confirmButton: 'btn btn-success',
+                    cancelButton: 'btn btn-danger'
+                }
+            }).then(function(result) {
+                if (result.isConfirmed) {
+                    // Kalau klik Yes, kirim form logout
+                    document.getElementById('logoutForm').submit();
+                }
+                // Gak usah pakai else, biar kalau cancel yaudah selesai
+            });
+        });
+    }
+</script> --}}
+
+<script>
+    const swalCombineElement = document.querySelector('#sweet_combine');
+    if (swalCombineElement) {
+        swalCombineElement.addEventListener('click', function () {
+            Swal.fire({
+                title: 'Logout Confirmation',
+                text: 'Are you sure you want to logout now?',
+                icon: 'question',
+                showCancelButton: true,
+                confirmButtonText: '<i class="ph-sign-out"></i> Yes, log me out',
+                cancelButtonText: '<i class="ph-x-circle"></i> Nope, stay logged in',
+                buttonsStyling: false,
+                reverseButtons: true,
+                background: '#fdfdfd',
+                color: '#333',
+                iconColor: '#0d6efd',
+                customClass: {
+                    popup: 'rounded-4 shadow-lg border border-light-subtle',
+                    title: 'fw-semibold fs-5',
+                    confirmButton: 'btn btn-primary px-4 py-2 me-2',
+                    cancelButton: 'btn btn-outline-secondary px-4 py-2'
+                }
+            }).then(function (result) {
+                if (result.isConfirmed) {
+                    document.getElementById('logoutForm').submit();
+                }
+                // Cancel? Gak ngapa-ngapain. Biar smooth.
+            });
+        });
+    }
+</script>
+
 
 </html>

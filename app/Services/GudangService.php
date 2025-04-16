@@ -28,6 +28,16 @@ class GudangService
         return collect();
     }
 
+    public function getOperators($token)
+    {
+        $response = $this->repository->getOperators($token);
+        if ($response->successful()) {
+            return collect($response->json('data'));
+        }
+
+        return collect();
+    }
+
     public function find($id, $token): ?GudangResource
     {
         $response = $this->repository->getById($id, $token);

@@ -19,9 +19,10 @@ class GudangResource extends JsonResource
             'name' => $this->name,
             'slug' => $this->slug,
             'description' => $this->description ?? '-',
-            // 'stok_tersedia' => $this->stok_tersedia,
-            // 'stok_dipinjam' => $this->stok_dipinjam,
-            // 'stok_maintenance' => $this->stok_maintenance,
+            'stok_tersedia' => $this->pivot->stok_tersedia ?? 0,
+            'stok_dipinjam' => $this->pivot->stok_dipinjam ?? 0,
+            'stok_maintenance' => $this->pivot->stok_maintenance ?? 0,
+
             'created_at' => $this->created_at,
         ];
     }

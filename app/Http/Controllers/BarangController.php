@@ -2,14 +2,12 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Resources\BarangResource;
 use App\Http\Resources\JenisBarangResource;
 use App\Http\Resources\SatuanResource;
 use App\Services\BarangCategoryService;
 use App\Services\BarangService;
 use App\Services\JenisBarangService;
 use App\Services\SatuanService;
-use App\Services\KategoriBarangService;
 use Illuminate\Http\Request;
 
 class BarangController extends Controller
@@ -118,7 +116,4 @@ class BarangController extends Controller
             return redirect()->back()->with('error', 'Terjadi kesalahan: ' . $th->getMessage());
         }
     }
-
-
-
 }

@@ -34,9 +34,16 @@ class BarangService
     {
         $token = session('token');
         $response = $this->repository->update($id, $data, $token);
-        logger()->info('Update Barang Response:', $response);
+
+        if (is_array($response)) {
+            logger()->info('Update Barang Response:', $response);
+        } else {
+            logger()->warning('Update Barang gagal: response tidak berbentuk array.', ['response' => $response]);
+        }
+
         return $response;
     }
+
 
 
     public function deleteBarang($id)
@@ -49,5 +56,4 @@ class BarangService
         $token = session('token');
         return $this->repository->regenerateQRCodeAll($token);
     }
-
 }

@@ -61,8 +61,7 @@
                         <label class="form-label">Gambar Barang</label>
                         <div id="dropArea" class="border rounded p-3 text-center" style="cursor:pointer;">
                             <p class="m-0">Seret gambar ke sini atau klik untuk unggah</p>
-                            <input type="file" id="barang_gambar_input" accept="image/*" style="display:none;"
-                                required>
+                            <input type="file" id="barang_gambar_input" accept="image/*" style="display:none;">
                         </div>
                         <small id="gambarStatus" class="text-muted d-block mt-1"></small>
                         <div id="gambarPreviewContainer" class="mt-2 d-none">

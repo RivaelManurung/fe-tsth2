@@ -16,6 +16,26 @@
                     <label>Deskripsi</label>
                     <textarea name="description" class="form-control">{{ $gudang['description'] }}</textarea>
                 </div>
+
+                <div class="mb-3">
+                    <label for="user_id">Pilih Operator</label>
+                    <select name="user_id" class="form-select" required>
+                        <option value="" disabled>-- Pilih Operator --</option>
+                        @foreach ($operators as $operator)
+                            <option value="{{ $operator['id'] }}"
+                                {{ old('user_id', $gudang['user_id']) == $operator['id'] ? 'selected' : '' }}>
+                                {{ $operator['name'] }}
+                            </option>
+                        @endforeach
+                    </select>
+
+                    @if ($errors->has('user_id'))
+                        <div class="invalid-feedback">
+                            {{ $errors->first('user_id') }}
+                        </div>
+                    @endif
+                </div>
+
             </div>
             <div class="modal-footer">
                 <button class="btn btn-primary">Simpan</button>
