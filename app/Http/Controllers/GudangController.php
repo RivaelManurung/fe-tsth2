@@ -33,41 +33,6 @@ class GudangController extends Controller
         }
     }
 
-
-    // public function store(Request $request)
-    // {
-    //     $token = session('token');
-
-    //     if (!$token) {
-    //         return redirect()->route('login')->with('error', 'Silakan login terlebih dahulu.');
-    //     }
-
-    //     $request->validate([
-    //         'name' => 'required|string|max:255',
-    //         'description' => 'nullable|string',
-    //         'user_id' => 'required|exists:users,id',
-    //     ]);
-
-    //     try {
-    //         $data = $request->only(['name', 'description', 'user_id']);
-    //         $this->service->create($data, $token);
-
-    //         return redirect()->route('gudangs.index')->with('success', 'Gudang berhasil ditambahkan.');
-    //     } catch (\Exception $e) {
-    //         // Cek apakah error berkaitan dengan user_id yang sudah di-assign ke gudang lain
-    //         if (strpos($e->getMessage(), 'User ini sudah diassign ke gudang lain.') !== false) {
-    //             return back()->withErrors([
-    //                 'user_id' => 'User ini sudah diassign ke gudang lain.'
-    //             ]);
-    //         }
-
-    //         return redirect()->route('gudangs.index')
-    //             ->withErrors($e->getMessage()); // Ensure errors are passed correctly
-
-    //     }
-    // }
-
-
     public function store(Request $request)
     {
         $token = session('token');
@@ -76,7 +41,6 @@ class GudangController extends Controller
             return redirect()->route('login')->with('error', 'Silakan login terlebih dahulu.');
         }
 
-        // Validasi input
         $request->validate([
             'name' => 'required|string|max:255',
             'description' => 'nullable|string',
@@ -84,29 +48,18 @@ class GudangController extends Controller
         ]);
 
         try {
-            // Menyimpan data gudang menggunakan service
             $data = $request->only('name', 'description', 'user_id');
-            $this->service->create($data, $token);
+            $response = $this->service->create($data, $token);
 
-            return redirect()->route('gudangs.index')->with('success', 'Gudang berhasil ditambahkan.');
-        } catch (\Exception $e) {
-            // Menangkap dan menampilkan error yang lebih spesifik
-            $errorMessage = $e->getMessage();  // Mendapatkan pesan error dari API
-
-            // Parsing JSON error message jika ada
-            $errorData = json_decode($errorMessage, true);
-            if ($errorData && isset($errorData['user_id'])) {
-                // Menampilkan error spesifik untuk user_id
-                return back()->withErrors([
-                    'user_id' => $errorData['user_id'][0] ?? 'Terjadi kesalahan. Coba lagi.'
-                ]);
+            if ($response['success']) {
+                return redirect()->route('gudangs.index')->with('success', $response['message'] ?? 'Gudang berhasil ditambahkan.');
             }
 
-            // Jika tidak ada error terkait user_id, tampilkan error umum
-            return back()->withErrors(['error' => 'Terjadi kesalahan: ' . $errorMessage]);
+            return redirect()->route('gudangs.index')->with('error', $response['message'] ?? 'Gagal menambahkan gudang.');
+        } catch (Exception $e) {
+            return redirect()->route('gudangs.index')->with('error', 'Terjadi kesalahan: ' . $e->getMessage());
         }
     }
-
 
     public function update(Request $request, $id)
     {
@@ -119,24 +72,23 @@ class GudangController extends Controller
         $request->validate([
             'name' => 'required|string|max:255',
             'description' => 'nullable|string',
-            'user_id' => 'required|exists:users,id', // Pastikan user_id valid
+            'user_id' => 'required|exists:users,id',
         ]);
 
         try {
-            // Mengambil data request dan mengirim ke service
             $data = $request->only('name', 'description', 'user_id');
 
-            // Mengirim data ke service untuk update
-            $this->service->edit($id, $data, $token);
+            $response = $this->service->edit($id, $data, $token);
 
-            // Redirect dengan pesan sukses
-            return redirect()->route('gudangs.index')->with('success', 'Gudang berhasil diperbarui.');
+            if ($response['success']) {
+                return redirect()->route('gudangs.index')->with('success', $response['message'] ?? 'Gudang berhasil diperbarui.');
+            }
+
+            return redirect()->route('gudangs.index')->with('error', $response['message'] ?? 'Gagal memperbarui gudang.');
         } catch (Exception $e) {
-            // Tangani error dan kembalikan pesan error
             return redirect()->route('gudangs.index')->with('error', 'Terjadi kesalahan: ' . $e->getMessage());
         }
     }
-
 
     public function destroy($id)
     {
@@ -147,8 +99,13 @@ class GudangController extends Controller
         }
 
         try {
-            $this->service->destroy($id, $token);
-            return redirect()->route('gudangs.index')->with('success', 'Gudang berhasil dihapus.');
+            $response = $this->service->destroy($id, $token);
+
+            if ($response['success']) {
+                return redirect()->route('gudangs.index')->with('success', $response['message'] ?? 'Gudang berhasil dihapus.');
+            }
+
+            return redirect()->route('gudangs.index')->with('error', $response['message'] ?? 'Gagal menghapus gudang.');
         } catch (Exception $e) {
             return redirect()->route('gudangs.index')->with('error', 'Terjadi kesalahan: ' . $e->getMessage());
         }

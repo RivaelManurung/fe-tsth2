@@ -107,13 +107,13 @@
 
 
             </li>
-            <li class="nav-item nav-item-submenu">
-                <a href="#" class="nav-link">
+            <li class="nav-item">
+                <a href="{{route('transactions.index')}}" class="nav-link">
                     <i class="fas fa-exchange-alt"></i>
                     <span>Transaksi</span>
                 </a>
             </li>
-            <li class="nav-item nav-item-submenu">
+            <li class="nav-item">
                 <a href="#" class="nav-link">
                     <i class="ph-printer"></i>
                     <span>Laporan</span>
@@ -140,7 +140,7 @@
                         <a href="{{route('roles.index')}}" class="nav-link">Role</a>
                     </li>
                     <li class="nav-item">
-                        <a href="form_dual_listboxes.html" class="nav-link">Akses</a>
+                        <a href="{{route('permissions.index')}}" class="nav-link">Akses</a>
                     </li>
                 </ul>
             </li>

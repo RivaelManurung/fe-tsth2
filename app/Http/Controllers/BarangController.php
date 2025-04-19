@@ -116,4 +116,40 @@ class BarangController extends Controller
             return redirect()->back()->with('error', 'Terjadi kesalahan: ' . $th->getMessage());
         }
     }
+    public function exportPDF(Request $request, $id)
+{
+    try {
+        $jumlah = $request->input('jumlah');
+        $token = session('token');
+
+        $response = $this->barang_service->exportQRCodePDF($id, $jumlah, $token);
+
+        if (isset($response['pdf_url'])) {
+            return redirect()->away($response['pdf_url']);
+        }
+
+        return redirect()->back()->with('error', 'Gagal mengekspor QR Code PDF.');
+    } catch (\Throwable $th) {
+        return redirect()->back()->with('error', 'Terjadi kesalahan: ' . $th->getMessage());
+    }
+}
+
+
+public function exportPDFALL()
+{
+    try {
+        $token = session('token');
+
+        $response = $this->barang_service->exportQRCodePDFAll($token);
+
+        if (isset($response['pdf_url'])) {
+            return redirect()->away($response['pdf_url']);
+        }
+
+        return redirect()->back()->with('error', 'Gagal mengekspor QR Code PDF.');
+    } catch (\Throwable $th) {
+        return redirect()->back()->with('error', 'Terjadi kesalahan: ' . $th->getMessage());
+    }
+}
+
 }

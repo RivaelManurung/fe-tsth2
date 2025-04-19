@@ -56,4 +56,19 @@ class BarangService
         $token = session('token');
         return $this->repository->regenerateQRCodeAll($token);
     }
+
+    public function exportQRCodePDF($id, $jumlah, $token)
+{
+    return $this->repository->exportQRCodePDF($id, $jumlah, $token);
+}
+
+public function exportQRCodePDFAll($token)
+{
+    return $this->repository->exportQRCodePDFAll($token);
+}
+public function getByKode($kode, $token)
+{
+    $all = $this->repository->getAll($token);
+    return collect($all)->firstWhere('barang_kode', $kode); // Mengambil barang berdasarkan kode
+}
 }
