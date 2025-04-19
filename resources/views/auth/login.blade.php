@@ -5,7 +5,7 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <title>Limitless - Responsive Web Application Kit by Eugene Kopyov</title>
+    <title>Login</title>
 
     <!-- Global stylesheets -->
     <link href="{{ asset('template/assets/fonts/inter/inter.css') }}" rel="stylesheet" type="text/css">
@@ -16,130 +16,114 @@
     <!-- Core JS files -->
     <script src="{{ asset('template/assets/demo/demo_configurator.js') }}"></script>
     <script src="{{ asset('template/assets/js/bootstrap/bootstrap.bundle.min.js') }}"></script>
-    <!-- /core JS files -->
-
-    <!-- Theme JS files -->
-    <script src="{{ asset('template/assets/js/vendor/visualization/d3/d3.min.js') }}"></script>
-    <script src="{{ asset('template/assets/js/vendor/visualization/d3/d3_tooltip.js') }}"></script>
-
-    <script src="{{ asset('assets/js/app.js') }}"></script>
-    <script src="{{ asset('template/assets/js/vendor/notifications/noty.min.js') }}"></script>
-    <script src="{{ asset('template/assets/demo/pages/extra_noty.js') }}"></script>
-    <script src="{{ asset('template/assets/demo/pages/dashboard.js') }}"></script>
-    <script src="{{ asset('template/assets/demo/charts/pages/dashboard/streamgraph.js') }}"></script>
-    <script src="{{ asset('template/assets/demo/charts/pages/dashboard/sparklines.js') }}"></script>
-    <script src="{{ asset('template/assets/demo/charts/pages/dashboard/lines.js') }}"></script>
-    <script src="{{ asset('template/assets/demo/charts/pages/dashboard/areas.js') }}"></script>
-    <script src="{{ asset('template/assets/demo/charts/pages/dashboard/donuts.js') }}"></script>
-    <script src="{{ asset('template/assets/demo/charts/pages/dashboard/bars.js') }}"></script>
-    <script src="{{ asset('template/assets/demo/charts/pages/dashboard/progress.js') }}"></script>
-    <script src="{{ asset('template/assets/demo/charts/pages/dashboard/heatmaps.js') }}"></script>
-    <script src="{{ asset('template/assets/demo/charts/pages/dashboard/pies.js') }}"></script>
-    <script src="{{ asset('template/assets/demo/data/dashboard/bullets.json') }}"></script>
-    <!-- /theme JS files -->
-
 </head>
 
-<body>
-    <!-- Main navbar -->
-    <div class="navbar navbar-dark navbar-static py-2">
-        <div class="container-fluid">
-            <div class="navbar-brand">
-                <a href="index.html" class="d-inline-flex align-items-center">
-                    <img src="../../../assets/images/logo_icon.svg" alt="">
-                    <img src="../../../assets/images/logo_text_light.svg" class="d-none d-sm-inline-block h-16px ms-3"
-                        alt="">
-                </a>
-            </div>
-        </div>
-    </div>
-    <!-- /main navbar -->
+<body class="bg-light">
 
     <!-- Page content -->
     <div class="page-content">
 
-        <!-- Main content -->
+        <!-- Content wrapper -->
         <div class="content-wrapper">
 
             <!-- Inner content -->
             <div class="content-inner">
 
                 <!-- Content area -->
-                <div class="content d-flex justify-content-center align-items-center">
-                    <!-- Menampilkan pesan error dari API -->
-                    @if (session('error_message'))
-                        <div class="alert alert-danger text-center mb-3">
-                            {{ session('error_message') }}
-                        </div>
-                    @endif
-                    @if (session('login_success'))
-                        <div class="alert alert-success">{{ session('login_success') }}</div>
-                    @endif
+                <div class="content d-flex justify-content-center align-items-center min-vh-100">
+
+                    <!-- Login form -->
                     <form class="login-form" action="{{ route('auth.login') }}" method="POST">
                         @csrf
-                        <div class="card mb-0">
-                            <div class="card-body">
-                                <div class="text-center mb-3">
-                                    <img src="{{ asset('template/assets/images/logo_icon.svg') }}" class="h-48px"
-                                        alt="">
-                                    <h5 class="mb-0">Login to your account</h5>
-                                    <span class="d-block text-muted">Enter your credentials below</span>
+
+                        <div class="card shadow-lg border-0 rounded-4" style="min-width: 360px;">
+                            <div class="card-body p-4">
+                                <div class="text-center mb-4">
+                                    <img src="{{ asset('template/assets/images/logo_icon.svg') }}" class="h-48px mb-2" alt="">
+                                    <h5 class="fw-semibold mb-0">Login to your account</h5>
+                                    <small class="text-muted">Enter your credentials below</small>
                                 </div>
 
-                                <!-- Tampilkan pesan error -->
+                                <!-- Flash messages -->
+                                @if (session('error_message'))
+                                    <div class="alert alert-danger text-center">
+                                        {{ session('error_message') }}
+                                    </div>
+                                @endif
+                                @if (session('login_success'))
+                                    <div class="alert alert-success text-center">
+                                        {{ session('login_success') }}
+                                    </div>
+                                @endif
                                 @if ($errors->has('login_error'))
-                                    <div class="alert alert-danger">
+                                    <div class="alert alert-danger text-center">
                                         {{ $errors->first('login_error') }}
                                     </div>
                                 @endif
 
-
+                                <!-- Email -->
                                 <div class="mb-3">
                                     <label class="form-label">Email</label>
                                     <div class="form-control-feedback form-control-feedback-start">
-                                        <input type="email" name="email" class="form-control"
-                                            placeholder="Masukan email.." required>
+                                        <input type="email" name="email" class="form-control rounded-3" placeholder="Masukkan email.." required>
                                         <div class="form-control-feedback-icon">
                                             <i class="ph-user-circle text-muted"></i>
                                         </div>
                                     </div>
                                 </div>
 
+                                <!-- Password -->
                                 <div class="mb-3">
                                     <label class="form-label">Password</label>
-                                    <div class="form-control-feedback form-control-feedback-start">
-                                        <input type="password" name="password" class="form-control"
-                                            placeholder="•••••••••••" required>
+                                    <div class="form-control-feedback form-control-feedback-start position-relative">
+                                        <input type="password" name="password" id="passwordInput" class="form-control rounded-3" placeholder="•••••••••••" required>
                                         <div class="form-control-feedback-icon">
                                             <i class="ph-lock text-muted"></i>
                                         </div>
+                                        <button type="button" onclick="togglePassword()" class="position-absolute end-0 top-50 translate-middle-y me-3 p-0 bg-transparent border-0" style="z-index: 10;">
+                                            <i id="toggleIcon" class="ph-eye text-muted fs-5"></i>
+                                        </button>
                                     </div>
                                 </div>
 
+                                <!-- Submit -->
                                 <div class="mb-3">
-                                    <button type="submit" class="btn btn-primary w-100">Login</button>
+                                    <button type="submit" class="btn btn-primary w-100 rounded-3">
+                                        Login
+                                    </button>
                                 </div>
                             </div>
                         </div>
                     </form>
-
-
-
-                    <!-- /login form -->
+                    <!-- /Login form -->
 
                 </div>
-                <!-- /content area -->
-
-                <!-- Footer -->
+                <!-- /Content area -->
 
             </div>
-            <!-- /inner content -->
+            <!-- /Inner content -->
 
         </div>
-        <!-- /main content -->
+        <!-- /Content wrapper -->
 
     </div>
-    <!-- /page content -->
+    <!-- /Page content -->
+
+    <!-- Password Toggle Script -->
+    <script>
+        function togglePassword() {
+            const input = document.getElementById('passwordInput');
+            const icon = document.getElementById('toggleIcon');
+            if (input.type === 'password') {
+                input.type = 'text';
+                icon.classList.replace('ph-eye', 'ph-eye-slash');
+            } else {
+                input.type = 'password';
+                icon.classList.replace('ph-eye-slash', 'ph-eye');
+            }
+        }
+    </script>
+
 </body>
 
 </html>

@@ -102,3 +102,11 @@
         opacity: 0;
     }
 }
+
+
+.lightboxOverlay {
+    z-index: 9999 !important;
+}
+.lightbox {
+    z-index: 10000 !important;
+}

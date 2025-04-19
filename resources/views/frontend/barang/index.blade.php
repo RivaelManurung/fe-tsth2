@@ -11,13 +11,21 @@
                     <i class="icon-sync"></i>
                 </span> Refresh QR Code
             </a>
+
             <button type="button" class="btn btn-primary btn-labeled btn-labeled-start mb-2" data-bs-toggle="modal"
                 data-bs-target="#modalCreateBarang">
                 <span class="btn-labeled-icon bg-black bg-opacity-20">
                     <i class="icon-database-add"></i>
-                </span> Tambah Barang
+                </span> Tambah Satuan Barang
             </button>
-        </div>
+
+            <a href="{{ route('barangs.exportPDFALL') }}" class="btn btn-danger btn-labeled btn-labeled-start mb-2" target="_blank">
+                <span class="btn-labeled-icon bg-black bg-opacity-20">
+                    <i class="icon-printer2"></i>
+                </span> Cetak
+            </a>
+                </div>
+
     </div>
 
     <div class="card">
@@ -45,8 +53,7 @@
                             <td>{{ $barang['barang_kode'] ?? '-' }}</td>
                             <td>
                                 @if (!empty($barang['barang_gambar']))
-                                    <img src="{{ $barang['barang_gambar'] }}" class="img-thumbnail" width="100"
-                                        alt="Gambar Barang">
+                                    <img src="{{ $barang['barang_gambar'] }}" class="img-thumbnail" width="200" alt="Gambar Barang">
                                 @else
                                     <span class="text-muted">Tidak ada gambar</span>
                                 @endif
@@ -59,8 +66,7 @@
 
                                     foreach ($qrCodeFormats as $format) {
                                         $tempUrl = $qrCodeBaseUrl . $barang['barang_kode'] . '.' . $format;
-                                        $headers = @get_headers($tempUrl);
-                                        if ($headers && strpos($headers[0], '200')) {
+                                        if (@getimagesize($tempUrl)) {
                                             $qrCodeUrl = $tempUrl;
                                             break;
                                         }
@@ -68,8 +74,15 @@
                                 @endphp
 
                                 @if ($qrCodeUrl)
-                                    <img src="{{ $qrCodeUrl }}" width="50"
-                                        alt="QR Code {{ $barang['barang_kode'] }}">
+                                    <div class="d-flex flex-column align-items-start text-start">
+                                        <img src="{{ $qrCodeUrl }}" width="80" height="80" class="mb-2"
+                                            alt="QR Code">
+                                            <button type="button" class="btn btn-sm btn-danger btn-labeled" style="width: 80px;"
+                                            data-bs-toggle="modal" data-bs-target="#modalprintBarang{{ $barang['id'] }}">
+                                            <i class="ph-printer me-1"></i> Print
+                                        </button>
+
+                                    </div>
                                 @else
                                     <span class="text-muted">Tidak tersedia</span>
                                 @endif
@@ -105,9 +118,9 @@
 
 
     @foreach ($barangs as $barang)
+        @include('frontend.barang.print-modal', ['barang' => $barang])
         @include('frontend.barang.detail-modal', ['barang' => $barang])
         @include('frontend.barang.edit-modal', ['barang' => $barang])
         @include('frontend.barang.delete-modal', ['barang' => $barang])
     @endforeach
 @endsection
-

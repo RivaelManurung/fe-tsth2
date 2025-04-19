@@ -13,6 +13,8 @@
     <link href="{{ asset('template/assets/fonts/inter/inter.css') }}" rel="stylesheet" type="text/css">
     <link href="{{ asset('template/assets/icons/phosphor/styles.min.css') }}" rel="stylesheet" type="text/css">
     <link href="{{ asset('assets/css/ltr/all.min.css') }}" id="stylesheet" rel="stylesheet" type="text/css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.11.4/css/lightbox.min.css" rel="stylesheet" />
+
     <!-- /global stylesheets -->
 
     <!-- Core JS files -->
@@ -24,6 +26,7 @@
     <script src="{{ asset('template/assets/js/vendor/notifications/noty.min.js') }}"></script>
     {{-- <script src="{{asset('template/assets/demo/pages/extra_sweetalert.js')}}"></script> --}}
     <script src="{{ asset('template/assets/js/vendor/notifications/sweet_alert.min.js') }}"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.11.4/js/lightbox.min.js"></script>
 
     <script src="{{ asset('template/assets/js/jquery/jquery.min.js') }}"></script>
     <script src="{{ asset('template/assets/js/vendor/tables/datatables/datatables.min.js') }}"></script>
@@ -102,7 +105,7 @@
                 </div>
                 <!-- /content area -->
 
-                <!-- Tombol Scan -->
+                {{-- <!-- Tombol Scan -->
                 <button id="scan-btn" class="btn btn-primary d-flex  btn-position btn-circle">
                     <i class="ph-scan ph-2x rounded"></i>
                 </button>
@@ -112,7 +115,7 @@
                     <button id="close-btn">✖</button>
                     <video id="preview"></video>
                     <input type="text" id="qrcode-result" class="form-control mt-2" readonly>
-                </div>
+                </div> --}}
 
                 <!-- Footer -->
                 @include('layouts.footer')
@@ -140,7 +143,7 @@
     <!-- /demo config -->
 
 </body>
-{{-- 
+{{--
 <script>
     const swalCombineElement = document.querySelector('#sweet_combine');
     if (swalCombineElement) {
@@ -199,6 +202,6 @@
         });
     }
 </script>
-
+@stack('js')
 
 </html>

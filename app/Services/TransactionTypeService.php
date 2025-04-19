@@ -18,9 +18,11 @@ class TransactionTypeService
     {
         $response = $this->repository->getAll($token);
 
+
         if ($response->successful()) {
             return collect($response->json('data'));
         }
+
 
         return collect();
     }

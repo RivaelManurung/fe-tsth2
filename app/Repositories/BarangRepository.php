@@ -69,4 +69,32 @@ class BarangRepository
 
         return $response->json();
     }
+
+    public function exportQRCodePDF($id, $jumlah, $token)
+{
+    $url = "{$this->baseUrl}/export-pdf/{$id}?jumlah={$jumlah}";
+
+    $response = Http::withToken($token)->get($url);
+
+    logger()->info('Export QR PDF Response:', [
+        'status' => $response->status(),
+        'body' => $response->body()
+    ]);
+
+    return $response->json();
+}
+
+public function exportQRCodePDFAll($token)
+{
+    $url = config('api.base_url') . '/export-pdf';
+
+    $response = Http::withToken($token)->get($url);
+
+    logger()->info('Export All QR PDF Response:', [
+        'status' => $response->status(),
+        'body' => $response->body()
+    ]);
+
+    return $response->json();
+}
 }
