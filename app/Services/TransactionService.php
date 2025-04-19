@@ -3,36 +3,67 @@
 namespace App\Services;
 
 use App\Repositories\TransactionRepository;
-use Illuminate\Http\Client\Response as ClientResponse;
+use Illuminate\Contracts\Session\Session;
 use Illuminate\Support\Collection;
-use Illuminate\Support\Facades\Http;
-use Illuminate\Support\Facades\Response;
 
 class TransactionService
 {
-    protected $transactionRepository; // Properti untuk repository
+    protected $transactionRepository;
 
     public function __construct(TransactionRepository $transactionRepository)
     {
-        $this->transactionRepository = $transactionRepository; // Injeksi dependensi repository
+        $this->transactionRepository = $transactionRepository;
     }
 
-    // Mendapatkan semua transaksi
     public function getAllTransactions($token): Collection
     {
-        $response = $this->transactionRepository->getAll($token); // Memanggil repository untuk mendapatkan data transaksi
+        $response = $this->transactionRepository->getAll($token);
 
         if ($response->successful()) {
-            return collect($response->json('data')); // Jika berhasil, kembalikan data transaksi
+            return collect($response->json('data'));
         }
 
-        return collect(); // Jika gagal, kembalikan collection kosong
+        return collect();
     }
 
-    public function checkBarcode($token, string $kode)
+    public function checkAndAddBarang(string $kode, string $token, Session $session): ?array
     {
-        return $this->transactionRepository->checkBarcode($token, $kode);
+        $response = $this->transactionRepository->checkBarcode($token, $kode);
+
+        if ($response->successful() && $response->json('success')) {
+            $barang = $response->json('data');
+            $daftarBarang = $session->get('daftar_barang', []);
+
+            if (isset($daftarBarang[$barang['barang_kode']])) {
+                $daftarBarang[$barang['barang_kode']]['jumlah'] += 1;
+            } else {
+                $daftarBarang[$barang['barang_kode']] = [
+                    'nama' => $barang['barang_nama'],
+                    'kode' => $barang['barang_kode'],
+                    'jumlah' => 1,
+                    'stok_tersedia' => $barang['stok_tersedia'],
+                    'gambar' => $barang['gambar'],
+                ];
+            }
+
+            $session->put('daftar_barang', $daftarBarang);
+
+            return $daftarBarang;
+        }
+
+        return null;
     }
+    public function storeTransaction(string $tipe, array $daftarBarang, string $token)
+{
+    $payload = [
+        'transaction_type_id' => $tipe,
+        'items' => array_map(fn($item) => [
+            'barang_kode' => $item['kode'],
+            'quantity'    => $item['jumlah'],
+        ], $daftarBarang),
+    ];
 
-
+    return $this->transactionRepository->storeTransaction($token, $payload);
 }
+}
+

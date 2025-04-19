@@ -24,6 +24,9 @@ class AuthService
             if ($response->successful() && isset($data['response_code']) && $data['response_code'] == 200) {
                 Session::put('token', $data['data']['token']);
                 Session::put('user', $data['data']['user']);
+                Session::put('permissions', $data['data']['permissions'] ?? []);
+                Session::put('roles', $data['data']['roles'] ?? []);
+
                 return ['success' => true, 'user' => $data['data']['user']];
             }
 

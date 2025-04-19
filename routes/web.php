@@ -45,6 +45,7 @@ Route::middleware('auth.session')->group(function () {
     Route::resource('roles', RoleController::class);
     Route::resource('users', UserController::class);
     Route::get('transactions', [TransactionController::class, 'index'])->name('transactions.index');
+    Route::post('/transaksi/store', [TransactionController::class, 'store'])->name('transaksi.store');
     Route::get('transactions/scan', [TransactionController::class, 'form'])->name('transactions.tambah');
     Route::post('/barcode/check', [TransactionController::class, 'check'])->name('barcode.check');
     Route::get('/barcode/reset', [TransactionController::class, 'reset'])->name('barcode.reset');

@@ -39,6 +39,11 @@
     </table>
 </div>
 
+<div class="text-end mt-3">
+    <button id="submit-btn" class="btn btn-success px-4">
+        Kirim Transaksi
+    </button>
+</div>
 @else
 <p class="text-muted mt-3">Belum ada barang yang discan.</p>
 @endif
