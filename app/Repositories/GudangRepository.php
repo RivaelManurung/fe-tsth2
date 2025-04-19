@@ -37,15 +37,9 @@ class GudangRepository
         if ($response->successful()) {
             return $response->json();
         } else {
-            // Tangani jika request gagal
             throw new \Exception('Error creating Gudang: ' . $response->body());
         }
     }
-
-    // public function update($id, array $data, $token)
-    // {
-    //     return Http::withToken($token)->put("{$this->baseUrl}/{$id}", $data);
-    // }
 
     public function update($id, array $data, $token)
     {

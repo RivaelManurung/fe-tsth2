@@ -6,6 +6,9 @@
                 <button class="btn-close" data-bs-dismiss="modal"></button>
             </div>
             <div class="modal-body">
+                @php
+                    $operator = $operators->firstWhere('id', $gudang['user_id']);
+                @endphp
                 <dl class="row">
                     <dt class="col-sm-4">Nama Gudang</dt>
                     <dd class="col-sm-8">{{ $gudang['name'] }}</dd>
@@ -14,16 +17,16 @@
                     <dd class="col-sm-8">{{ $gudang['slug'] }}</dd>
 
                     <dt class="col-sm-4">Deskripsi</dt>
-                    <dd class="col-sm-8">{{ $gudang['description'] }}</dd>
+                    <dd class="col-sm-8">{{ $gudang['description'] ?? '-' }}</dd>
 
-                    {{-- <dt class="col-sm-4">Stok Tersedia</dt>
-                    <dd class="col-sm-8">{{ $gudang['stok_tersedia'] }}</dd>
-
-                    <dt class="col-sm-4">Stok Dipinjam</dt>
-                    <dd class="col-sm-8">{{ $gudang['stok_dipinjam'] }}</dd>
-
-                    <dt class="col-sm-4">Stok Maintenance</dt>
-                    <dd class="col-sm-8">{{ $gudang['stok_maintenance'] }}</dd> --}}
+                    <dt class="col-sm-4">Operator</dt>
+                    <dd class="col-sm-8">
+                        @if ($operator)
+                            {{ $operator['name'] }} ({{ $operator['email'] }})
+                        @else
+                            <span class="text-muted">Tidak ada operator</span>
+                        @endif
+                    </dd>
 
                     <dt class="col-sm-4">Dibuat Pada</dt>
                     <dd class="col-sm-8">{{ \Carbon\Carbon::parse($gudang['created_at'])->format('d-m-Y H:i') }}</dd>
