@@ -92,7 +92,7 @@
                             <td>{{ $item['kode'] }}</td>
                             <td>
                                 <a href="{{ asset($item['gambar']) }}" data-lightbox="gambar-{{ $item['kode'] }}">
-                                    <img src="{{ asset($item['gambar']) }}" alt="{{ $item['nama'] }}" style="width: 50px; height: 50px; object-fit: cover;">
+                                    <img src="{{ asset($item['gambar']) }}" alt="{{$item['gambar'] }}" style="width: 50px; height: 50px; object-fit: cover;">
                                 </a>
                             </td>
                             <td>{{ $item['stok_tersedia'] }}</td>
