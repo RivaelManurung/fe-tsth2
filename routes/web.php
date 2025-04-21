@@ -38,13 +38,13 @@ Route::middleware('auth.session')->group(function () {
     Route::get('/barang/refresh-qrcodes', [BarangController::class, 'refreshQRCodes'])->name('barang.refresh-qrcodes');
     Route::get('/search-barang', [TransactionController::class, 'searchBarang'])->name('search.barang');
 
-    Route::resource('satuans', SatuanController::class)->middleware('check.permission:view_satuan');
-    Route::resource('gudangs', GudangController::class)->middleware('check.permission:view_gudang');
-    Route::resource('jenis-barangs', JenisBarangController::class)->middleware('check.permission:view_jenis_barang');
-    Route::resource('barang-categories', BarangCategoryController::class)->middleware('check.permission:view_category_barang');
+    Route::resource('satuans', SatuanController::class);
+    Route::resource('gudangs', GudangController::class);
+    Route::resource('jenis-barangs', JenisBarangController::class);
+    Route::resource('barang-categories', BarangCategoryController::class);
     Route::resource('transaction-types', TransactionTypeController::class);
-    Route::resource('roles', RoleController::class)->middleware('check.permission:view_role');
-    Route::resource('users', UserController::class)->middleware('check.permission:view_user');
+    Route::resource('roles', RoleController::class);
+    Route::resource('users', UserController::class);
     Route::get('transactions', [TransactionController::class, 'index'])->name('transactions.index');
     Route::post('/transaksi/store', [TransactionController::class, 'store'])->name('transaksi.store');
     Route::get('transactions/scan', [TransactionController::class, 'form'])->name('transactions.tambah');
