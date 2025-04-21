@@ -1,66 +1,77 @@
 @extends('layouts.main')
 
 @section('content')
-@include('components.flash-message')
+    @include('components.flash-message')
 
-<div class="container-fluid py-4">
-    <div class="row justify-content-center">
-        <div class="col-12 col-md-10 col-lg-8">
+    <form action="{{ route('transaksi.store') }}" method="POST">
+        @csrf
 
-            <div class="card shadow border-0">
-                <div class="card-header bg-success text-white text-center fs-5">
-                    Scan Barang Transaksi
-                </div>
-                <div class="card-body p-3">
-
-                    <div id="reader-container" class="w-100 d-flex justify-content-center mb-4">
-                        <div id="reader" class="border border-3 rounded" style="width: 100%; max-width: 100%; aspect-ratio: 1 / 1;"></div>
-                    </div>
-
-                    <div class="mb-4">
-                        <label for="product-code" class="form-label">Kode Barang:</label>
-                        <input type="text" id="product-code" class="form-control" readonly />
-                    </div>
-
-                    <div class="mb-4">
-                        <label for="transaction-type" class="form-label">Tipe Transaksi:</label>
-                        <select id="transaction-type" class="form-select">
-                            @foreach ($transactionTypes as $type)
-                                <option value="{{ $type['id'] }}">{{ $type['name'] }}</option>
-                            @endforeach
-                        </select>
-                    </div>
-
-                </div>
+        <div class="card shadow border-0">
+            <div class="card-header bg-success text-white text-center fs-5">
+                Scan Barang Transaksi
             </div>
+            <div class="card-body p-3">
 
-            <div class="mt-4">
-                <div class="table-responsive">
-                    <table class="table table-bordered table-striped align-middle text-center" id="items-table">
-                        <thead class="table-success">
-                            <tr>
-                                <th>#</th>
-                                <th>Nama Barang</th>
-                                <th>Jumlah</th>
-                                <th>Aksi</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <!-- Hasil scan ditambahkan ke sini -->
-                        </tbody>
-                    </table>
+                <!-- QR Code Scanner -->
+                <div id="reader-container" class="w-100 d-flex justify-content-center mb-4">
+                    <div id="reader" class="border border-3 rounded" style="width:100%; max-width:400px; aspect-ratio:1/1;"></div>
+                </div>
+
+                <!-- Display scanned code -->
+                <div class="mb-3">
+                    <label for="product-code" class="form-label">Kode Barang:</label>
+                    <input type="text" id="product-code" class="form-control" readonly />
+                </div>
+
+                <!-- Select transaction type -->
+                <div class="mb-3">
+                    <label for="transaction-type" class="form-label">Tipe Transaksi:</label>
+                    <select name="tipe" id="transaction-type" class="form-select" required>
+                        @foreach ($transactionTypes as $type)
+                            <option value="{{ $type['id'] }}">{{ $type['name'] }}</option>
+                        @endforeach
+                    </select>
                 </div>
             </div>
-
-            <div class="text-end mt-3">
-                <button id="submit-btn" class="btn btn-success px-4">
-                    Kirim Transaksi
-                </button>
-            </div>
-
         </div>
-    </div>
-</div>
+
+        <!-- Table of scanned items -->
+        <div class="mt-4">
+            <div class="table-responsive">
+                <table class="table table-bordered table-striped text-center" id="items-table">
+                    <thead class="table-success">
+                        <tr>
+                            <th>#</th>
+                            <th>Nama Barang</th>
+                            <th>Jumlah</th>
+                            <th>Aksi</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach(session('daftar_barang', []) as $kode => $item)
+                            <tr data-kode="{{ $kode }}">
+                                <td>{{ $loop->iteration }}</td>
+                                <td class="item-name">{{ $item['nama'] }}</td>
+                                <td class="item-qty">{{ $item['jumlah'] }}</td>
+                                <td>
+                                    <form action="{{ url('/barcode/remove') }}" method="POST" style="display:inline">
+                                        @csrf
+                                        <input type="hidden" name="kode" value="{{ $kode }}">
+                                        <button type="submit" class="btn btn-sm btn-danger">Hapus</button>
+                                    </form>
+                                </td>
+                            </tr>
+                        @endforeach
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- Submit button -->
+        <div class="text-end mt-3">
+            <button type="button" class="btn btn-success">Kirim Transaksi</button>
+        </div>
+    </form>
 @endsection
 
 @push('js')
@@ -76,7 +87,10 @@ document.addEventListener('DOMContentLoaded', () => {
         fps: 10,
         qrbox: (w, h) => {
             const edge = Math.min(w, h);
-            return { width: edge * 0.8, height: edge * 0.8 };
+            return {
+                width: edge * 0.8,
+                height: edge * 0.8
+            };
         },
         aspectRatio: 1
     };
@@ -100,48 +114,50 @@ document.addEventListener('DOMContentLoaded', () => {
                 document.getElementById('reader').style.borderColor = 'green';
                 document.getElementById('product-code').value = decodedText;
 
+                // Delay of 1 second before performing further actions
                 setTimeout(() => {
                     document.getElementById('reader').style.borderColor = '#ccc';
                     isScanningAllowed = true;
-                }, 1500);
 
-                fetch(`/barcode/check?kode=${decodedText}`)
-                    .then((res) => res.json())
-                    .then((data) => {
-                        if (!data || !data.barang_nama || !data.barang_kode) {
-                            alert("Barang tidak ditemukan.");
-                            return;
-                        }
+                    // Proceed with the fetch request after the delay
+                    fetch(`/barcode/check?kode=${decodedText}`)
+                        .then(res => res.json())
+                        .then(data => {
+                            if (!data || !data.barang_nama || !data.barang_kode) {
+                                alert("Barang tidak ditemukan.");
+                                return;
+                            }
 
-                        let existingRow = Array.from(tableBody.querySelectorAll('tr')).find(row =>
-                            row.dataset.kode === data.barang_kode
-                        );
+                            let existingRow = Array.from(tableBody.querySelectorAll('tr')).find(
+                                row => row.dataset.kode === data.barang_kode
+                            );
 
-                        if (existingRow) {
-                            const qtyElem = existingRow.querySelector('.item-qty');
-                            qtyElem.textContent = parseInt(qtyElem.textContent) + 1;
-                        } else {
-                            const rowCount = tableBody.rows.length + 1;
-                            const row = document.createElement('tr');
-                            row.dataset.kode = data.barang_kode;
-                            row.innerHTML = `
-                                <td>${rowCount}</td>
-                                <td class="item-name text-success fw-semibold">${data.barang_nama}</td>
-                                <td class="item-qty">1</td>
-                                <td>
-                                    <button class="btn btn-sm btn-danger" onclick="this.closest('tr').remove(); updateRowNumbers();">Hapus</button>
-                                </td>
-                            `;
-                            tableBody.appendChild(row);
-                        }
-                    })
-                    .catch((err) => {
-                        console.error("Fetch error:", err);
-                        alert("Terjadi kesalahan saat mengambil data barang.");
-                    });
+                            if (existingRow) {
+                                const qtyElem = existingRow.querySelector('.item-qty');
+                                qtyElem.textContent = parseInt(qtyElem.textContent) + 1;
+                            } else {
+                                const rowCount = tableBody.rows.length + 1;
+                                const row = document.createElement('tr');
+                                row.dataset.kode = data.barang_kode;
+                                row.innerHTML = `
+                                    <td>${rowCount}</td>
+                                    <td class="item-name text-success fw-semibold">${data.barang_nama}</td>
+                                    <td class="item-qty">1</td>
+                                    <td>
+                                        <button class="btn btn-sm btn-danger" onclick="this.closest('tr').remove(); updateRowNumbers();">Hapus</button>
+                                    </td>
+                                `;
+                                tableBody.appendChild(row);
+                            }
+                        })
+                        .catch((err) => {
+                            console.error("Fetch error:", err);
+                            alert("Terjadi kesalahan saat mengambil data barang.");
+                        });
+                }, 1000); // 1 second delay before executing the rest
             },
             (err) => {
-                // Silent scan errors
+                // ignore scan errors
             }
         );
     }).catch((err) => {
@@ -153,47 +169,6 @@ document.addEventListener('DOMContentLoaded', () => {
             row.children[0].textContent = i + 1;
         });
     };
-
-    document.getElementById('submit-btn').addEventListener('click', () => {
-        const rows = document.querySelectorAll('#items-table tbody tr');
-        const transactionType = document.getElementById('transaction-type').value;
-        const data = [];
-
-        rows.forEach((row) => {
-            const kode = row.dataset.kode;
-            const nama = row.querySelector('.item-name')?.textContent;
-            const qty = row.querySelector('.item-qty')?.textContent;
-            if (kode && nama && qty) {
-                data.push({ kode, nama, qty });
-            }
-        });
-
-        if (data.length === 0) {
-            alert("Belum ada data barang yang discan.");
-            return;
-        }
-
-        fetch('/transaksi/store', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-                'X-CSRF-TOKEN': "{{ csrf_token() }}"
-            },
-            body: JSON.stringify({
-                tipe: transactionType,
-                barang: data
-            })
-        })
-        .then((res) => res.json())
-        .then((res) => {
-            alert("Transaksi berhasil disimpan!");
-            location.reload();
-        })
-        .catch((err) => {
-            console.error("Submit error:", err);
-            alert("Gagal menyimpan transaksi.");
-        });
-    });
 });
 </script>
 @endpush

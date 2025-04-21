@@ -6,11 +6,13 @@
     <div class="d-flex justify-content-between mb-3">
         <h4>Daftar Transaksi</h4>
         <div>
+            {{-- @can('create_transaksi') --}}
             <a href="{{ route('transactions.tambah') }}" class="btn btn-primary btn-labeled btn-labeled-start mb-2">
                 <span class="btn-labeled-icon bg-black bg-opacity-20">
                     <i class="icon-plus-circle2"></i>
                 </span> Tambah Transaksi
             </a>
+            {{-- @endcan --}}
         </div>
     </div>
 

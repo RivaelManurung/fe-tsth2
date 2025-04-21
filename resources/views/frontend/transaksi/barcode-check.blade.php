@@ -1,6 +1,7 @@
 @extends('layouts.main')
 
 @section('content')
+
 <div class="container py-5">
     <div class="text-center mb-5">
         <h2 class="fw-bold text-primary">Input Barang</h2>
@@ -26,13 +27,23 @@
 
     <!-- Manual Input -->
     <div id="manual-section" class="d-none d-flex justify-content-center mb-4">
-        <div class="w-75">
+        <div class="w-100 position-relative">
             <label for="manual-input" class="form-label text-muted">Masukkan Kode Barang</label>
             <input type="text" id="manual-input" class="form-control shadow-sm" placeholder="Contoh: BRG123">
+
+            <!-- Dropdown untuk hasil pencarian -->
+            <ul id="search-results" class="mt-2 list-group text-dark" style="display: none; position: absolute; width: 100%; max-height: 200px; overflow-y: auto; background-color: white; border: 1px solid #ccc; z-index: 1000; border-radius: 5px;">
+                <!-- Hasil pencarian akan muncul di sini -->
+            </ul>
+
+            <!-- Pesan Error dan Success -->
             <p id="manual-error" class="text-danger mt-2 d-none">Kode barang tidak valid.</p>
             <p id="manual-success" class="text-success mt-2 d-none">Kode barang ditemukan!</p>
         </div>
     </div>
+
+
+
 
     <!-- Scan result -->
     <p id="scan-result" class="text-success mt-2 fw-bold text-center"></p>
@@ -152,10 +163,22 @@
         document.getElementById('manual-input').addEventListener('input', handleManualInput);
     });
 
-    function onScanSuccess(decodedText) {
-        document.getElementById('scan-result').innerText = 'Scanned: ' + decodedText;
+    let lastScannedTime = 0;
+
+function onScanSuccess(decodedText) {
+    const now = new Date().getTime();
+    if (now - lastScannedTime < 1000) return; // Jika scan baru saja terjadi, abaikan
+
+    lastScannedTime = now;
+
+    document.getElementById('scan-result').innerText = 'Scanned: ' + decodedText;
+
+    // Tambahkan delay 1 detik sebelum kirim ke server
+    setTimeout(() => {
         sendCode(decodedText);
-    }
+    }, 1000);
+}
+
 
     function handleManualInput(event) {
         const kode = event.target.value;
@@ -248,5 +271,75 @@
             });
         }
     }
+
+
+    $(document).ready(function() {
+    $('#manual-input').on('input', function() {
+        var keyword = $(this).val();
+
+        // Jika input tidak kosong, kirimkan permintaan Ajax
+        if (keyword.length > 0) {
+            $.ajax({
+                url: '{{ route("search.barang") }}',
+                method: 'GET',
+                data: { keyword: keyword },
+                success: function(data) {
+                    var resultsHtml = '';
+                    if (data.length > 0) {
+                        data.forEach(function(barang) {
+                            resultsHtml += '<li class="list-group-item result-item" data-id="' + barang.id + '" data-nama="' + barang.barang_nama + '" data-kode="' + barang.barang_kode + '">' +
+                                                barang.barang_nama + ' (Kode: ' + barang.barang_kode + ')' +
+                                                '</li>';
+                        });
+                    } else {
+                        resultsHtml = '<li class="list-group-item disabled">Tidak ada Item ini</li>';
+                    }
+                    $('#search-results').html(resultsHtml).show();
+                }
+            });
+        } else {
+            // Jika input kosong, sembunyikan hasil pencarian
+            $('#search-results').html('').hide();
+        }
+    });
+
+    // Tangani klik pada hasil pencarian
+    $('#search-results').on('click', '.result-item', function(e) {
+        e.preventDefault(); // Mencegah link untuk membuka halaman baru
+
+        var selectedBarangNama = $(this).data('nama');
+        var selectedBarangKode = $(this).data('kode');
+
+        // Setel input field dengan nama atau kode barang yang dipilih
+        $('#manual-input').val(selectedBarangKode); // Ganti dengan nama jika ingin menampilkan nama
+
+        // Sembunyikan dropdown setelah memilih
+        $('#search-results').html('').hide();
+
+        // Tampilkan pesan sukses
+        $('#manual-success').removeClass('d-none').fadeIn();
+        $('#manual-error').addClass('d-none');
+    });
+
+    // Menampilkan pesan error jika kode barang tidak ditemukan
+    $('#manual-input').on('blur', function() {
+        var keyword = $(this).val();
+        if (keyword.length > 0) {
+            // Cek jika barang ada
+            $.ajax({
+                url: '{{ route("search.barang") }}',
+                method: 'GET',
+                data: { keyword: keyword },
+                success: function(data) {
+                    if (data.length === 0) {
+                        $('#manual-error').removeClass('d-none').fadeIn();
+                        $('#manual-success').addClass('d-none');
+                    }
+                }
+            });
+        }
+    });
+});
+
 </script>
 @endpush

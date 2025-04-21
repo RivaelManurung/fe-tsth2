@@ -3,6 +3,7 @@
 namespace App\Services;
 
 use App\Repositories\TransactionRepository;
+use Illuminate\Contracts\Session\Session;
 use Illuminate\Support\Collection;
 
 class TransactionService
@@ -26,44 +27,35 @@ class TransactionService
         return collect();
     }
 
-    public function checkBarcode($token, string $kode)
+    public function checkAndAddBarang(string $kode, string $token, Session $session): ?array
     {
-        return $this->transactionRepository->checkBarcode($token, $kode);
-    }
+        $response = $this->transactionRepository->checkBarcode($token, $kode);
 
-    public function checkAndAddBarang($token, string $kode, array $currentItems): array
-    {
-        $result = $this->transactionRepository->checkAndParseBarang($token, $kode);
+        if ($response->successful() && $response->json('success')) {
+            $barang = $response->json('data');
+            $daftarBarang = $session->get('daftar_barang', []);
 
-        if (!$result['success']) {
-            return [
-                'success' => true,
-                'message' => $result['message']
-            ];
+            if (isset($daftarBarang[$barang['barang_kode']])) {
+                $daftarBarang[$barang['barang_kode']]['jumlah'] += 1;
+            } else {
+                $daftarBarang[$barang['barang_kode']] = [
+                    'nama' => $barang['barang_nama'],
+                    'kode' => $barang['barang_kode'],
+                    'jumlah' => 1,
+                    'stok_tersedia' => $barang['stok_tersedia'],
+                    'gambar' => $barang['gambar'],
+                ];
+            }
+
+            $session->put('daftar_barang', $daftarBarang);
+
+            return $daftarBarang;
         }
 
-        $barang = $result['data'];
-
-        $barang['stok_tersedia'] = $barang['stok_tersedia'];
-        $barang['gambar'] = $barang['gambar'];
-
-        if (isset($currentItems[$barang['barang_kode']])) {
-            $currentItems[$barang['barang_kode']]['jumlah'] += 1;
-        } else {
-            $currentItems[$barang['barang_kode']] = [
-                'nama' => $barang['barang_nama'],
-                'kode' => $barang['barang_kode'],
-                'jumlah' => 1,
-                'stok_tersedia' => $barang['stok_tersedia'],
-                'gambar' => $barang['gambar'],
-            ];
-        }
-
-        return [
-            'success' => true,
-            'data' => $currentItems,
-        ];
+        return null;
     }
+
+
 
     public function resetDaftarBarang(): array
     {
@@ -87,5 +79,19 @@ class TransactionService
             'data' => $currentItems,
             'message' => 'Barang tidak ditemukan.',
         ];
+    }
+
+
+    public function storeTransaction(string $tipe, array $daftarBarang, string $token)
+    {
+        $payload = [
+            'transaction_type_id' => $tipe,
+            'items' => array_map(fn($item) => [
+                'barang_kode' => $item['kode'],
+                'quantity'    => $item['jumlah'],
+            ], $daftarBarang),
+        ];
+
+        return $this->transactionRepository->storeTransaction($token, $payload);
     }
 }

@@ -11,14 +11,16 @@
                     <i class="icon-sync"></i>
                 </span> Refresh QR Code
             </a>
+            @can('create_barang')
 
             <button type="button" class="btn btn-primary btn-labeled btn-labeled-start mb-2" data-bs-toggle="modal"
-                data-bs-target="#modalCreateBarang">
-                <span class="btn-labeled-icon bg-black bg-opacity-20">
-                    <i class="icon-database-add"></i>
-                </span> Tambah Satuan Barang
-            </button>
+            data-bs-target="#modalCreateBarang">
+            <span class="btn-labeled-icon bg-black bg-opacity-20">
+                <i class="icon-database-add"></i>
+            </span> Tambah Satuan Barang
+        </button>
 
+        @endcan
             <a href="{{ route('barangs.exportPDFALL') }}" class="btn btn-danger btn-labeled btn-labeled-start mb-2" target="_blank">
                 <span class="btn-labeled-icon bg-black bg-opacity-20">
                     <i class="icon-printer2"></i>
@@ -89,18 +91,24 @@
                             </td>
                             <td>
                                 <div class="d-inline-flex">
+                                    @can('view_barang')
                                     <a href="#" class="text-info me-2" data-bs-toggle="modal"
                                         data-bs-target="#detailBarang{{ $barang['id'] }}" title="Detail">
                                         <i class="ph-eye"></i>
                                     </a>
+                                    @endcan
+                                    @can('update_barang')
                                     <a href="#" class="text-primary me-2" data-bs-toggle="modal"
                                         data-bs-target="#editBarangModal{{ $barang['id'] }}" title="Edit">
                                         <i class="ph-pencil"></i>
                                     </a>
+                                    @endcan
+                                    @can('delete_barang')
                                     <a href="#" class="text-danger" data-bs-toggle="modal"
                                         data-bs-target="#deleteBarangModal{{ $barang['id'] }}">
                                         <i class="ph-trash"></i>
                                     </a>
+                                    @endcan
                                 </div>
                             </td>
                         </tr>

@@ -14,6 +14,7 @@ return Application::configure(basePath: dirname(__DIR__))
         $middleware->alias([
             'auth.token' => \App\Http\Middleware\Authenticated::class,
             'auth.session' => \App\Http\Middleware\AuthSession::class,
+            'check.permission' => \App\Http\Middleware\CheckPermission::class,
         ]);
     })
     ->withExceptions(function (Exceptions $exceptions) {

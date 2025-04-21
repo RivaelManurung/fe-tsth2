@@ -1,3 +1,4 @@
+
 <!-- Sidebar content -->
 <div class="sidebar-content">
     <!-- Sidebar header -->
@@ -36,6 +37,7 @@
                     <span> Dashboard </span>
                 </a>
             </li>
+            @can('view_barang', 'view_satuan', 'view_jenis_barang', 'view_category_barang', 'view_gudang', 'view_transaction_type')
             <li class="nav-item nav-item-submenu">
                 <a href="#" class="nav-link">
                     <i class="ph-squares-four"></i>
@@ -96,23 +98,36 @@
                     )
                         ? 'show'
                         : '' }}">
-
+                    @can('view_barang')
                     <x-nav-item route="barangs" label="Barang" />
+                    @endcan
+                    @can('view_satuan')
                     <x-nav-item route="satuans" label="Satuan" />
+                    @endcan
+                    @can('view_jenis_barang')
                     <x-nav-item route="jenis-barangs" label="Jenis Barang" />
+                    @endcan
+                    @can('view_category_barang')
                     <x-nav-item route="barang-categories" label="Kategori Barang" />
+                    @endcan
+                    @can('view_gudang')
                     <x-nav-item route="gudangs" label="Gudang" />
+                    @endcan
+                    @can('view_transaction_type')
                     <x-nav-item route="transaction-types" label="Jenis Transaksi" />
+                    @endcan
                 </ul>
-
-
             </li>
+            @endcan
+            @can('view_transaction')
             <li class="nav-item">
                 <a href="{{route('transactions.index')}}" class="nav-link">
                     <i class="fas fa-exchange-alt"></i>
                     <span>Transaksi</span>
                 </a>
             </li>
+            @endcan
+
             <li class="nav-item">
                 <a href="#" class="nav-link">
                     <i class="ph-printer"></i>
@@ -127,23 +142,34 @@
                 </div>
                 <i class="ph-dots-three sidebar-resize-show"></i>
             </li>
+
+            @can('view_user','view_role', 'manage_permissions')
             <li class="nav-item nav-item-submenu">
+
                 <a href="#" class="nav-link">
                     <i class="mi-settings"></i>
                     <span>Settings</span>
                 </a>
                 <ul class="nav-group-sub collapse">
+                    @can('view_user')
+
                     <li class="nav-item">
                         <a href="{{route('users.index')}}" class="nav-link">User</a>
                     </li>
+                    @endcan
+                    @can('view_role')
                     <li class="nav-item">
                         <a href="{{route('roles.index')}}" class="nav-link">Role</a>
                     </li>
+                    @endcan
+                    @can('manage_permissions')
                     <li class="nav-item">
                         <a href="{{route('permissions.index')}}" class="nav-link">Akses</a>
                     </li>
+                    @endcan
                 </ul>
             </li>
+            @endcan
             <li class="nav-item">
                 <a href="#" class="nav-link">
                     <i class="ph-desktop"></i>

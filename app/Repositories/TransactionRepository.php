@@ -24,20 +24,8 @@ class TransactionRepository
         return Http::withToken($token)->get("{$this->baseUrl}/check-barcode/{$kode}");
     }
 
-    public function checkAndParseBarang($token, string $kode)
+    public function storeTransaction(string $token, array $payload)
     {
-        $response = Http::withToken($token)->get("{$this->baseUrl}/check-barcode/{$kode}");
-
-        if ($response->successful() && $response->json('success')) {
-            return [
-                'success' => true,
-                'data' => $response->json('data')
-            ];
-        }
-
-        return [
-            'success' => false,
-            'message' => $response->json('message') ?? 'Barang tidak ditemukan.'
-        ];
+        return Http::withToken($token)->post($this->baseUrl, $payload);
     }
 }

@@ -5,9 +5,11 @@
         @include('components.flash-message')
         <div class="d-flex justify-content-between mb-3">
             <h4>Data Jenis Transaksi</h4>
+            @can('create_transaction_type')
             <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#createTransactionTypeModal">
                 <i class="icon-database-add me-2"></i> Tambah Jenis Transaksi
             </button>
+            @endcan
         </div>
 
         <div class="card">
