@@ -64,10 +64,6 @@
                     <div class="col-md-4 fw-bold">Jenis Barang:</div>
                     <div class="col-md-8">{{ $barang['jenisBarang'] ?? '-' }}</div>
                 </div>
-                <div class="row mb-3">
-                    <div class="col-md-4 fw-bold">barang:</div>
-                    <div class="col-md-8">{{ $barang['barang'] ?? '-' }}</div>
-                </div>
 
                 <!-- Bagian Gudang -->
                 <div class="row mb-3">

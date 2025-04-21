@@ -15,6 +15,7 @@ class TransactionService
         $this->transactionRepository = $transactionRepository;
     }
 
+    // Mendapatkan semua transaksi
     public function getAllTransactions($token): Collection
     {
         $response = $this->transactionRepository->getAll($token);
@@ -53,6 +54,34 @@ class TransactionService
 
         return null;
     }
+
+
+
+    public function resetDaftarBarang(): array
+    {
+        return [];
+    }
+
+    public function removeBarang(string $kode, array $currentItems): array
+    {
+        if (isset($currentItems[$kode])) {
+            unset($currentItems[$kode]);
+
+            return [
+                'success' => true,
+                'data' => $currentItems,
+                'message' => 'Barang berhasil dihapus.',
+            ];
+        }
+
+        return [
+            'success' => false,
+            'data' => $currentItems,
+            'message' => 'Barang tidak ditemukan.',
+        ];
+    }
+
+
     public function storeTransaction(string $tipe, array $daftarBarang, string $token)
     {
         $payload = [
@@ -66,4 +95,3 @@ class TransactionService
         return $this->transactionRepository->storeTransaction($token, $payload);
     }
 }
-

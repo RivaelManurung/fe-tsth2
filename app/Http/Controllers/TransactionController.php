@@ -10,10 +10,11 @@ use Illuminate\Http\Request;
 class TransactionController extends Controller
 {
     protected $service;
-    protected $transactionService;
     protected $barang_service;
+    protected $transactionService;
 
-    public function __construct(BarangService $barang_service ,TransactionTypeService $service, TransactionService $transactionService)
+
+    public function __construct(BarangService $barang_service, TransactionTypeService $service, TransactionService $transactionService)
     {
         $this->transactionService = $transactionService;
         $this->service = $service;
@@ -24,6 +25,7 @@ class TransactionController extends Controller
     {
         $token = $request->session()->get('token');
         $transactionTypes = $this->service->all($token);
+
         return view('frontend.transaksi.create', compact('transactionTypes'));
     }
 
@@ -31,6 +33,7 @@ class TransactionController extends Controller
     {
         $token = $request->session()->get('token');
         $transactions = $this->transactionService->getAllTransactions($token);
+
         return view('frontend.transaksi.index', compact('transactions'));
     }
 
@@ -38,10 +41,11 @@ class TransactionController extends Controller
     {
         $token = $request->session()->get('token');
         $daftarBarang = $request->session()->get('daftar_barang', []);
-        $barangs = $this->barang_service->getAllBarang();
         $transactionTypes = $this->service->all($token);
-        return view('frontend.transaksi.barcode-check', compact('daftarBarang', 'transactionTypes', 'barangs'));
+
+        return view('frontend.transaksi.barcode-check', compact('daftarBarang', 'transactionTypes'));
     }
+
 
     public function check(Request $request)
     {
@@ -61,9 +65,10 @@ class TransactionController extends Controller
         return response()->json(['success' => false, 'message' => 'Barang tidak ditemukan.']);
     }
 
+
     public function reset(Request $request)
     {
-        $request->session()->forget('daftar_barang');
+        $request->session()->put('daftar_barang', $this->transactionService->resetDaftarBarang());
         return redirect()->back();
     }
 
@@ -72,16 +77,14 @@ class TransactionController extends Controller
         $kode = $request->input('kode');
         $daftarBarang = session()->get('daftar_barang', []);
 
-        if (isset($daftarBarang[$kode])) {
-            unset($daftarBarang[$kode]);
-            session()->put('daftar_barang', $daftarBarang);
+        $result = $this->transactionService->removeBarang($kode, $daftarBarang);
+        session()->put('daftar_barang', $result['data']);
 
-            return response()->json(['success' => true, 'message' => 'Barang berhasil dihapus.']);
-        } else {
-            return response()->json(['success' => false, 'message' => 'Barang tidak ditemukan.']);
-        }
+        return response()->json([
+            'success' => $result['success'],
+            'message' => $result['message'],
+        ]);
     }
-
 
 
     public function store(Request $request)
@@ -105,18 +108,17 @@ class TransactionController extends Controller
     }
 
     public function searchBarang(Request $request)
-{
-    $keyword = $request->get('keyword');
+    {
+        $keyword = $request->get('keyword');
 
-    // Mencari barang yang sesuai dengan keyword (misalnya berdasarkan kode atau nama)
-    $barangs = $this->barang_service->getAllBarang();
-    $filteredBarang = collect($barangs)->filter(function ($barang) use ($keyword) {
-        return str_contains(strtolower($barang['barang_kode']), strtolower($keyword)) ||
-               str_contains(strtolower($barang['barang_nama']), strtolower($keyword));
-    });
+        // Mencari barang yang sesuai dengan keyword (misalnya berdasarkan kode atau nama)
+        $barangs = $this->barang_service->getAllBarang();
+        $filteredBarang = collect($barangs)->filter(function ($barang) use ($keyword) {
+            return str_contains(strtolower($barang['barang_kode']), strtolower($keyword)) ||
+                str_contains(strtolower($barang['barang_nama']), strtolower($keyword));
+        });
 
-    // Kembalikan hasil pencarian dalam format JSON
-    return response()->json($filteredBarang);
-}
-
+        // Kembalikan hasil pencarian dalam format JSON
+        return response()->json($filteredBarang);
+    }
 }

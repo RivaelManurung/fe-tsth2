@@ -191,8 +191,28 @@
                         }
                     })
                     .then(res => {
-                        window.location.reload();
+                        progressBar.classList.add('d-none');
+                        tombolUpdate.disabled = false;
+
+                        // Tutup modal manual
+                        const modal = bootstrap.Modal.getInstance(document.getElementById(
+                            `editBarangModal${id}`));
+                        modal.hide();
+
+                        // Flash message (manual inject ke alert container di halaman)
+                        const flashContainer = document.getElementById('flash-container');
+                        if (flashContainer) {
+                            flashContainer.innerHTML = `
+            <div class="alert alert-success alert-dismissible fade show mt-3" role="alert">
+                Barang berhasil diperbarui.
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>`;
+                        }
+
+                        // Optional reload (delay dikit biar flash keliatan)
+                        setTimeout(() => window.location.reload(), 1500);
                     })
+
                     .catch(err => {
                         tombolUpdate.disabled = false;
                         progressBar.classList.add('d-none');

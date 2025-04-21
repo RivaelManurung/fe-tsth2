@@ -67,7 +67,6 @@ class GudangService
         return $this->parseResponse($response);
     }
 
-
     protected function parseResponse($response): array
     {
         // Kalau response adalah array biasa (fallback)
