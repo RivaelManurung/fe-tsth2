@@ -15,8 +15,7 @@ class TransactionTypeRepository
 
     public function getAll($token)
     {
-        $aa = Http::withToken($token)->get($this->baseUrl);
-        dd($aa->status(), $aa->body());
+        return Http::withToken($token)->get($this->baseUrl);
     }
 
     public function getById($id, $token)

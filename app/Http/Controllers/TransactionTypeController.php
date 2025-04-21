@@ -19,7 +19,7 @@ class TransactionTypeController extends Controller
     {
         $token = $request->session()->get('token');
         $transactionTypes = $this->service->all($token);
-        dd($transactionTypes);
+        // dd($transactionTypes);
 
         return view('frontend.transaction-types.index', compact('transactionTypes'));
     }
