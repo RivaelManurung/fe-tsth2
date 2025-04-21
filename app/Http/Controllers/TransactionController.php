@@ -42,7 +42,7 @@ class TransactionController extends Controller
 
         // teruskan status & body persis dari BE
         return response($response->body(), $response->status())
-               ->header('Content-Type', 'application/json');
+            ->header('Content-Type', 'application/json');
     }
 
     public function form(Request $request)
@@ -54,73 +54,85 @@ class TransactionController extends Controller
         return view('frontend.transaksi.barcode-check', compact('daftarBarang', 'transactionTypes'));
     }
 
+    // public function check(Request $request)
+    // {
+    //     $kode = $request->kode;
+    //     $token = $request->session()->get('token');
+    //     $response = Http::withToken($token)
+    //         ->get("http://127.0.0.1:8000/api/transactions/check-barcode/" . $kode);
+
+    //     if ($response->successful() && $response->json('success')) {
+    //         $barang = $response->json('data');
+    //         $daftarBarang = $request->session()->get('daftar_barang', []);
+
+    //         // Tambahkan stok_tersedia dan gambar ke data barang
+    //         $barang['stok_tersedia'] = $barang['stok_tersedia'];
+    //         $barang['gambar'] = $barang['gambar'];
+
+    //         if (isset($daftarBarang[$barang['barang_kode']])) {
+    //             $daftarBarang[$barang['barang_kode']]['jumlah'] += 1;
+    //         } else {
+    //             $daftarBarang[$barang['barang_kode']] = [
+    //                 'nama' => $barang['barang_nama'],
+    //                 'kode' => $barang['barang_kode'],
+    //                 'jumlah' => 1,
+    //                 'stok_tersedia' => $barang['stok_tersedia'],
+    //                 'gambar' => $barang['gambar'],
+    //             ];
+    //         }
+
+    //         $request->session()->put('daftar_barang', $daftarBarang);
+
+    //         return response()->json([
+    //             'success' => true,
+    //             'html' => view('frontend.transaksi.table', compact('daftarBarang'))->render(),
+    //         ]);
+    //     }
+
+    //     return response()->json(['success' => false, 'message' => 'Barang tidak ditemukan.']);
+    // }
+
     public function check(Request $request)
     {
         $kode = $request->kode;
         $token = $request->session()->get('token');
-        $response = Http::withToken($token)
-            ->get("http://127.0.0.1:8090/api/transactions/check-barcode/" . $kode);
+        $daftarBarang = $request->session()->get('daftar_barang', []);
 
-        if ($response->successful() && $response->json('success')) {
-            $barang = $response->json('data');
-            $daftarBarang = $request->session()->get('daftar_barang', []);
+        $result = $this->transactionService->checkAndAddBarang($token, $kode, $daftarBarang);
 
-            // Tambahkan stok_tersedia dan gambar ke data barang
-            $barang['stok_tersedia'] = $barang['stok_tersedia'];
-            $barang['gambar'] = $barang['gambar'];
-
-            if (isset($daftarBarang[$barang['barang_kode']])) {
-                $daftarBarang[$barang['barang_kode']]['jumlah'] += 1;
-            } else {
-                $daftarBarang[$barang['barang_kode']] = [
-                    'nama' => $barang['barang_nama'],
-                    'kode' => $barang['barang_kode'],
-                    'jumlah' => 1,
-                    'stok_tersedia' => $barang['stok_tersedia'],
-                    'gambar' => $barang['gambar'],
-                ];
-            }
-
-            $request->session()->put('daftar_barang', $daftarBarang);
+        if ($result['success']) {
+            $request->session()->put('daftar_barang', $result['data']);
 
             return response()->json([
                 'success' => true,
-                'html' => view('frontend.transaksi.table', compact('daftarBarang'))->render(),
+                'html' => view('frontend.transaksi.table', ['daftarBarang' => $result['data']])->render(),
             ]);
         }
 
-        return response()->json(['success' => false, 'message' => 'Barang tidak ditemukan.']);
+        return response()->json([
+            'success' => false,
+            'message' => $result['message'] ?? 'Barang tidak ditemukan.',
+        ]);
     }
 
 
     public function reset(Request $request)
     {
-        $request->session()->forget('daftar_barang');
+        $request->session()->put('daftar_barang', $this->transactionService->resetDaftarBarang());
         return redirect()->back();
     }
+
     public function remove(Request $request)
     {
         $kode = $request->input('kode');
-
-        // Hapus barang dari sesi atau database
         $daftarBarang = session()->get('daftar_barang', []);
 
-        if (isset($daftarBarang[$kode])) {
-            unset($daftarBarang[$kode]);
-            session()->put('daftar_barang', $daftarBarang);
+        $result = $this->transactionService->removeBarang($kode, $daftarBarang);
+        session()->put('daftar_barang', $result['data']);
 
-            return response()->json([
-                'success' => true,
-                'message' => 'Barang berhasil dihapus.'
-            ]);
-        } else {
-            return response()->json([
-                'success' => false,
-                'message' => 'Barang tidak ditemukan.'
-            ]);
-        }
+        return response()->json([
+            'success' => $result['success'],
+            'message' => $result['message'],
+        ]);
     }
-
-
-
 }
