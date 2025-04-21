@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Services\BarangService;
 use App\Services\TransactionService;
 use App\Services\TransactionTypeService;
 use Illuminate\Http\Request;
@@ -10,11 +11,13 @@ class TransactionController extends Controller
 {
     protected $service;
     protected $transactionService;
+    protected $barang_service;
 
-    public function __construct(TransactionTypeService $service, TransactionService $transactionService)
+    public function __construct(BarangService $barang_service ,TransactionTypeService $service, TransactionService $transactionService)
     {
         $this->transactionService = $transactionService;
         $this->service = $service;
+        $this->barang_service = $barang_service;
     }
 
     public function tambah(Request $request)
@@ -35,8 +38,9 @@ class TransactionController extends Controller
     {
         $token = $request->session()->get('token');
         $daftarBarang = $request->session()->get('daftar_barang', []);
+        $barangs = $this->barang_service->getAllBarang();
         $transactionTypes = $this->service->all($token);
-        return view('frontend.transaksi.barcode-check', compact('daftarBarang', 'transactionTypes'));
+        return view('frontend.transaksi.barcode-check', compact('daftarBarang', 'transactionTypes', 'barangs'));
     }
 
     public function check(Request $request)
@@ -81,22 +85,38 @@ class TransactionController extends Controller
 
 
     public function store(Request $request)
+    {
+        $token = $request->session()->get('token');
+        $tipe = $request->input('tipe');
+        $daftarBarang = $request->session()->get('daftar_barang', []);
+
+        if (empty($daftarBarang)) {
+            return redirect()->back()->with('error', 'Tidak ada barang untuk transaksi.');
+        }
+
+        $response = $this->transactionService->storeTransaction($tipe, $daftarBarang, $token);
+
+        if ($response->successful()) {
+            $request->session()->forget('daftar_barang');
+            return redirect()->route('transactions.index')->with('success', 'Transaksi berhasil disimpan');
+        }
+
+        return redirect()->back()->with('error', 'Gagal menyimpan transaksi');
+    }
+
+    public function searchBarang(Request $request)
 {
-    $token = $request->session()->get('token');
-    $tipe = $request->input('tipe');
-    $daftarBarang = $request->session()->get('daftar_barang', []);
+    $keyword = $request->get('keyword');
 
-    if (empty($daftarBarang)) {
-        return redirect()->back()->with('error', 'Tidak ada barang untuk transaksi.');
-    }
+    // Mencari barang yang sesuai dengan keyword (misalnya berdasarkan kode atau nama)
+    $barangs = $this->barang_service->getAllBarang();
+    $filteredBarang = collect($barangs)->filter(function ($barang) use ($keyword) {
+        return str_contains(strtolower($barang['barang_kode']), strtolower($keyword)) ||
+               str_contains(strtolower($barang['barang_nama']), strtolower($keyword));
+    });
 
-    $response = $this->transactionService->storeTransaction($tipe, $daftarBarang, $token);
-
-    if ($response->successful()) {
-        $request->session()->forget('daftar_barang');
-        return redirect()->route('transactions.index')->with('success', 'Transaksi berhasil disimpan');
-    }
-
-    return redirect()->back()->with('error', 'Gagal menyimpan transaksi');
+    // Kembalikan hasil pencarian dalam format JSON
+    return response()->json($filteredBarang);
 }
+
 }

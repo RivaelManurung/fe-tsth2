@@ -54,16 +54,16 @@ class TransactionService
         return null;
     }
     public function storeTransaction(string $tipe, array $daftarBarang, string $token)
-{
-    $payload = [
-        'transaction_type_id' => $tipe,
-        'items' => array_map(fn($item) => [
-            'barang_kode' => $item['kode'],
-            'quantity'    => $item['jumlah'],
-        ], $daftarBarang),
-    ];
+    {
+        $payload = [
+            'transaction_type_id' => $tipe,
+            'items' => array_map(fn($item) => [
+                'barang_kode' => $item['kode'],
+                'quantity'    => $item['jumlah'],
+            ], $daftarBarang),
+        ];
 
-    return $this->transactionRepository->storeTransaction($token, $payload);
-}
+        return $this->transactionRepository->storeTransaction($token, $payload);
+    }
 }
 

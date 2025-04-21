@@ -14,6 +14,7 @@
     <link href="{{ asset('template/assets/icons/phosphor/styles.min.css') }}" rel="stylesheet" type="text/css">
     <link href="{{ asset('assets/css/ltr/all.min.css') }}" id="stylesheet" rel="stylesheet" type="text/css">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.11.4/css/lightbox.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="https://code.jquery.com/ui/1.13.2/themes/base/jquery-ui.css">
 
     <!-- /global stylesheets -->
 
@@ -23,6 +24,8 @@
     <!-- /core JS files -->
 
     <!-- Theme JS files -->
+    <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="{{ asset('template/assets/js/vendor/notifications/noty.min.js') }}"></script>
     {{-- <script src="{{asset('template/assets/demo/pages/extra_sweetalert.js')}}"></script> --}}
     <script src="{{ asset('template/assets/js/vendor/notifications/sweet_alert.min.js') }}"></script>
@@ -174,7 +177,7 @@
 <script>
     const swalCombineElement = document.querySelector('#sweet_combine');
     if (swalCombineElement) {
-        swalCombineElement.addEventListener('click', function () {
+        swalCombineElement.addEventListener('click', function() {
             Swal.fire({
                 title: 'Logout Confirmation',
                 text: 'Are you sure you want to logout now?',
@@ -193,7 +196,7 @@
                     confirmButton: 'btn btn-primary px-4 py-2 me-2',
                     cancelButton: 'btn btn-outline-secondary px-4 py-2'
                 }
-            }).then(function (result) {
+            }).then(function(result) {
                 if (result.isConfirmed) {
                     document.getElementById('logoutForm').submit();
                 }
@@ -201,6 +204,24 @@
             });
         });
     }
+</script>
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        fetch("http://localhost:8090/api/auth/refresh-permission", {
+                headers: {
+                    'Authorization': 'Bearer {{ auth()->user()?->token() ?? '' }}',
+                    'Accept': 'application/json'
+                }
+            })
+
+            .then(response => response.json())
+            .then(data => {
+                console.log('Permission refreshed:', data);
+            })
+            .catch(error => {
+                console.error('Failed to refresh permission:', error);
+            });
+    });
 </script>
 @stack('js')
 

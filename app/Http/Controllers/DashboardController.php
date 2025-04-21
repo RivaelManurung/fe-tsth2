@@ -19,6 +19,8 @@ class DashboardController extends Controller
         $users = User::count();
         $gudangs = Gudang::count();
 
+
+
         return view('frontend.dashboard', compact('barangs', 'jenisbarangs', 'satuans', 'users', 'gudangs'));
     }
 }

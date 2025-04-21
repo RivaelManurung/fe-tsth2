@@ -114,45 +114,47 @@ document.addEventListener('DOMContentLoaded', () => {
                 document.getElementById('reader').style.borderColor = 'green';
                 document.getElementById('product-code').value = decodedText;
 
+                // Delay of 1 second before performing further actions
                 setTimeout(() => {
                     document.getElementById('reader').style.borderColor = '#ccc';
                     isScanningAllowed = true;
-                }, 1500);
 
-                fetch(`/barcode/check?kode=${decodedText}`)
-                    .then(res => res.json())
-                    .then(data => {
-                        if (!data || !data.barang_nama || !data.barang_kode) {
-                            alert("Barang tidak ditemukan.");
-                            return;
-                        }
+                    // Proceed with the fetch request after the delay
+                    fetch(`/barcode/check?kode=${decodedText}`)
+                        .then(res => res.json())
+                        .then(data => {
+                            if (!data || !data.barang_nama || !data.barang_kode) {
+                                alert("Barang tidak ditemukan.");
+                                return;
+                            }
 
-                        let existingRow = Array.from(tableBody.querySelectorAll('tr')).find(
-                            row => row.dataset.kode === data.barang_kode
-                        );
+                            let existingRow = Array.from(tableBody.querySelectorAll('tr')).find(
+                                row => row.dataset.kode === data.barang_kode
+                            );
 
-                        if (existingRow) {
-                            const qtyElem = existingRow.querySelector('.item-qty');
-                            qtyElem.textContent = parseInt(qtyElem.textContent) + 1;
-                        } else {
-                            const rowCount = tableBody.rows.length + 1;
-                            const row = document.createElement('tr');
-                            row.dataset.kode = data.barang_kode;
-                            row.innerHTML = `
-                                <td>${rowCount}</td>
-                                <td class="item-name text-success fw-semibold">${data.barang_nama}</td>
-                                <td class="item-qty">1</td>
-                                <td>
-                                    <button class="btn btn-sm btn-danger" onclick="this.closest('tr').remove(); updateRowNumbers();">Hapus</button>
-                                </td>
-                            `;
-                            tableBody.appendChild(row);
-                        }
-                    })
-                    .catch((err) => {
-                        console.error("Fetch error:", err);
-                        alert("Terjadi kesalahan saat mengambil data barang.");
-                    });
+                            if (existingRow) {
+                                const qtyElem = existingRow.querySelector('.item-qty');
+                                qtyElem.textContent = parseInt(qtyElem.textContent) + 1;
+                            } else {
+                                const rowCount = tableBody.rows.length + 1;
+                                const row = document.createElement('tr');
+                                row.dataset.kode = data.barang_kode;
+                                row.innerHTML = `
+                                    <td>${rowCount}</td>
+                                    <td class="item-name text-success fw-semibold">${data.barang_nama}</td>
+                                    <td class="item-qty">1</td>
+                                    <td>
+                                        <button class="btn btn-sm btn-danger" onclick="this.closest('tr').remove(); updateRowNumbers();">Hapus</button>
+                                    </td>
+                                `;
+                                tableBody.appendChild(row);
+                            }
+                        })
+                        .catch((err) => {
+                            console.error("Fetch error:", err);
+                            alert("Terjadi kesalahan saat mengambil data barang.");
+                        });
+                }, 1000); // 1 second delay before executing the rest
             },
             (err) => {
                 // ignore scan errors
