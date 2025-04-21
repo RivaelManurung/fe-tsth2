@@ -42,7 +42,7 @@ Route::middleware('auth.session')->group(function () {
     Route::resource('gudangs', GudangController::class)->middleware('check.permission:view_gudang');
     Route::resource('jenis-barangs', JenisBarangController::class)->middleware('check.permission:view_jenis_barang');
     Route::resource('barang-categories', BarangCategoryController::class)->middleware('check.permission:view_category_barang');
-    Route::resource('transaction-types', TransactionTypeController::class)->middleware('check.permission:view_transaction_type');
+    Route::resource('transaction-types', TransactionTypeController::class);
     Route::resource('roles', RoleController::class)->middleware('check.permission:view_role');
     Route::resource('users', UserController::class)->middleware('check.permission:view_user');
     Route::get('transactions', [TransactionController::class, 'index'])->name('transactions.index');
