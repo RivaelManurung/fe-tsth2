@@ -43,50 +43,6 @@
                     <i class="ph-squares-four"></i>
                     <span>Master Data</span>
                 </a>
-                {{-- <ul class="nav-group-sub collapse">
-                    <li class="nav-item">
-                        <a href="{{ route('barangs.index') }}"
-                            class="nav-link {{ request()->routeIs('barangs.*') ? 'active' : '' }}">
-                            Barang
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a href="{{ route('satuans.index') }}"
-                            class="nav-link {{ request()->routeIs('satuans.*') ? 'active' : '' }}">
-                            Satuan
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a href="{{ route('jenis-barangs.index') }}"
-                            class="nav-link {{ request()->routeIs('jenis-barangs.*') ? 'active' : '' }}">
-                            Jenis Barang
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a href="{{ route('barang-categories.index') }}"
-                            class="nav-link {{ request()->routeIs('barang-categories.*') ? 'active' : '' }}">
-                            Kategori Barang
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a href="{{ route('gudangs.index') }}"
-                            class="nav-link {{ request()->routeIs('gudangs.*') ? 'active' : '' }}">
-                            Gudang
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a href="{{ route('transaction-types.index') }}"
-                            class="nav-link {{ request()->routeIs('transaction-types.*') ? 'active' : '' }}">
-                            Jenis Transaksi
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a href="../../layout_7/full/index.html"
-                            class="nav-link {{ request()->is('status') ? 'active' : '' }}">
-                            Status
-                        </a>
-                    </li>
-                </ul> --}}
                 <ul
                     class="nav-group-sub collapse {{ request()->routeIs(
                         'barangs.*',
