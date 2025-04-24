@@ -44,7 +44,7 @@
             <div class="card bg-pink text-white">
                 <div class="card-body">
                     <div class="d-flex align-items-center">
-                        <h3 class="mb-10">0</h3>
+                        <h3 class="mb-10">{{$transaksis}}</h3>
                         <div class="dropdown d-inline-flex ms-auto">
                             <a href="#" class="text-white d-inline-flex align-items-center dropdown-toggle"
                                 data-bs-toggle="dropdown">
@@ -122,11 +122,11 @@
             <div class="card bg-teal text-white">
                 <div class="card-body">
                     <div class="d-flex">
-                        <h3 class="mb-10">{{ $gudangs }}</h3>
+                        <h3 class="mb-10">{{$roles}}</h3>
                     </div>
 
                     <div>
-                        Status
+                        Role
                     </div>
                 </div>
             </div>

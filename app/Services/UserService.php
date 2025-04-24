@@ -33,6 +33,23 @@ class UserService
         return $this->withToken()->get("{$this->apiBaseUrl}/users");
     }
 
+    public function count(){
+        $response = $this->withToken()->get("{$this->apiBaseUrl}/users");
+        $json = $response->json();
+
+        // Kalau response bentuknya { "status": true, "data": [...] }
+        if (isset($json['data']) && is_array($json['data'])) {
+            return count($json['data']);
+        }
+
+        // Kalau response langsung berupa array tanpa wrapper
+        if (is_array($json)) {
+            return count($json);
+        }
+
+        return 0;
+    }
+
     public function createUser($data)
     {
         return $this->withToken()->post("{$this->apiBaseUrl}/users", $data);

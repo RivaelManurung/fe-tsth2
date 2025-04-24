@@ -27,6 +27,17 @@ class TransactionService
         return collect();
     }
 
+    public function countTransaksi()
+    {
+        $token = session('token');
+        $response = $this->transactionRepository->getAll($token);
+
+        if ($response->successful()) {
+            return count(collect($response->json('data')));
+        }
+
+        return collect();
+    }
     public function checkAndAddBarang(string $kode, string $token, Session $session): ?array
     {
         $response = $this->transactionRepository->checkBarcode($token, $kode);
