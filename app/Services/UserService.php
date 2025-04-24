@@ -43,6 +43,10 @@ class UserService
         return $this->withToken()->get("{$this->apiBaseUrl}/users/{$id}");
     }
 
+    public function getuserbyid($id)
+    {
+        return $this->withToken()->get("{$this->apiBaseUrl}/users/{$id}");
+    }
 
     public function deleteUser($id)
     {

@@ -3,32 +3,30 @@
 @section('content')
     @include('components.flash-message')
 
-    <div class="d-flex justify-content-between mb-3">
-        <h4></h4>
-        <div>
-            <a href="{{ route('barang.refresh-qrcodes') }}" class="btn btn-secondary btn-labeled btn-labeled-start mb-2 me-2">
-                <span class="btn-labeled-icon bg-black bg-opacity-20">
-                    <i class="icon-sync"></i>
-                </span> Refresh QR Code
-            </a>
-            @can('create_barang')
-
-            <button type="button" class="btn btn-primary btn-labeled btn-labeled-start mb-2" data-bs-toggle="modal"
+<div class="d-flex justify-content-between mb-3 flex-wrap">
+    <h4></h4>
+    <div class="d-flex gap-2 flex-wrap">
+        <a href="{{ route('barang.refresh-qrcodes') }}" class="btn btn-secondary btn-labeled btn-labeled-start btn-sm w-100 w-sm-auto mb-2 mb-sm-0">
+            <span class="btn-labeled-icon bg-black bg-opacity-20">
+                <i class="icon-sync"></i>
+            </span> Refresh QR Code
+        </a>
+        @can('create_barang')
+        <button type="button" class="btn btn-primary btn-labeled btn-labeled-start btn-sm w-100 w-sm-auto mb-2 mb-sm-0" data-bs-toggle="modal"
             data-bs-target="#modalCreateBarang">
             <span class="btn-labeled-icon bg-black bg-opacity-20">
                 <i class="icon-database-add"></i>
             </span> Tambah Satuan Barang
         </button>
-
         @endcan
-            <a href="{{ route('barangs.exportPDFALL') }}" class="btn btn-danger btn-labeled btn-labeled-start mb-2" target="_blank">
-                <span class="btn-labeled-icon bg-black bg-opacity-20">
-                    <i class="icon-printer2"></i>
-                </span> Cetak
-            </a>
-                </div>
-
+        <a href="{{ route('barangs.exportPDFALL') }}" class="btn btn-danger btn-labeled btn-labeled-start btn-sm w-100 w-sm-auto mb-2 mb-sm-0" target="_blank">
+            <span class="btn-labeled-icon bg-black bg-opacity-20">
+                <i class="icon-printer2"></i>
+            </span> Cetak Semua QR-Code
+        </a>
     </div>
+</div>
+
 
     <div class="card">
         <div class="card-header">
@@ -79,7 +77,7 @@
                                     <div class="d-flex flex-column align-items-start text-start">
                                         <img src="{{ $qrCodeUrl }}" width="80" height="80" class="mb-2"
                                             alt="QR Code">
-                                            <button type="button" class="btn btn-sm btn-danger btn-labeled" style="width: 80px;"
+                                            <button type="button" class="btn btn-sm btn-danger btn-labeled " style="width: 80px;"
                                             data-bs-toggle="modal" data-bs-target="#modalprintBarang{{ $barang['id'] }}">
                                             <i class="ph-printer me-1"></i> Print
                                         </button>

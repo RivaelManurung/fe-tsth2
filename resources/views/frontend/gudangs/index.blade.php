@@ -5,12 +5,15 @@
         @include('components.flash-message')
         <div class="d-flex justify-content-between mb-3">
             <h4></h4>
+            @can('create_gudang')
+
             <button type="button" class="btn btn-primary btn-labeled btn-labeled-start mb-2" data-bs-toggle="modal"
                 data-bs-target="#createGudangModal">
                 <span class="btn-labeled-icon bg-black bg-opacity-20">
                     <i class="icon-database-add"></i>
                 </span> Tambah Gudang
             </button>
+            @endcan
         </div>
 
         <div class="card">
@@ -60,9 +63,9 @@
             </table>
         </div>
     </div>
-
+    @can('create_gudang')
     @include('frontend.gudangs.create-modal')
-
+    @endcan
     @foreach ($gudangs as $gudang)
         @include('frontend.gudangs.detail-modal', ['gudang' => $gudang])
         @include('frontend.gudangs.edit-modal', ['gudang' => $gudang])

@@ -39,6 +39,7 @@ class TransactionController extends Controller
 
     public function form(Request $request)
     {
+        // dd($request->Session());
         $token = $request->session()->get('token');
         $daftarBarang = $request->session()->get('daftar_barang', []);
         $transactionTypes = $this->service->all($token);

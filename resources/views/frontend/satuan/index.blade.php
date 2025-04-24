@@ -3,9 +3,9 @@
 @section('content')
     <div class="container-fluid">
         @include('components.flash-message')
-        <div class="d-flex justify-content-between mb-3">
+        <div class="d-flex justify-content-between mb-3 flex-wrap">
             <h4></h4>
-            <button type="button" class="btn btn-primary btn-labeled btn-labeled-start mb-2" data-bs-toggle="modal"
+            <button type="button" class="btn btn-primary btn-labeled btn-labeled-start mb-2 btn-sm w-100 w-sm-auto mb-2 mb-sm-0" data-bs-toggle="modal"
                 data-bs-target="#createSatuanModal">
                 <span class="btn-labeled-icon bg-black bg-opacity-20">
                     <i class="icon-database-add"></i>

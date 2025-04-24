@@ -1,122 +1,65 @@
-<!DOCTYPE html>
-<html lang="en" dir="ltr">
-
-<head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <title>Limitless - Responsive Web Application Kit by Eugene Kopyov</title>
-
-    <!-- Global stylesheets -->
-    <link href="{{ asset('template/assets/fonts/inter/inter.css') }}" rel="stylesheet" type="text/css">
-    <link href="{{ asset('template/assets/icons/phosphor/styles.min.css') }}" rel="stylesheet" type="text/css">
-    <link href="{{ asset('assets/css/ltr/all.min.css') }}" id="stylesheet" rel="stylesheet" type="text/css">
-
-    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet">
-
-    <!-- /global stylesheets -->
-
-    <!-- Core JS files -->
-    <script src="{{ asset('template/assets/demo/demo_configurator.js') }}"></script>
-    <script src="{{ asset('template/assets/js/bootstrap/bootstrap.bundle.min.js') }}"></script>
-    <!-- /core JS files -->
-
-    <!-- Theme JS files -->
-    <script src="{{ asset('template/assets/js/vendor/visualization/d3/d3.min.js') }}"></script>
-    <script src="{{ asset('template/assets/js/vendor/visualization/d3/d3_tooltip.js') }}"></script>
-
-    <script src="{{ asset('assets/js/app.js') }}"></script>
-    <script src="{{ asset('template/assets/demo/pages/dashboard.js') }}"></script>
-    <script src="{{ asset('template/assets/demo/charts/pages/dashboard/streamgraph.js') }}"></script>
-    <script src="{{ asset('template/assets/demo/charts/pages/dashboard/sparklines.js') }}"></script>
-    <script src="{{ asset('template/assets/demo/charts/pages/dashboard/lines.js') }}"></script>
-    <script src="{{ asset('template/assets/demo/charts/pages/dashboard/areas.js') }}"></script>
-    <script src="{{ asset('template/assets/demo/charts/pages/dashboard/donuts.js') }}"></script>
-    <script src="{{ asset('template/assets/demo/charts/pages/dashboard/bars.js') }}"></script>
-    <script src="{{ asset('template/assets/demo/charts/pages/dashboard/progress.js') }}"></script>
-    <script src="{{ asset('template/assets/demo/charts/pages/dashboard/heatmaps.js') }}"></script>
-    <script src="{{ asset('template/assets/demo/charts/pages/dashboard/pies.js') }}"></script>
-    <script src="{{ asset('template/assets/demo/data/dashboard/bullets.json') }}"></script>
-    <!-- /theme JS files -->
-
-</head>
-
-<body>
-
-    <!-- Main navbar -->
-    @include('layouts.navbar')
-
-    <!-- /main navbar -->
-
-
-    <!-- Page content -->
-    <div class="page-content">
-
-        <!-- Main sidebar -->
-        <div class="sidebar sidebar-dark sidebar-main sidebar-expand-lg">
-
-            <!-- Sidebar content -->
-            @include('layouts.sidebar')
-
-            <!-- /sidebar content -->
-
-        </div>
-        <!-- /main sidebar -->
-
-
-        <!-- Main content -->
-        <div class="content-wrapper">
-
-            <!-- Inner content -->
-            <div class="content-inner">
-
-
-                <!-- Content area -->
-                <div class="content">
-
-                    <!-- Main charts -->
-                    <div class="row">
-                        <div class="col-xl-5">
-
-
-                        </div>
-                    </div>
-                    <!-- /main charts -->
-
-                    <!-- Dashboard content -->
-                    @include('layouts.dashboard_content')
-
-                    <!-- /dashboard content -->
-
-                </div>
-                <!-- /content area -->
-
-                <!-- Footer -->
-                @include('layouts.footer')
-
-                <!-- /footer -->
-
-            </div>
-            <!-- /inner content -->
-
-        </div>
-        <!-- /main content -->
-
+@extends('frontend.profile.layout.template')
+@section('contentprofile')
+<!-- Right Side -->
+<div class="col-md-12">
+  <div class="profile-card p-4 card">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+      <h5 class="text-muted  mb-0">Informasi Profil</h5>
     </div>
-    <!-- /page content -->
+    <div class="row g-3 mb-3">
+      <div class="col-md-12">
+        <label class="form-label text-muted ">Nama</label>
+        <input type="text" class="form-control" value="Carloka Dev" readonly>
+      </div>
+      <div class="col-md-12">
+        <label class="form-label text-muted ">Email</label>
+        <input type="email" class="form-control" value="carloka@email.com" readonly>
+      </div>
+      <div class="col-md-12">
+        <label class="form-label text-muted ">Nomor Telepon</label>
+        <input type="text" class="form-control" value="08123456789" readonly>
+      </div>
+    </div>
+    <div class="text-end">
+      <button class="btn btn-primary btn-flat" data-bs-toggle="modal" data-bs-target="#editInfoModal">
+        <i class="bi bi-pencil-square me-1"></i> Edit Profil
+      </button>
+    </div>
+  </div>
+</div>
 
-
-    <!-- Notifications -->
-    @include('layouts.components.notifications')
-
-    <!-- /notifications -->
-
-
-    <!-- Demo config -->
-    @include('layouts.components.demo_config')
-
-    <!-- /demo config -->
-
-</body>
-
-</html>
+<!-- Modal Update Profile -->
+<div class="modal fade" id="editInfoModal" tabindex="-1">
+  <div class="modal-dialog modal-dialog-centered modal-lg">
+    <div class="modal-content">
+      <form method="POST">
+        @csrf
+        <div class="modal-header">
+          <h5 class="modal-title">Edit Informasi Profil</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+        </div>
+        <div class="modal-body">
+          <div class="row g-3">
+            <div class="col-md-6">
+              <label for="nama" class="form-label">Nama Lengkap</label>
+              <input type="text" class="form-control" id="nama" name="nama" value="{{ session('user')['name'] }}">
+            </div>
+            <div class="col-md-6">
+              <label for="email" class="form-label">Alamat Email</label>
+              <input type="email" class="form-control" id="email" name="email" value="{{ session('user')['email'] }}">
+            </div>
+            <div class="col-md-6">
+              <label for="no_telp" class="form-label">No. Telepon</label>
+              <input type="text" class="form-control" id="no_telp" name="no_telp" value="{{ session('user')['no_telp'] ?? '' }}">
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Batal</button>
+          <button type="submit" class="btn btn-success">Simpan Perubahan</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+@endsection
