@@ -39,8 +39,8 @@
                         <div class="card shadow-lg border-0 rounded-4" style="min-width: 360px;">
                             <div class="card-body p-4">
                                 <div class="text-center mb-4">
-                                    <img src="{{ asset('template/assets/images/logo_icon.svg') }}" class="h-48px mb-2" alt="">
-                                    <h5 class="fw-semibold mb-0">Login to your account</h5>
+                                    <img src="{{ asset('template/assets/images/logo_icon.png') }}" class="h-48px mb-2" alt="">
+                                    <h3 class="fw-semibold mb-0">Login</h3>
                                     <small class="text-muted">Enter your credentials below</small>
                                 </div>
 
@@ -84,6 +84,12 @@
                                             <i id="toggleIcon" class="ph-eye text-muted fs-5"></i>
                                         </button>
                                     </div>
+                                </div>
+
+                                <!-- Remember me -->
+                                <div class="mb-3 form-check">
+                                    <input type="checkbox" class="form-check-input" id="remember" name="remember">
+                                    <label class="form-check-label" for="remember">Remember me</label>
                                 </div>
 
                                 <!-- Submit -->

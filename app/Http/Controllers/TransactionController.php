@@ -34,6 +34,7 @@ class TransactionController extends Controller
     {
         $token = session('token');
         $daftarBarang = Session::get('daftar_barang', []);
+
         $transactionTypes = $this->service->all($token);
 
         return view('frontend.transaksi.create', compact('daftarBarang', 'transactionTypes'));

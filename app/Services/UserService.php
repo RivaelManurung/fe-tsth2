@@ -28,9 +28,15 @@ class UserService
         return $this->userRepository->create($data);
     }
 
+<<<<<<< HEAD
     public function updateUser(array $data, $id)
     {
         return $this->userRepository->update($data, $id);
+=======
+    public function getuserbyid($id)
+    {
+        return $this->withToken()->get("{$this->apiBaseUrl}/users/{$id}");
+>>>>>>> bf198d4516aa8169c1efc5b219024782583fc4bc
     }
 
     public function deleteUser($id)

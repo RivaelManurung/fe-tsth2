@@ -66,9 +66,9 @@
             </table>
         </div>
     </div>
-
-    @include('frontend.gudangs.create-modal')
-
+    @can('create_gudang')
+        @include('frontend.gudangs.create-modal')
+    @endcan
     @foreach ($gudangs as $gudang)
         @include('frontend.gudangs.detail-modal', ['gudang' => $gudang])
         @include('frontend.gudangs.edit-modal', ['gudang' => $gudang])

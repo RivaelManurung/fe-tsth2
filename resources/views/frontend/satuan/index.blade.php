@@ -4,7 +4,7 @@
     <div class="container-fluid">
         @include('components.flash-message')
         <div class="d-flex justify-content-between mb-3">
-            <h4>Data Satuan</h4>
+            <h4>Data Satuan Barang</h4>
             @can('create_satuan')
                 <button type="button" class="btn btn-primary btn-labeled btn-labeled-start mb-2" data-bs-toggle="modal"
                     data-bs-target="#createSatuanModal">

@@ -3,9 +3,9 @@
 @section('content')
     @include('components.flash-message')
 
-    <div class="d-flex justify-content-between mb-3">
+    <div class="d-flex justify-content-between mb-3 flex-wrap">
         <h4>Data Barang</h4>
-        <div>
+        <div class="d-flex gap-2 flex-wrap">
             <a href="{{ route('barang.refresh-qrcodes') }}" class="btn btn-secondary btn-labeled btn-labeled-start mb-2 me-2">
                 <span class="btn-labeled-icon bg-black bg-opacity-20">
                     <i class="icon-sync"></i>
@@ -26,8 +26,8 @@
                 </span> Cetak
             </a>
         </div>
-
     </div>
+
 
     <div class="card">
         <div class="card-header">
@@ -84,7 +84,6 @@
                                             data-bs-target="#modalprintBarang{{ $barang['id'] }}">
                                             <i class="ph-printer me-1"></i> Print
                                         </button>
-
                                     </div>
                                 @else
                                     <span class="text-muted">Tidak tersedia</span>

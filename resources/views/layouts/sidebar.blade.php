@@ -84,11 +84,20 @@
             </li>
             @endcan
 
-            <li class="nav-item">
+            <li class="nav-item nav-item-submenu">
+
                 <a href="#" class="nav-link">
-                    <i class="ph-printer"></i>
+                    <i class="mi-settings"></i>
                     <span>Laporan</span>
                 </a>
+                <ul class="nav-group-sub collapse">
+                    <li class="nav-item">
+                        <a href="{{route('laporan.transaksi')}}" class="nav-link">Laporan Transaksi</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="{{route('laporan.stok')}}" class="nav-link">Laporan Stok Barang</a>
+                    </li>
+                </ul>
             </li>
 
             <!-- Settings -->
@@ -127,17 +136,12 @@
             </li>
             @endcan
             <li class="nav-item">
-                <a href="#" class="nav-link">
+                <a href="{{route('webs.index')}}" class="nav-link">
                     <i class="ph-desktop"></i>
                     <span>Web</span>
                 </a>
             </li>
-            <li class="nav-item">
-                <a href="#" class="nav-link">
-                    <i class="mi-power-settings-new"></i>
-                    <span>Logout</span>
-                </a>
-            </li>
+
             <!-- /forms -->
         </ul>
     </div>

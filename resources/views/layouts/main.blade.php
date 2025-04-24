@@ -23,8 +23,8 @@
     <!-- /core JS files -->
 
     <!-- Theme JS files -->
-    <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.min.js"></script>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.min.js"></script>
     <script src="{{ asset('template/assets/js/vendor/notifications/noty.min.js') }}"></script>
     {{-- <script src="{{asset('template/assets/demo/pages/extra_sweetalert.js')}}"></script> --}}
     <script src="{{ asset('template/assets/js/vendor/notifications/sweet_alert.min.js') }}"></script>
@@ -39,8 +39,8 @@
 
     <link href="{{ asset('template/assets/icons/icomoon/styles.min.css') }}" rel="stylesheet" type="text/css">
     <link href="{{ asset('template/assets/icons/material/styles.min.css') }}" rel="stylesheet" type="text/css">
-    <script src="{{ asset('template/assets/js/vendor/visualization/d3/d3.min.js') }}"></script>
-    <script src="{{ asset('template/assets/js/vendor/visualization/d3/d3_tooltip.js') }}"></script>
+    {{-- <script src="{{ asset('template/assets/js/vendor/visualization/d3/d3.min.js') }}"></script> --}}
+    {{-- <script src="{{ asset('template/assets/js/vendor/visualization/d3/d3_tooltip.js') }}"></script> --}}
     <script src="{{ asset('template/assets/js/vendor/ui/fullcalendar/main.min.js') }}"></script>
     <script src="{{ asset('template/assets/demo/pages/datatables_extension_key_table.js') }}"></script>
     <script src="{{ asset('template/assets/js/vendor/tables/datatables/extensions/key_table.min.js') }}"></script>
@@ -49,14 +49,14 @@
     <script src="{{ asset('assets/js/app.js') }}"></script>
     <script src="{{ asset('template/assets/demo/pages/dashboard.js') }}"></script>
     <script src="{{ asset('template/assets/demo/charts/pages/dashboard/streamgraph.js') }}"></script>
-    <script src="{{ asset('template/assets/demo/charts/pages/dashboard/sparklines.js') }}"></script>
-    <script src="{{ asset('template/assets/demo/charts/pages/dashboard/lines.js') }}"></script>
-    <script src="{{ asset('template/assets/demo/charts/pages/dashboard/areas.js') }}"></script>
-    <script src="{{ asset('template/assets/demo/charts/pages/dashboard/donuts.js') }}"></script>
-    <script src="{{ asset('template/assets/demo/charts/pages/dashboard/bars.js') }}"></script>
+    {{-- <script src="{{ asset('template/assets/demo/charts/pages/dashboard/sparklines.js') }}"></script> --}}
+    {{-- <script src="{{ asset('template/assets/demo/charts/pages/dashboard/lines.js') }}"></script> --}}
+    {{-- <script src="{{ asset('template/assets/demo/charts/pages/dashboard/areas.js') }}"></script> --}}
+    {{-- <script src="{{ asset('template/assets/demo/charts/pages/dashboard/donuts.js') }}"></script> --}}
+    {{-- <script src="{{ asset('template/assets/demo/charts/pages/dashboard/bars.js') }}"></script> --}}
     <script src="{{ asset('template/assets/demo/charts/pages/dashboard/progress.js') }}"></script>
     <script src="{{ asset('template/assets/demo/charts/pages/dashboard/heatmaps.js') }}"></script>
-    <script src="{{ asset('template/assets/demo/charts/pages/dashboard/pies.js') }}"></script>
+    {{-- <script src="{{ asset('template/assets/demo/charts/pages/dashboard/pies.js') }}"></script> --}}
     <script src="{{ asset('template/assets/demo/data/dashboard/bullets.json') }}"></script>
     <!-- /theme JS files -->
     <script src="https://cdn.jsdelivr.net/npm/parsleyjs@2.9.3/dist/parsley.min.js"></script>
