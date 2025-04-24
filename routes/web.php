@@ -46,7 +46,7 @@ Route::middleware('auth.session')->group(function () {
     Route::get('laporan-transaksi', [LaporanController::class, 'laporanTrans'])->name('laporan.transaksi');
     Route::get('laporan-transaksi/export-pdf', [LaporanController::class, 'exportPDF'])->name('laporan.transaksi.exportPDF');
 
-    Route::get('laporan-stok',[LaporanController::class, 'laporanStok'])->name('laporan.stok');
+    Route::get('laporan-stok', [LaporanController::class, 'laporanStok'])->name('laporan.stok');
 
 
     Route::resource('barangs', BarangController::class);
@@ -73,21 +73,19 @@ Route::middleware('auth.session')->group(function () {
     Route::resource('transaction-types', TransactionTypeController::class);
     Route::resource('roles', RoleController::class)->middleware('check.permission:view_role');
     Route::resource('users', UserController::class)->middleware('check.permission:view_user');
+
+    Route::resource('transactions', TransactionController::class);
     Route::resource('webs', WebController::class);
-    Route::get('transactions', [TransactionController::class, 'index'])->name('transactions.index');
-    Route::post('/transaksi/store', [TransactionController::class, 'store'])->name('transaksi.store');
-    Route::get('transactions/scan', [TransactionController::class, 'form'])->name('transactions.tambah');
-    Route::post('/barcode/check', [TransactionController::class, 'check'])->name('barcode.check');
-    Route::get('/barcode/reset', [TransactionController::class, 'reset'])->name('barcode.reset');
-    Route::post('/barcode/remove', [TransactionController::class, 'remove'])->name('barcode.remove');
 
+    Route::post('/kode-barang/check', [TransactionController::class, 'check'])->name('kode_barang.check');
+    Route::get('/kode-barang/reset', [TransactionController::class, 'reset'])->name('kode_barang.reset');
+    Route::post('/kode-barang/remove', [TransactionController::class, 'remove'])->name('kode_barang.remove');
 
-Route::get('/select-role', [PermissionController::class, 'selectRole'])->name('permissions.index');
-Route::get('select-role/permissions', [PermissionController::class, 'show'])->name('permissions.show');
-Route::post('/permissions/toggle', [PermissionController::class, 'toggle'])->name('permissions.toggle');
+    Route::get('/select-role', [PermissionController::class, 'selectRole'])->name('permissions.index');
+    Route::get('select-role/permissions', [PermissionController::class, 'show'])->name('permissions.show');
+    Route::post('/permissions/toggle', [PermissionController::class, 'toggle'])->name('permissions.toggle');
 });
 
 Route::get('/error', function () {
     return view('error.error');
 })->name('error');
-

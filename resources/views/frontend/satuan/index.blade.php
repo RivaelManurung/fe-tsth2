@@ -3,14 +3,16 @@
 @section('content')
     <div class="container-fluid">
         @include('components.flash-message')
-        <div class="d-flex justify-content-between mb-3 flex-wrap">
-            <h4></h4>
-            <button type="button" class="btn btn-primary btn-labeled btn-labeled-start mb-2 btn-sm w-100 w-sm-auto mb-2 mb-sm-0" data-bs-toggle="modal"
-                data-bs-target="#createSatuanModal">
-                <span class="btn-labeled-icon bg-black bg-opacity-20">
-                    <i class="icon-database-add"></i>
-                </span> Tambah Satuan Barang
-            </button>
+        <div class="d-flex justify-content-between mb-3">
+            <h4>Data Satuan Barang</h4>
+            @can('create_satuan')
+                <button type="button" class="btn btn-primary btn-labeled btn-labeled-start mb-2" data-bs-toggle="modal"
+                    data-bs-target="#createSatuanModal">
+                    <span class="btn-labeled-icon bg-black bg-opacity-20">
+                        <i class="icon-database-add"></i>
+                    </span> Tambah Satuan Barang
+                </button>
+            @endcan
         </div>
 
 
@@ -36,18 +38,24 @@
                             <td>{{ $satuan['description'] ?? '-' }}</td>
                             <td>
                                 <div class="d-inline-flex">
-                                    <a href="#" class="text-info me-2" data-bs-toggle="modal"
-                                        data-bs-target="#detailSatuanModal{{ $satuan['id'] }}">
-                                        <i class="ph-eye"></i>
-                                    </a>
+                                    @can('view_satuan')
+                                        <a href="#" class="text-info me-2" data-bs-toggle="modal"
+                                            data-bs-target="#detailSatuanModal{{ $satuan['id'] }}">
+                                            <i class="ph-eye"></i>
+                                        </a>
+                                    @endcan
+                                    {{-- @can('update_satuan') --}}
                                     <a href="#" class="text-warning me-2" data-bs-toggle="modal"
                                         data-bs-target="#editSatuanModal{{ $satuan['id'] }}">
                                         <i class="ph-pencil"></i>
                                     </a>
-                                    <a href="#" class="text-danger" data-bs-toggle="modal"
-                                        data-bs-target="#deleteSatuanModal{{ $satuan['id'] }}">
-                                        <i class="ph-trash"></i>
-                                    </a>
+                                    {{-- @endcan --}}
+                                    @can('delete_satuan')
+                                        <a href="#" class="text-danger" data-bs-toggle="modal"
+                                            data-bs-target="#deleteSatuanModal{{ $satuan['id'] }}">
+                                            <i class="ph-trash"></i>
+                                        </a>
+                                    @endcan
                                 </div>
                             </td>
                         </tr>

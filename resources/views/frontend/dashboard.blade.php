@@ -22,6 +22,8 @@
         </div>
 
 
+        @can('view_jenis_barang')
+
         <div class="col-lg-3">
             <!-- Members online -->
             <div class="card bg-teal text-white">
@@ -38,6 +40,7 @@
             <!-- /members online -->
 
         </div>
+        @endcan
 
         <div class="col-lg-3">
             <!-- Current server load -->
@@ -71,10 +74,11 @@
 
         </div>
 
-        <div class="col-lg-3">
-            <!-- Members online -->
-            <div class="card bg-teal text-white">
-                <div class="card-body">
+@can('view_satuan')
+<div class="col-lg-3">
+    <!-- Members online -->
+    <div class="card bg-teal text-white">
+        <div class="card-body">
                     <div class="d-flex">
                         <h3 class="mb-10">{{ $satuans }}</h3>
                     </div>
@@ -86,6 +90,9 @@
             </div>
             <!-- /members online -->
         </div>
+        @endcan
+
+        @can('view_user')
 
         <div class="col-lg-3">
             <!-- Members nline -->
@@ -102,11 +109,13 @@
             </div>
             <!-- /members online -->
         </div>
+        @endcan
+ @can('view_gudang')
 
-        <div class="col-lg-3">
-            <!-- Members online -->
-            <div class="card bg-teal text-white">
-                <div class="card-body">
+ <div class="col-lg-3">
+     <!-- Members online -->
+     <div class="card bg-teal text-white">
+         <div class="card-body">
                     <div class="d-flex">
                         <h3 class="mb-10">{{ $gudangs }}</h3>
                     </div>
@@ -117,6 +126,9 @@
                 </div>
             </div>
         </div>
+        @endcan
+        @can('view_role')
+
         <div class="col-lg-3">
             <!-- Members online -->
             <div class="card bg-teal text-white">
@@ -131,12 +143,14 @@
                 </div>
             </div>
         </div>
+        @endcan
+        @can('view_transaction_type')
         <div class="col-lg-3">
             <!-- Members online -->
             <div class="card bg-teal text-white">
                 <div class="card-body">
                     <div class="d-flex">
-                        <h3 class="mb-10">{{ $gudangs }}</h3>
+                        <h3 class="mb-10">{{ $transactionType }}</h3>
                     </div>
 
                     <div>
@@ -145,6 +159,24 @@
                 </div>
             </div>
         </div>
+        @endcan
+        @can('view_category_barang')
+        <div class="col-lg-3">
+            <!-- Members online -->
+            <div class="card bg-teal text-white">
+                <div class="card-body">
+                    <div class="d-flex">
+                        <h3 class="mb-10">{{ $barang_category }}</h3>
+                    </div>
+
+                    <div>
+                        Kategori Barang
+                    </div>
+                </div>
+            </div>
+        </div>
+        @endcan
+
 
         <div class="row">
             <div class="col-xl-8">

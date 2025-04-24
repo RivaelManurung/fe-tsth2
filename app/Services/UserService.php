@@ -2,71 +2,45 @@
 
 namespace App\Services;
 
-use Illuminate\Support\Facades\Http;
-namespace App\Services;
-
-use Illuminate\Support\Facades\Http;
+use App\Repositories\UserRepository;
 
 class UserService
 {
-    protected $apiBaseUrl;
-    protected $token;
+    protected $userRepository;
 
-    public function __construct()
+    public function __construct(UserRepository $userRepository)
     {
-        $this->apiBaseUrl = config('api.base_url');
-        $this->token = session('token');
+        $this->userRepository = $userRepository;
     }
 
-    protected function withToken()
-    {
-        return Http::withToken($this->token);
-    }
-
-    public function getRoles()
-{
-    return $this->withToken()->get("{$this->apiBaseUrl}/roles");
-}
 
     public function getAllUsers()
     {
-        return $this->withToken()->get("{$this->apiBaseUrl}/users");
+        return $this->userRepository->all();
     }
 
     public function count(){
-        $response = $this->withToken()->get("{$this->apiBaseUrl}/users");
-        $json = $response->json();
-
-        // Kalau response bentuknya { "status": true, "data": [...] }
-        if (isset($json['data']) && is_array($json['data'])) {
-            return count($json['data']);
-        }
-
-        // Kalau response langsung berupa array tanpa wrapper
-        if (is_array($json)) {
-            return count($json);
-        }
-
-        return 0;
+        return $this->userRepository->count();
     }
 
-    public function createUser($data)
+    public function getUserById($id)
     {
-        return $this->withToken()->post("{$this->apiBaseUrl}/users", $data);
+        return $this->userRepository->find($id);
     }
 
-    public function getUser($id)
+    public function createUser(array $data)
     {
-        return $this->withToken()->get("{$this->apiBaseUrl}/users/{$id}");
+        return $this->userRepository->create($data);
     }
 
-    public function getuserbyid($id)
+    public function updateUser(array $data, $id)
     {
-        return $this->withToken()->get("{$this->apiBaseUrl}/users/{$id}");
+        return $this->userRepository->update($data, $id);
+
     }
 
     public function deleteUser($id)
     {
-        return $this->withToken()->delete("{$this->apiBaseUrl}/users/{$id}");
+        return $this->userRepository->delete($id);
     }
 }

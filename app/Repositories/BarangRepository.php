@@ -28,27 +28,9 @@ class BarangRepository
         return Http::withToken($token)->post($this->baseUrl, $data)->json();
     }
 
-
     public function update($id, array $data, $token)
     {
-        $response = Http::withToken($token)
-            ->put("{$this->baseUrl}/{$id}", $data);
-
-        logger()->info('Payload update:', $data);
-        logger()->info('Response update:', [
-            'status' => $response->status(),
-            'body' => $response->body()
-        ]);
-
-        if ($response->successful()) {
-            return $response->json();
-        }
-
-        return [
-            'error' => true,
-            'status' => $response->status(),
-            'message' => $response->body()
-        ];
+        return Http::withToken($token)->put("{$this->baseUrl}/{$id}", $data)->json();
     }
 
 
@@ -71,30 +53,30 @@ class BarangRepository
     }
 
     public function exportQRCodePDF($id, $jumlah, $token)
-{
-    $url = "{$this->baseUrl}/export-pdf/{$id}?jumlah={$jumlah}";
+    {
+        $url = "{$this->baseUrl}/export-pdf/{$id}?jumlah={$jumlah}";
 
-    $response = Http::withToken($token)->get($url);
+        $response = Http::withToken($token)->get($url);
 
-    logger()->info('Export QR PDF Response:', [
-        'status' => $response->status(),
-        'body' => $response->body()
-    ]);
+        logger()->info('Export QR PDF Response:', [
+            'status' => $response->status(),
+            'body' => $response->body()
+        ]);
 
-    return $response->json();
-}
+        return $response->json();
+    }
 
-public function exportQRCodePDFAll($token)
-{
-    $url = config('api.base_url') . '/export-pdf';
+    public function exportQRCodePDFAll($token)
+    {
+        $url = config('api.base_url') . '/export-pdf';
 
-    $response = Http::withToken($token)->get($url);
+        $response = Http::withToken($token)->get($url);
 
-    logger()->info('Export All QR PDF Response:', [
-        'status' => $response->status(),
-        'body' => $response->body()
-    ]);
+        logger()->info('Export All QR PDF Response:', [
+            'status' => $response->status(),
+            'body' => $response->body()
+        ]);
 
-    return $response->json();
-}
+        return $response->json();
+    }
 }

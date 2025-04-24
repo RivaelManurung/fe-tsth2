@@ -1,174 +1,343 @@
 @extends('layouts.main')
-
 @section('content')
     @include('components.flash-message')
 
-    <form action="{{ route('transaksi.store') }}" method="POST">
-        @csrf
+    <div class="container py-5">
+        <div class="text-center mb-5">
+            <h2 class="fw-bold text-primary">Input Barang</h2>
+            <p class="text-muted">Pilih metode input dan masukkan data barang</p>
+        </div>
 
-        <div class="card shadow border-0">
-            <div class="card-header bg-success text-white text-center fs-5">
-                Scan Barang Transaksi
-            </div>
-            <div class="card-body p-3">
-
-                <!-- QR Code Scanner -->
-                <div id="reader-container" class="w-100 d-flex justify-content-center mb-4">
-                    <div id="reader" class="border border-3 rounded" style="width:100%; max-width:400px; aspect-ratio:1/1;"></div>
-                </div>
-
-                <!-- Display scanned code -->
-                <div class="mb-3">
-                    <label for="product-code" class="form-label">Kode Barang:</label>
-                    <input type="text" id="product-code" class="form-control" readonly />
-                </div>
-
-                <!-- Select transaction type -->
-                <div class="mb-3">
-                    <label for="transaction-type" class="form-label">Tipe Transaksi:</label>
-                    <select name="tipe" id="transaction-type" class="form-select" required>
-                        @foreach ($transactionTypes as $type)
-                            <option value="{{ $type['id'] }}">{{ $type['name'] }}</option>
-                        @endforeach
-                    </select>
-                </div>
+        <!-- Toggle Button -->
+        <div class="d-flex justify-content-center mb-4">
+            <div class="btn-group shadow" role="group" aria-label="Metode Input">
+                <button type="button" class="btn btn-outline-primary active px-4 py-2 fs-5" id="btn-scan">
+                    <i class="bi bi-upc-scan me-2"></i>Scan Barcode
+                </button>
+                <button type="button" class="btn btn-outline-secondary px-4 py-2 fs-5" id="btn-manual">
+                    <i class="bi bi-keyboard me-2"></i>Input Manual
+                </button>
             </div>
         </div>
 
-        <!-- Table of scanned items -->
-        <div class="mt-4">
-            <div class="table-responsive">
-                <table class="table table-bordered table-striped text-center" id="items-table">
-                    <thead class="table-success">
-                        <tr>
-                            <th>#</th>
-                            <th>Nama Barang</th>
-                            <th>Jumlah</th>
-                            <th>Aksi</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @foreach(session('daftar_barang', []) as $kode => $item)
-                            <tr data-kode="{{ $kode }}">
-                                <td>{{ $loop->iteration }}</td>
-                                <td class="item-name">{{ $item['nama'] }}</td>
-                                <td class="item-qty">{{ $item['jumlah'] }}</td>
-                                <td>
-                                    <form action="{{ url('/barcode/remove') }}" method="POST" style="display:inline">
-                                        @csrf
-                                        <input type="hidden" name="kode" value="{{ $kode }}">
-                                        <button type="submit" class="btn btn-sm btn-danger">Hapus</button>
-                                    </form>
-                                </td>
-                            </tr>
-                        @endforeach
-                    </tbody>
-                </table>
+        <!-- Scanner Section -->
+        <div id="scanner-section" class="d-flex justify-content-center mb-4">
+            <div id="reader" class="border rounded shadow-lg" style="width:100%; max-width:400px; aspect-ratio:1/1;">
             </div>
         </div>
 
-        <!-- Submit button -->
-        <div class="text-end mt-3">
-            <button type="button" class="btn btn-success">Kirim Transaksi</button>
+        <!-- Manual Input -->
+        <div id="manual-section" class="d-none d-flex justify-content-center mb-4">
+            <div class="w-100 position-relative">
+                <label for="manual-input" class="form-label text-muted">Masukkan Kode Barang</label>
+                <input type="text" id="manual-input" class="form-control shadow-sm" placeholder="Contoh: BRG123">
+
+                <!-- Dropdown untuk hasil pencarian -->
+                <ul id="search-results" class="mt-2 list-group text-dark"
+                    style="display: none; position: absolute; width: 100%; max-height: 200px; overflow-y: auto; background-color: white; border: 1px solid #ccc; z-index: 1000; border-radius: 5px;">
+                </ul>
+
+                <!-- Pesan Error dan Success -->
+                <p id="manual-error" class="text-danger mt-2 d-none">Kode barang tidak valid.</p>
+                <p id="manual-success" class="text-success mt-2 d-none">Kode barang ditemukan!</p>
+            </div>
         </div>
-    </form>
+
+        <!-- Scan Result -->
+        <p id="scan-result" class="text-success fw-bold text-center"></p>
+
+        <!-- Reset Button -->
+        <form method="GET" action="{{ route('kode_barang.reset') }}" id="reset-form">
+            @csrf
+            <button class="btn btn-outline-danger mb-4">
+                <i class="bi bi-arrow-counterclockwise me-2"></i>Reset Daftar
+            </button>
+        </form>
+
+        <!-- Transaction Form -->
+        <!-- Hilangkan action agar default submit tidak terjadi -->
+        <form id="transaction-form" method="POST">
+            @csrf
+            <div class="mb-4">
+                <label for="transaction-type" class="form-label">Tipe Transaksi:</label>
+                <select name="transaction_type_id" id="transaction-type" class="form-select">
+                    @foreach ($transactionTypes as $type)
+                        <option value="{{ $type['id'] }}">{{ $type['name'] }}</option>
+                    @endforeach
+                </select>
+            </div>
+
+            <!-- Daftar Barang Table -->
+            <div id="tabel-barang">
+                @include('frontend.transaksi.partials.table', ['daftarBarang' => $daftarBarang])
+            </div>
+        </form>
+    </div>
 @endsection
 
 @push('js')
-<script src="https://unpkg.com/html5-qrcode"></script>
-<script>
-document.addEventListener('DOMContentLoaded', () => {
-    const html5QrCode = new Html5Qrcode("reader");
-    const tableBody = document.querySelector('#items-table tbody');
-    const scanSound = new Audio("/scanner.mp3");
-    let isScanningAllowed = true;
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
+    <script src="https://unpkg.com/html5-qrcode"></script>
+    <script>
+        const scannerSound = new Audio("{{ asset('scanner.mp3') }}");
 
-    const config = {
-        fps: 10,
-        qrbox: (w, h) => {
-            const edge = Math.min(w, h);
-            return {
-                width: edge * 0.8,
-                height: edge * 0.8
-            };
-        },
-        aspectRatio: 1
-    };
+        document.addEventListener('DOMContentLoaded', function() {
+            const btnScan = document.getElementById('btn-scan');
+            const btnManual = document.getElementById('btn-manual');
+            const scannerSection = document.getElementById('scanner-section');
+            const manualSection = document.getElementById('manual-section');
+            const manualError = document.getElementById('manual-error');
+            const manualSuccess = document.getElementById('manual-success');
 
-    Html5Qrcode.getCameras().then((cameras) => {
-        if (!cameras.length) {
-            alert("Kamera tidak ditemukan.");
-            return;
+            btnScan.addEventListener('click', () => {
+                btnScan.classList.add('active');
+                btnManual.classList.remove('active');
+                scannerSection.classList.remove('d-none');
+                manualSection.classList.add('d-none');
+            });
+
+            btnManual.addEventListener('click', () => {
+                btnManual.classList.add('active');
+                btnScan.classList.remove('active');
+                manualSection.classList.remove('d-none');
+                scannerSection.classList.add('d-none');
+                manualError.classList.add('d-none');
+                manualSuccess.classList.add('d-none');
+            });
+
+            const scanner = new Html5QrcodeScanner("reader", {
+                fps: 10,
+                qrbox: 250
+            });
+            scanner.render(onScanSuccess);
+
+            document.getElementById('manual-input').addEventListener('input', handleManualInput);
+        });
+
+        let lastScannedTime = 0;
+
+        function onScanSuccess(decodedText) {
+            const now = new Date().getTime();
+            if (now - lastScannedTime < 1000) return;
+            lastScannedTime = now;
+
+            document.getElementById('scan-result').innerText = 'Scanned: ' + decodedText;
+            setTimeout(() => sendCode(decodedText), 1000);
         }
 
-        const backCam = cameras.find(cam => cam.label.toLowerCase().includes('back')) || cameras[0];
-
-        html5QrCode.start(
-            { deviceId: { exact: backCam.id } },
-            config,
-            (decodedText) => {
-                if (!isScanningAllowed) return;
-
-                isScanningAllowed = false;
-                scanSound.play();
-                document.getElementById('reader').style.borderColor = 'green';
-                document.getElementById('product-code').value = decodedText;
-
-                // Delay of 1 second before performing further actions
-                setTimeout(() => {
-                    document.getElementById('reader').style.borderColor = '#ccc';
-                    isScanningAllowed = true;
-
-                    // Proceed with the fetch request after the delay
-                    fetch(`/barcode/check?kode=${decodedText}`)
-                        .then(res => res.json())
-                        .then(data => {
-                            if (!data || !data.barang_nama || !data.barang_kode) {
-                                alert("Barang tidak ditemukan.");
-                                return;
-                            }
-
-                            let existingRow = Array.from(tableBody.querySelectorAll('tr')).find(
-                                row => row.dataset.kode === data.barang_kode
-                            );
-
-                            if (existingRow) {
-                                const qtyElem = existingRow.querySelector('.item-qty');
-                                qtyElem.textContent = parseInt(qtyElem.textContent) + 1;
-                            } else {
-                                const rowCount = tableBody.rows.length + 1;
-                                const row = document.createElement('tr');
-                                row.dataset.kode = data.barang_kode;
-                                row.innerHTML = `
-                                    <td>${rowCount}</td>
-                                    <td class="item-name text-success fw-semibold">${data.barang_nama}</td>
-                                    <td class="item-qty">1</td>
-                                    <td>
-                                        <button class="btn btn-sm btn-danger" onclick="this.closest('tr').remove(); updateRowNumbers();">Hapus</button>
-                                    </td>
-                                `;
-                                tableBody.appendChild(row);
-                            }
-                        })
-                        .catch((err) => {
-                            console.error("Fetch error:", err);
-                            alert("Terjadi kesalahan saat mengambil data barang.");
-                        });
-                }, 1000); // 1 second delay before executing the rest
-            },
-            (err) => {
-                // ignore scan errors
+        function handleManualInput(e) {
+            const kode = e.target.value;
+            if (kode.length > 0) {
+                fetchBarangSuggestion(kode);
+                sendCode(kode);
+            } else {
+                $('#search-results').hide();
+                $('#manual-error').addClass('d-none');
+                $('#manual-success').addClass('d-none');
             }
-        );
-    }).catch((err) => {
-        console.error("Camera init error:", err);
-    });
+        }
 
-    window.updateRowNumbers = () => {
-        document.querySelectorAll('#items-table tbody tr').forEach((row, i) => {
-            row.children[0].textContent = i + 1;
+        function fetchBarangSuggestion(keyword) {
+            $.ajax({
+                url: '{{ route('search.barang') }}',
+                method: 'GET',
+                data: {
+                    keyword
+                },
+                success: function(data) {
+                    let resultsHtml = '';
+                    if (data.length > 0) {
+                        data.forEach(barang => {
+                            resultsHtml += `
+                        <li class="list-group-item result-item" data-kode="${barang.barang_kode}"
+                            style="color: black; cursor: pointer;">
+                            ${barang.barang_nama} (Kode: ${barang.barang_kode})
+                        </li>`;
+                        });
+                    } else {
+                        resultsHtml = `
+                    <li class="list-group-item disabled" style="color: black;">
+                        Tidak ada hasil
+                    </li>`;
+                    }
+                    $('#search-results').html(resultsHtml).show();
+                }
+            });
+        }
+
+        // handler click item otomatis
+        $(document).on('click', '.result-item', function() {
+            const kode = $(this).data('kode');
+            $('#manual-input').val(kode);
+            sendCode(kode);
+            $('#search-results').hide();
         });
-    };
-});
-</script>
+
+        function sendCode(kode) {
+            fetch("{{ route('kode_barang.check') }}", {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-CSRF-TOKEN': "{{ csrf_token() }}",
+                    },
+                    body: JSON.stringify({
+                        kode
+                    })
+                })
+                .then(res => res.json())
+                .then(data => {
+                    if (data.success) {
+                        $('#tabel-barang').html(data.html);
+                        $('#manual-error').addClass('d-none');
+                        $('#manual-success').removeClass('d-none');
+                        scannerSound.play();
+                    } else {
+                        $('#manual-error').removeClass('d-none');
+                        $('#manual-success').addClass('d-none');
+                    }
+                })
+                .catch(() => {
+                    $('#manual-error').removeClass('d-none');
+                    $('#manual-success').addClass('d-none');
+                });
+        }
+
+        function updateQuantity(kode, increment) {
+            const jumlahElement = document.getElementById('jumlah-' + kode);
+            let jumlah = parseInt(jumlahElement.innerText);
+            if (jumlah + increment >= 0) {
+                jumlah += increment;
+                jumlahElement.innerText = jumlah;
+
+                fetch("{{ route('kode_barang.check') }}", {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'X-CSRF-TOKEN': "{{ csrf_token() }}",
+                        },
+                        body: JSON.stringify({
+                            kode,
+                            jumlah
+                        })
+                    })
+                    .then(res => res.json())
+                    .then(data => {
+                        if (!data.success) {
+                            alert(data.message);
+                        }
+                    })
+                    .catch(() => {
+                        alert('Terjadi kesalahan saat memperbarui jumlah.');
+                    });
+            }
+        }
+
+        function removeItem(kode) {
+            if (confirm('Apakah Anda yakin ingin menghapus barang ini?')) {
+                fetch("{{ route('kode_barang.remove') }}", {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'X-CSRF-TOKEN': "{{ csrf_token() }}",
+                        },
+                        body: JSON.stringify({
+                            kode
+                        })
+                    })
+                    .then(res => res.json())
+                    .then(data => {
+                        if (data.success) {
+                            const itemRow = document.getElementById('item-' + kode);
+                            if (itemRow) itemRow.remove();
+                            document.getElementById('scan-result').innerText = 'Barang berhasil dihapus!';
+                        } else {
+                            alert('Gagal menghapus barang: ' + data.message);
+                        }
+                    })
+                    .catch(() => {
+                        alert('Terjadi kesalahan saat menghapus barang.');
+                    });
+            }
+        }
+
+        // Fungsi untuk menangani submit form transaksi dengan fetch
+        document.getElementById('transaction-form').addEventListener('submit', function(e) {
+            e.preventDefault(); // Mencegah default submit form
+
+            const transactionTypeId = document.getElementById('transaction-type').value;
+
+            // Ambil data dari tabel barang berdasarkan atribut data-barang-kode.
+            let items = [];
+            document.querySelectorAll('[data-barang-kode]').forEach(row => {
+                const kode = row.getAttribute('data-barang-kode');
+                // Pastikan elemen yang menampilkan jumlah memiliki kelas "quantity"
+                const qtyElem = row.querySelector('.quantity');
+                if (qtyElem) {
+                    const qty = parseInt(qtyElem.innerText);
+                    if (qty > 0) {
+                        items.push({
+                            barang_kode: kode,
+                            quantity: qty
+                        });
+                    }
+                }
+            });
+
+            if (items.length === 0) {
+                alert('Tidak ada barang yang ditambahkan.');
+                return;
+            }
+
+            fetch("{{ route('transactions.store') }}", {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-CSRF-TOKEN': "{{ csrf_token() }}"
+                    },
+                    body: JSON.stringify({
+                        transaction_type_id: parseInt(transactionTypeId),
+                        items: items
+                    })
+                })
+                .then(response => {
+                    if (!response.ok) {
+                        return response.json().then(err => {
+                            throw err
+                        });
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    showFlashMessage('success', data.message || 'Transaksi berhasil disimpan.');
+
+                    // Reset form atau redirect kalau perlu
+                    document.getElementById('tabel-barang').innerHTML = '';
+                    document.getElementById('scan-result').innerText = '';
+                    window.location.href = "{{ route('transactions.index') }}";
+                })
+                .catch(err => {
+                    console.error(err);
+                    // tampilkan pesan error
+                    const message = error?.message || 'Gagal menyimpan transaksi.';
+                    showFlashMessage('danger', message);
+                });
+        });
+
+        function showFlashMessage(type, message) {
+            const alertHtml = `
+        <div class="alert alert-${type} alert-dismissible fade show" role="alert">
+            ${message}
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>`;
+            const flashContainer = document.querySelector('.flash-message-container') || createFlashMessageContainer();
+            flashContainer.innerHTML = alertHtml;
+        }
+
+        function createFlashMessageContainer() {
+            const container = document.createElement('div');
+            container.classList.add('flash-message-container');
+            document.querySelector('.container')?.prepend(container);
+            return container;
+        }
+    </script>
 @endpush

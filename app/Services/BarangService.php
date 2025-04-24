@@ -39,18 +39,8 @@ class BarangService
     public function updateBarang($id, array $data)
     {
         $token = session('token');
-        $response = $this->repository->update($id, $data, $token);
-
-        if (is_array($response)) {
-            logger()->info('Update Barang Response:', $response);
-        } else {
-            logger()->warning('Update Barang gagal: response tidak berbentuk array.', ['response' => $response]);
-        }
-
-        return $response;
+        return $this->repository->update($id, $data, $token);
     }
-
-
 
     public function deleteBarang($id)
     {
@@ -64,17 +54,17 @@ class BarangService
     }
 
     public function exportQRCodePDF($id, $jumlah, $token)
-{
-    return $this->repository->exportQRCodePDF($id, $jumlah, $token);
-}
+    {
+        return $this->repository->exportQRCodePDF($id, $jumlah, $token);
+    }
 
-public function exportQRCodePDFAll($token)
-{
-    return $this->repository->exportQRCodePDFAll($token);
-}
-public function getByKode($kode, $token)
-{
-    $all = $this->repository->getAll($token);
-    return collect($all)->firstWhere('barang_kode', $kode); // Mengambil barang berdasarkan kode
-}
+    public function exportQRCodePDFAll($token)
+    {
+        return $this->repository->exportQRCodePDFAll($token);
+    }
+    public function getByKode($kode, $token)
+    {
+        $all = $this->repository->getAll($token);
+        return collect($all)->firstWhere('barang_kode', $kode); // Mengambil barang berdasarkan kode
+    }
 }

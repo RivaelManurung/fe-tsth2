@@ -20,8 +20,16 @@ class SatuanService
     public function satuancount()
     {
         $token = session('token');
-        return count($this->repository->getAll($token));
+        $data = $this->repository->getAll($token);
+
+        if (is_array($data)) {
+            return count($data);
+        }
+
+        return 0;
     }
+
+
 
     public function create($token, $data)
     {

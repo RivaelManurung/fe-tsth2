@@ -24,12 +24,19 @@ class UserController extends Controller
                 return redirect()->route('login')->withErrors('Anda perlu login terlebih dahulu.');
             }
 
-            $users = $this->userService->getAllUsers()->json('data') ?? [];
-            $roles = $this->roleService->getAllRoles()->json('data') ?? [];
+            $usersResponse = $this->userService->getAllUsers();
+            $rolesResponse = $this->roleService->getAllRoles();
 
-            return view('frontend.user.index', compact('users', 'roles'));
+            if ($usersResponse->successful() && $rolesResponse->successful()) {
+                $users = $usersResponse->json('data') ?? [];
+                $roles = $rolesResponse->json('data') ?? [];
+
+                return view('frontend.user.index', compact('users', 'roles'));
+            }
+
+            return back()->withErrors(['message' => 'Gagal mengambil data pengguna atau peran.']);
         } catch (\Exception $e) {
-            dd($e->getMessage());
+            return back()->withErrors(['message' => $e->getMessage()]);
         }
     }
 
@@ -37,21 +44,49 @@ class UserController extends Controller
     {
         try {
             $response = $this->userService->createUser($request->only([
-                'name', 'email', 'password', 'password_confirmation', 'roles'
+                'name',
+                'email',
+                'password',
+                'password_confirmation',
+                'roles'
             ]));
 
-        if ($response->successful()) {
-            return redirect()->route('users.index')->with('success', 'User berhasil ditambahkan!');
-        }
+            if ($response->successful()) {
+                return redirect()->route('users.index')->with('success', 'User berhasil ditambahkan!');
+            }
 
-        $responseBody = $response->json();
-        return back()->withErrors([
-            'message' => $responseBody['error'] ?? 'Gagal menyimpan user.'
-        ]);
-    } catch (\Exception $e) {
-        return back()->withErrors(['message' => $e->getMessage()]);
+            $responseBody = $response->json();
+            return back()->withErrors([
+                'message' => $responseBody['error'] ?? 'Gagal menyimpan user.'
+            ]);
+        } catch (\Exception $e) {
+            return back()->withErrors(['message' => $e->getMessage()]);
+        }
     }
-}
+
+    public function update(Request $request, $id)
+    {
+        try {
+            $response = $this->userService->updateUser($request->only([
+                'name',
+                'email',
+                'password',
+                'password_confirmation',
+                'roles'
+            ]), $id);
+
+            if ($response->successful()) {
+                return redirect()->route('users.index')->with('success', 'User berhasil diperbarui!');
+            }
+
+            $responseBody = $response->json();
+            return back()->withErrors([
+                'message' => $responseBody['error'] ?? 'Gagal memperbarui user.'
+            ]);
+        } catch (\Exception $e) {
+            return back()->withErrors(['message' => $e->getMessage()]);
+        }
+    }
 
     public function destroy($id)
     {

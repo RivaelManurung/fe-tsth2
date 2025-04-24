@@ -4,7 +4,7 @@
     @include('components.flash-message')
 
     <div class="d-flex justify-content-between mb-3">
-        <h4></h4>
+        <h4>Data Role</h4>
         <button type="button" class="btn btn-primary btn-labeled btn-labeled-start mb-2" data-bs-toggle="modal"
             data-bs-target="#createRoleModal">
             <span class="btn-labeled-icon bg-black bg-opacity-20">
@@ -12,9 +12,6 @@
             </span> Tambah Role
         </button>
     </div>
-
-
-
 
     <!-- Table role -->
     <div class="card">
@@ -55,7 +52,6 @@
             </tbody>
         </table>
     </div>
-    {{-- </div> --}}
 
     @include('frontend.role.create-modal')
     @foreach ($roles as $role)
