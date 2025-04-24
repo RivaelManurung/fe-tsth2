@@ -4,13 +4,15 @@
     <div class="container-fluid">
         @include('components.flash-message')
         <div class="d-flex justify-content-between mb-3">
-            <h4></h4>
-            <button type="button" class="btn btn-primary btn-labeled btn-labeled-start mb-2" data-bs-toggle="modal"
-                data-bs-target="#createGudangModal">
-                <span class="btn-labeled-icon bg-black bg-opacity-20">
-                    <i class="icon-database-add"></i>
-                </span> Tambah Gudang
-            </button>
+            <h4>Data Gudang</h4>
+            @can('create_gudang')
+                <button type="button" class="btn btn-primary btn-labeled btn-labeled-start mb-2" data-bs-toggle="modal"
+                    data-bs-target="#createGudangModal">
+                    <span class="btn-labeled-icon bg-black bg-opacity-20">
+                        <i class="icon-database-add"></i>
+                    </span> Tambah Gudang
+                </button>
+            @endcan
         </div>
 
         <div class="card">
@@ -34,20 +36,24 @@
                             <td>{{ $gudang['description'] }}</td>
                             <td>
                                 <div class="d-inline-flex">
-                                    <a href="#" class="text-info me-2" data-bs-toggle="modal"
-                                        data-bs-target="#detailGudangModal{{ $gudang['id'] }}">
-                                        <i class="ph-eye"></i>
-                                    </a>
-                                    <a href="#" class="text-warning me-2" data-bs-toggle="modal"
-                                        data-bs-target="#editGudangModal{{ $gudang['id'] }}">
-                                        <i class="ph-pencil"></i>
-                                    </a>
-                                    <a href="#" class="text-danger" data-bs-toggle="modal"
-                                        data-bs-target="#deleteGudangModal{{ $gudang['id'] }}">
-                                        <i class="ph-trash"></i>
-                                    </a>
-
-                                    </a>
+                                    @can('view_gudang')
+                                        <a href="#" class="text-info me-2" data-bs-toggle="modal"
+                                            data-bs-target="#detailGudangModal{{ $gudang['id'] }}">
+                                            <i class="ph-eye"></i>
+                                        </a>
+                                    @endcan
+                                    @can('update_gudang')
+                                        <a href="#" class="text-warning me-2" data-bs-toggle="modal"
+                                            data-bs-target="#editGudangModal{{ $gudang['id'] }}">
+                                            <i class="ph-pencil"></i>
+                                        </a>
+                                    @endcan
+                                    @can('delete_gudang')
+                                        <a href="#" class="text-danger" data-bs-toggle="modal"
+                                            data-bs-target="#deleteGudangModal{{ $gudang['id'] }}">
+                                            <i class="ph-trash"></i>
+                                        </a>
+                                    @endcan
                                 </div>
                             </td>
                         </tr>

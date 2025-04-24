@@ -6,6 +6,7 @@ use App\Services\BarangService;
 use App\Services\TransactionService;
 use App\Services\TransactionTypeService;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Session;
 
 class TransactionController extends Controller
 {
@@ -21,50 +22,75 @@ class TransactionController extends Controller
         $this->barang_service = $barang_service;
     }
 
-    public function tambah(Request $request)
-    {
-        $token = $request->session()->get('token');
-        $transactionTypes = $this->service->all($token);
-
-        return view('frontend.transaksi.create', compact('transactionTypes'));
-    }
-
     public function index(Request $request)
     {
-        $token = $request->session()->get('token');
+        $token = session('token');
         $transactions = $this->transactionService->getAllTransactions($token);
 
         return view('frontend.transaksi.index', compact('transactions'));
     }
 
-    public function form(Request $request)
+    public function create(Request $request)
     {
-        $token = $request->session()->get('token');
-        $daftarBarang = $request->session()->get('daftar_barang', []);
+        $token = session('token');
+        $daftarBarang = Session::get('daftar_barang', []);
         $transactionTypes = $this->service->all($token);
 
-        return view('frontend.transaksi.barcode-check', compact('daftarBarang', 'transactionTypes'));
+        return view('frontend.transaksi.create', compact('daftarBarang', 'transactionTypes'));
+    }
+
+    public function store(Request $request)
+    {
+        $token = session('token');
+        if (!$token) {
+            return redirect()->route('login')->with('error', 'Silakan login terlebih dahulu.');
+        }
+
+        try {
+            $validated = $request->validate([
+                'transaction_type_id' => 'required|integer',
+                'items' => 'required|array',
+                'items.*.barang_kode' => 'required|string',
+                'items.*.quantity' => 'required|integer|min:1',
+            ]);
+
+            $response = $this->transactionService->store($validated, $token);
+
+            return response()->json([
+                'message' => 'Transaksi berhasil dibuat',
+                'data' => $response
+            ], 201);
+        } catch (\Exception $e) {
+            return response()->json([
+                'message' => 'Gagal membuat transaksi',
+                'error' => $e->getMessage()
+            ], 500);
+        }
     }
 
 
     public function check(Request $request)
     {
         $kode = $request->kode;
-        $token = $request->session()->get('token');
+        $token = session('token');
+        $daftarBarang = $request->session()->get('daftar_barang', []);
 
-        $barang = $this->transactionService->checkAndAddBarang($kode, $token, $request->session());
+        $result = $this->transactionService->checkAndAddBarang($token, $kode, $daftarBarang);
 
-        if ($barang) {
-            $daftarBarang = $request->session()->get('daftar_barang', []);
+        if ($result['success']) {
+            $request->session()->put('daftar_barang', $result['data']);
+
             return response()->json([
                 'success' => true,
-                'html' => view('frontend.transaksi.table', compact('daftarBarang'))->render(),
+                'html' => view('frontend.transaksi.partials.table', ['daftarBarang' => $result['data']])->render(),
             ]);
         }
 
-        return response()->json(['success' => false, 'message' => 'Barang tidak ditemukan.']);
+        return response()->json([
+            'success' => false,
+            'message' => $result['message'] ?? 'Barang tidak ditemukan.',
+        ]);
     }
-
 
     public function reset(Request $request)
     {
@@ -85,28 +111,6 @@ class TransactionController extends Controller
             'message' => $result['message'],
         ]);
     }
-
-
-    public function store(Request $request)
-    {
-        $token = $request->session()->get('token');
-        $tipe = $request->input('tipe');
-        $daftarBarang = $request->session()->get('daftar_barang', []);
-
-        if (empty($daftarBarang)) {
-            return redirect()->back()->with('error', 'Tidak ada barang untuk transaksi.');
-        }
-
-        $response = $this->transactionService->storeTransaction($tipe, $daftarBarang, $token);
-
-        if ($response->successful()) {
-            $request->session()->forget('daftar_barang');
-            return redirect()->route('transactions.index')->with('success', 'Transaksi berhasil disimpan');
-        }
-
-        return redirect()->back()->with('error', 'Gagal menyimpan transaksi');
-    }
-
     public function searchBarang(Request $request)
     {
         $keyword = $request->get('keyword');
