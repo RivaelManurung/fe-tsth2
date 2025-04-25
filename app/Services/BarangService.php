@@ -19,6 +19,12 @@ class BarangService
         return $this->repository->getAll($token);
     }
 
+    public function countbarang()
+    {
+        $token = session('token');
+        return count($this->repository->getAll($token));
+
+    }
     public function getBarangById($id)
     {
         $token = session('token');

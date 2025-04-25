@@ -25,6 +25,18 @@ class JenisBarangService
         return collect();
     }
 
+    public function count()
+    {
+        $token = session('token');
+        $response = $this->repository->getAll($token);
+
+        if ($response->successful()) {
+            return count(collect($response->json('data')));
+        }
+
+        return collect();
+    }
+
     public function create($token, $data)
     {
         return $this->repository->store($token, $data);

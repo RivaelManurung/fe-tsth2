@@ -20,6 +20,18 @@ class RoleService
         return Http::withToken($this->token);
     }
 
+    public function count()
+    {
+        $response = $this->withToken()->get("{$this->apiBaseUrl}/roles");
+
+        if ($response->successful()) {
+            $data = $response->json('data') ?? [];
+            return count($data);
+        }
+
+        return 0;
+    }
+
     public function getAllRoles()
     {
         return $this->withToken()->get("{$this->apiBaseUrl}/roles");

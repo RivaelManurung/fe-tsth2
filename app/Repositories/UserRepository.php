@@ -21,6 +21,17 @@ class UserRepository
         return Http::withToken($this->token);
     }
 
+    public function count()
+    {
+        $response = $this->withToken()->get("{$this->apiBaseUrl}/users");
+
+        if ($response->successful()) {
+            $data = $response->json('data') ?? [];
+            return count($data);
+        }
+
+        return 0;
+    }
     public function all()
     {
         return $this->withToken()->get("{$this->apiBaseUrl}/users");

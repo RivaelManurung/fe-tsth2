@@ -13,9 +13,15 @@ class UserService
         $this->userRepository = $userRepository;
     }
 
+
     public function getAllUsers()
     {
         return $this->userRepository->all();
+    }
+
+    public function count()
+    {
+        return $this->userRepository->count();
     }
 
     public function getUserById($id)

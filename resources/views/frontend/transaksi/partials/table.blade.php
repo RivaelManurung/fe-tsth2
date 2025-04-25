@@ -7,6 +7,7 @@
                     <th>Nama Barang</th>
                     <th>Kode</th>
                     <th>Gambar</th>
+                    <th>Kategory</th>
                     <th>Stok Tersedia</th>
                     <th>Jumlah</th>
                     <th>Aksi</th>
@@ -23,6 +24,7 @@
                                     style="width: 60px; height: 60px; object-fit: cover;">
                             </a>
                         </td>
+                        <td class="text-center">{{ $barang['kategoribarang'] }}</td>
                         <td class="text-center">{{ $barang['stok_tersedia'] }}</td>
                         <td class="text-center">
                             <div class="d-flex justify-content-center align-items-center gap-2">

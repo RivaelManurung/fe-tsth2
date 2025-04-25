@@ -28,6 +28,19 @@ class TransactionService
 
         return collect();
     }
+
+    public function countTransaksi()
+    {
+        $token = session('token');
+        $response = $this->transactionRepository->getAll($token);
+
+        if ($response->successful()) {
+            return count(collect($response->json('data')));
+        }
+
+        return collect();
+    }
+
     public function store(array $data, $token)
     {
         try {
@@ -80,6 +93,7 @@ class TransactionService
                 'nama' => $barang['barang_nama'],
                 'kode' => $barang['barang_kode'],
                 'jumlah' => 1,
+                'kategoribarang' => $barang['kategori'],
                 'stok_tersedia' => $barang['stok_tersedia'],
                 'gambar' => $barang['gambar'],
             ];
