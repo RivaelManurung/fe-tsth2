@@ -299,28 +299,21 @@
                         items: items
                     })
                 })
-                .then(response => {
+                .then(async response => {
+                    const data = await response.json();
                     if (!response.ok) {
-                        return response.json().then(err => {
-                            throw err
-                        });
+                        throw data;
                     }
-                    return response.json();
+                    showFlashMessage('success', data.message || 'Transaksi berhasil!');
+                    setTimeout(() => {
+                        window.location.href = "{{ route('transactions.index') }}";
+                    }, 1000);
                 })
-                .then(data => {
-                    showFlashMessage('success', data.message || 'Transaksi berhasil disimpan.');
-
-                    // Reset form atau redirect kalau perlu
-                    document.getElementById('tabel-barang').innerHTML = '';
-                    document.getElementById('scan-result').innerText = '';
-                    // window.location.href = "{{ route('transactions.create') }}";
-                })
-                .catch(err => {
-                    console.error(err);
-                    // tampilkan pesan error
-                    const message = error?.message || 'Gagal menyimpan transaksi.';
-                    showFlashMessage('danger', message);
+                .catch(error => {
+                    const errorMessage = error?.message || 'Gagal menyimpan transaksi.';
+                    showFlashMessage('danger', errorMessage);
                 });
+
         });
 
         function showFlashMessage(type, message) {

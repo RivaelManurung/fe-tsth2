@@ -12,27 +12,28 @@
             <h5 class="mb-0 w-100 w-sm-auto">Table Transaksi</h5>
             <div class="d-flex gap-2 flex-wrap w-100 w-sm-auto">
                 <!-- Dropdown Filter -->
-                <select class="form-select form-select-sm mb-2 mb-sm-0 w-100 w-sm-auto" aria-label="Filter" onchange="window.location.href=this.value;">
-                    <option value="{{ route('laporan.transaksi') }}" @if(!request('transaction_type_id')) selected @endif>Pilih Transaksi</option>
+                <select class="form-select form-select-sm mb-2 mb-sm-0 w-100 w-sm-auto" aria-label="Filter"
+                    onchange="window.location.href=this.value;">
+                    <option value="{{ route('laporan.transaksi') }}" @if (!request('transaction_type_id')) selected @endif>Pilih
+                        Transaksi</option>
                     @foreach ($transactionTypes as $tt)
                         <option value="{{ url('laporan-transaksi?transaction_type_id=' . $tt['id']) }}"
-                                @if(request('transaction_type_id') == $tt['id']) selected @endif>
+                            @if (request('transaction_type_id') == $tt['id']) selected @endif>
                             {{ $tt['name'] }}
                         </option>
                     @endforeach
                 </select>
 
                 <!-- Export PDF per jenis transaksi -->
-                @if(request('transaction_type_id'))
-                <a href="{{ route('transactions.exportPdfByType', request('transaction_type_id')) }}"class="btn btn-outline-danger btn-sm w-100 w-sm-auto mb-2 mb-sm-0"
-                target="_blank">
-                <i class="ph-file-pdf"></i> Laporan PDF ({{ $transactionTypes->firstWhere('id', request('transaction_type_id'))['name'] ?? 'Per Jenis' }})
-            </a>
-
+                @if (request('transaction_type_id'))
+                    <a href="{{ route('transactions.exportPdfByType', request('transaction_type_id')) }}"class="btn btn-outline-danger btn-sm w-100 w-sm-auto mb-2 mb-sm-0"
+                        target="_blank">
+                        <i class="ph-file-pdf"></i> Laporan PDF
+                        ({{ $transactionTypes->firstWhere('id', request('transaction_type_id'))['name'] ?? 'Per Jenis' }})
+                    </a>
                 @else
                     <a href="{{ route('transactions.exportPdf') }}"
-                       class="btn btn-outline-danger btn-sm w-100 w-sm-auto mb-2 mb-sm-0"
-                       target="_blank">
+                        class="btn btn-outline-danger btn-sm w-100 w-sm-auto mb-2 mb-sm-0" target="_blank">
                         <i class="ph-file-pdf"></i> Laporan PDF (Semua)
                     </a>
                 @endif
@@ -67,16 +68,16 @@
                             <td>{{ $trx['transaction_type']['name'] }}</td>
                             <td>{{ $trx['user']['name'] }}</td>
                             <td>{{ count($trx['items']) }}</td>
-                            @foreach ($trx['items'] as $item)
-                                <td>
+                            <td>
+                                @foreach ($trx['items'] as $item)
                                     <li>{{ $item['gudang']['nama'] }}</li>
-                                </td>
-                            @endforeach
-                            @foreach ($trx['items'] as $item)
-                                <td>
+                                @endforeach
+                            </td>
+                            <td>
+                                @foreach ($trx['items'] as $item)
                                     <li>{{ $item['barang']['nama'] }}</li>
-                                </td>
-                            @endforeach
+                                @endforeach
+                            </td>
                             <td>{{ $item['quantity'] }} {{ $item['barang']['satuan'] }}</td>
                         </tr>
                     @empty

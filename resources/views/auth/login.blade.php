@@ -39,7 +39,8 @@
                         <div class="card shadow-lg border-0 rounded-4" style="min-width: 360px;">
                             <div class="card-body p-4">
                                 <div class="text-center mb-4">
-                                    <img src="{{ asset('template/assets/images/logo_icon.png') }}" class="h-48px mb-2" alt="">
+                                    <img src="{{ asset('template/assets/images/logo_icon.png') }}" class="h-48px mb-2"
+                                        alt="">
                                     <h3 class="fw-semibold mb-0">Login</h3>
                                     <small class="text-muted">Enter your credentials below</small>
                                 </div>
@@ -65,7 +66,8 @@
                                 <div class="mb-3">
                                     <label class="form-label">Email</label>
                                     <div class="form-control-feedback form-control-feedback-start">
-                                        <input type="email" name="email" class="form-control rounded-3" placeholder="Masukkan email.." required>
+                                        <input type="email" name="email" class="form-control rounded-3"
+                                            placeholder="Masukkan email.." required>
                                         <div class="form-control-feedback-icon">
                                             <i class="ph-user-circle text-muted"></i>
                                         </div>
@@ -76,11 +78,14 @@
                                 <div class="mb-3">
                                     <label class="form-label">Password</label>
                                     <div class="form-control-feedback form-control-feedback-start position-relative">
-                                        <input type="password" name="password" id="passwordInput" class="form-control rounded-3" placeholder="•••••••••••" required>
+                                        <input type="password" name="password" id="passwordInput"
+                                            class="form-control rounded-3" placeholder="•••••••••••" required>
                                         <div class="form-control-feedback-icon">
                                             <i class="ph-lock text-muted"></i>
                                         </div>
-                                        <button type="button" onclick="togglePassword()" class="position-absolute end-0 top-50 translate-middle-y me-3 p-0 bg-transparent border-0" style="z-index: 10;">
+                                        <button type="button" onclick="togglePassword()"
+                                            class="position-absolute end-0 top-50 translate-middle-y me-3 p-0 bg-transparent border-0"
+                                            style="z-index: 10;">
                                             <i id="toggleIcon" class="ph-eye text-muted fs-5"></i>
                                         </button>
                                     </div>

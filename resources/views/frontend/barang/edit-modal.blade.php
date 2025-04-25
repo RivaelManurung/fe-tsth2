@@ -131,6 +131,8 @@
         dropArea.addEventListener('drop', e => handleImage(e.dataTransfer.files[0]));
         inputFile.addEventListener('change', () => handleImage(inputFile.files[0]));
 
+        let gambarDiubah = false; // Flag ini akan true jika user upload gambar baru
+
         function handleImage(file) {
             if (!file || file.size > 2 * 1024 * 1024) {
                 gambarStatus.textContent = 'Ukuran maksimal 2MB';
@@ -156,6 +158,7 @@
                     gambarPreviewContainer.classList.remove('d-none');
                     gambarStatus.textContent = 'Gambar siap disimpan';
                     hideProgress();
+                    gambarDiubah = true; // flag jadi true
                 };
                 img.src = e.target.result;
             };
@@ -167,18 +170,17 @@
             if (!$(form).parsley().isValid()) return;
             showProgress();
 
-            const gambarLama = '{{ $barang['barang_gambar'] }}';
             const formData = {
                 barang_nama: form.barang_nama.value,
                 barang_harga: form.barang_harga.value,
                 barangcategory_id: form.barangcategory_id.value,
                 jenisbarang_id: form.jenisbarang_id.value,
                 satuan_id: form.satuan_id.value,
-                barang_gambar: inputBase64.value.trim() !== '' ?
-                    inputBase64.value :
-                    gambarLama ? gambarLama : null,
-
+                ...(gambarDiubah ? {
+                    barang_gambar: inputBase64.value
+                } : {})
             };
+
 
             axios.put(`{{ route('barangs.update', $barang['id']) }}`, formData, {
                 headers: {
