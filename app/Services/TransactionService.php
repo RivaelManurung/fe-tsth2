@@ -3,8 +3,10 @@
 namespace App\Services;
 
 use App\Repositories\TransactionRepository;
-use Illuminate\Contracts\Session\Session;
+use Exception;
 use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Session;
 
 class TransactionService
 {
@@ -27,34 +29,81 @@ class TransactionService
         return collect();
     }
 
-    public function checkAndAddBarang(string $kode, string $token, Session $session): ?array
+    public function countTransaksi()
     {
-        $response = $this->transactionRepository->checkBarcode($token, $kode);
+        $token = session('token');
+        $response = $this->transactionRepository->getAll($token);
 
-        if ($response->successful() && $response->json('success')) {
-            $barang = $response->json('data');
-            $daftarBarang = $session->get('daftar_barang', []);
-
-            if (isset($daftarBarang[$barang['barang_kode']])) {
-                $daftarBarang[$barang['barang_kode']]['jumlah'] += 1;
-            } else {
-                $daftarBarang[$barang['barang_kode']] = [
-                    'nama' => $barang['barang_nama'],
-                    'kode' => $barang['barang_kode'],
-                    'jumlah' => 1,
-                    'stok_tersedia' => $barang['stok_tersedia'],
-                    'gambar' => $barang['gambar'],
-                ];
-            }
-
-            $session->put('daftar_barang', $daftarBarang);
-
-            return $daftarBarang;
+        if ($response->successful()) {
+            return count(collect($response->json('data')));
         }
 
-        return null;
+        return collect();
     }
 
+    public function store(array $data, $token)
+    {
+        try {
+            if (!isset($data['transaction_type_id']) || !is_array($data['items'])) {
+                throw new \InvalidArgumentException("Data transaksi tidak lengkap.");
+            }
+
+            $response = $this->transactionRepository->createTransaction($data, $token);
+
+            if (!$response['success']) {
+                throw new \Exception($response['message']);
+            }
+
+            Session::forget('daftar_barang');
+
+            return ['success' => true, 'message' => 'Transaksi berhasil disimpan'];
+        } catch (Exception $e) {
+            Log::error('Gagal menyimpan transaksi', [
+                'error' => $e->getMessage(),
+                'payload' => $data
+            ]);
+            return [
+                'success' => false,
+                'message' => $e->getMessage(),
+            ];
+        }
+    }
+
+    public function checkAndAddBarang($token, string $kode, array $currentItems): array
+    {
+        $result = $this->transactionRepository->checkAndParseBarang($token, $kode);
+
+        if (!$result['success']) {
+            return [
+                'success' => false,
+                'message' => $result['message'],
+            ];
+        }
+
+        $barang = $result['data'];
+
+        // Tambahkan info tambahan
+        $barang['stok_tersedia'] = $barang['stok_tersedia'];
+        $barang['gambar'] = $barang['gambar'];
+
+        if (isset($currentItems[$barang['barang_kode']])) {
+            $currentItems[$barang['barang_kode']]['jumlah'] += 1;
+        } else {
+            $currentItems[$barang['barang_kode']] = [
+                'nama' => $barang['barang_nama'],
+                'kode' => $barang['barang_kode'],
+                'jumlah' => 1,
+                'kategoribarang' => $barang['kategori'],
+                'stok_tersedia' => $barang['stok_tersedia'],
+                'gambar' => $barang['gambar'],
+            ];
+        }
+
+        return [
+            'success' => true,
+            'data' => $currentItems,
+        ];
+    }
 
 
     public function resetDaftarBarang(): array
@@ -81,17 +130,4 @@ class TransactionService
         ];
     }
 
-
-    public function storeTransaction(string $tipe, array $daftarBarang, string $token)
-    {
-        $payload = [
-            'transaction_type_id' => $tipe,
-            'items' => array_map(fn($item) => [
-                'barang_kode' => $item['kode'],
-                'quantity'    => $item['jumlah'],
-            ], $daftarBarang),
-        ];
-
-        return $this->transactionRepository->storeTransaction($token, $payload);
-    }
 }

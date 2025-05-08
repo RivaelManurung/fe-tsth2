@@ -38,6 +38,17 @@ class GudangService
         return collect();
     }
 
+    public function count(){
+        $token = session('token');
+        $response = $this->repository->getAll($token);
+
+        if ($response instanceof Response && $response->successful()) {
+            return count(collect($response->json('data'))->mapInto(GudangResource::class));
+        }
+
+        return collect();
+    }
+
     public function find($id, $token): ?GudangResource
     {
         $response = $this->repository->getById($id, $token);

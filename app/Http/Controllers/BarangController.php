@@ -66,30 +66,16 @@ class BarangController extends Controller
             return response()->json(['error' => 'Barang tidak ditemukan'], 404);
         }
     }
-
-    // public function update(Request $request, $id)
-    // {
-    //     try {
-    //         $this->barang_service->updateBarang($id, $request->all());
-    //         return redirect()->back()->with('success', 'Barang berhasil diperbarui.');
-    //     } catch (\Throwable $th) {
-    //         return redirect()->back()->with('error', 'Gagal memperbarui barang: ' . $th->getMessage());
-    //     }
-    // }
-
     public function update(Request $request, $id)
     {
         try {
-            // Filter input (handle jika tidak ada file gambar)
-            $data = $request->except(['_token', '_method']);
-            if (!$request->hasFile('barang_gambar')) {
-                unset($data['barang_gambar']);
-            }
+            $data = $request->all();
 
             $this->barang_service->updateBarang($id, $data);
-            return redirect()->back()->with('success', 'Barang berhasil diperbarui.');
+
+            return response()->json(['message' => 'Barang berhasil diperbarui.']);
         } catch (\Throwable $th) {
-            return redirect()->back()->with('error', 'Gagal memperbarui barang: ' . $th->getMessage());
+            return response()->json(['error' => 'Gagal memperbarui barang: ' . $th->getMessage()], 500);
         }
     }
 
@@ -116,40 +102,40 @@ class BarangController extends Controller
             return redirect()->back()->with('error', 'Terjadi kesalahan: ' . $th->getMessage());
         }
     }
+
     public function exportPDF(Request $request, $id)
-{
-    try {
-        $jumlah = $request->input('jumlah');
-        $token = session('token');
+    {
+        try {
+            $jumlah = $request->input('jumlah');
+            $token = session('token');
 
-        $response = $this->barang_service->exportQRCodePDF($id, $jumlah, $token);
+            $response = $this->barang_service->exportQRCodePDF($id, $jumlah, $token);
 
-        if (isset($response['pdf_url'])) {
-            return redirect()->away($response['pdf_url']);
+            if (isset($response['pdf_url'])) {
+                return redirect()->away($response['pdf_url']);
+            }
+
+            return redirect()->back()->with('error', 'Gagal mengekspor QR Code PDF.');
+        } catch (\Throwable $th) {
+            return redirect()->back()->with('error', 'Terjadi kesalahan: ' . $th->getMessage());
         }
-
-        return redirect()->back()->with('error', 'Gagal mengekspor QR Code PDF.');
-    } catch (\Throwable $th) {
-        return redirect()->back()->with('error', 'Terjadi kesalahan: ' . $th->getMessage());
     }
-}
 
 
-public function exportPDFALL()
-{
-    try {
-        $token = session('token');
+    public function exportPDFALL()
+    {
+        try {
+            $token = session('token');
 
-        $response = $this->barang_service->exportQRCodePDFAll($token);
+            $response = $this->barang_service->exportQRCodePDFAll($token);
 
-        if (isset($response['pdf_url'])) {
-            return redirect()->away($response['pdf_url']);
+            if (isset($response['pdf_url'])) {
+                return redirect()->away($response['pdf_url']);
+            }
+
+            return redirect()->back()->with('error', 'Gagal mengekspor QR Code PDF.');
+        } catch (\Throwable $th) {
+            return redirect()->back()->with('error', 'Terjadi kesalahan: ' . $th->getMessage());
         }
-
-        return redirect()->back()->with('error', 'Gagal mengekspor QR Code PDF.');
-    } catch (\Throwable $th) {
-        return redirect()->back()->with('error', 'Terjadi kesalahan: ' . $th->getMessage());
     }
-}
-
 }

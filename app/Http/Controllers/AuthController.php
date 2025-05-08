@@ -9,6 +9,8 @@ use Illuminate\Http\Request;
 class AuthController extends Controller
 {
     protected $service;
+    protected $auth_service;
+
 
     public function __construct(AuthService $service)
     {
@@ -23,7 +25,7 @@ class AuthController extends Controller
     public function handleLogin(Request $request)
     {
         $credentials = $request->validate([
-            'email' => 'required|email',
+            'name' => 'required|string',
             'password' => 'required|string',
         ]);
 
@@ -36,6 +38,7 @@ class AuthController extends Controller
 
         return back()->withErrors(['login_error' => $result['message']]);
     }
+
 
     public function handleLogout()
     {

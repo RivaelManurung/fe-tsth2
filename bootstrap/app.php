@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Middleware\RefreshPermissionMiddleware;
 use Illuminate\Foundation\Application;
 use Illuminate\Foundation\Configuration\Exceptions;
 use Illuminate\Foundation\Configuration\Middleware;
@@ -15,6 +16,7 @@ return Application::configure(basePath: dirname(__DIR__))
             'auth.token' => \App\Http\Middleware\Authenticated::class,
             'auth.session' => \App\Http\Middleware\AuthSession::class,
             'check.permission' => \App\Http\Middleware\CheckPermission::class,
+            'refresh.permissions' => RefreshPermissionMiddleware::class, // Menambahkan middleware refresh-permission
         ]);
     })
     ->withExceptions(function (Exceptions $exceptions) {

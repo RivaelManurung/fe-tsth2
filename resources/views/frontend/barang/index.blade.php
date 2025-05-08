@@ -3,32 +3,31 @@
 @section('content')
     @include('components.flash-message')
 
-    <div class="d-flex justify-content-between mb-3">
-        <h4></h4>
-        <div>
+    <div class="d-flex justify-content-between mb-3 flex-wrap">
+        <h4>Data Barang</h4>
+        <div class="d-flex gap-2 flex-wrap">
             <a href="{{ route('barang.refresh-qrcodes') }}" class="btn btn-secondary btn-labeled btn-labeled-start mb-2 me-2">
                 <span class="btn-labeled-icon bg-black bg-opacity-20">
                     <i class="icon-sync"></i>
                 </span> Refresh QR Code
             </a>
             @can('create_barang')
-
-            <button type="button" class="btn btn-primary btn-labeled btn-labeled-start mb-2" data-bs-toggle="modal"
-            data-bs-target="#modalCreateBarang">
-            <span class="btn-labeled-icon bg-black bg-opacity-20">
-                <i class="icon-database-add"></i>
-            </span> Tambah Satuan Barang
-        </button>
-
-        @endcan
-            <a href="{{ route('barangs.exportPDFALL') }}" class="btn btn-danger btn-labeled btn-labeled-start mb-2" target="_blank">
+                <button type="button" class="btn btn-primary btn-labeled btn-labeled-start mb-2" data-bs-toggle="modal"
+                    data-bs-target="#modalCreateBarang">
+                    <span class="btn-labeled-icon bg-black bg-opacity-20">
+                        <i class="icon-database-add"></i>
+                    </span> Tambah Barang
+                </button>
+            @endcan
+            <a href="{{ route('barangs.exportPDFALL') }}" class="btn btn-danger btn-labeled btn-labeled-start mb-2"
+                target="_blank">
                 <span class="btn-labeled-icon bg-black bg-opacity-20">
                     <i class="icon-printer2"></i>
                 </span> Cetak
             </a>
-                </div>
-
+        </div>
     </div>
+
 
     <div class="card">
         <div class="card-header">
@@ -55,7 +54,8 @@
                             <td>{{ $barang['barang_kode'] ?? '-' }}</td>
                             <td>
                                 @if (!empty($barang['barang_gambar']))
-                                    <img src="{{ $barang['barang_gambar'] }}" class="img-thumbnail" width="200" alt="Gambar Barang">
+                                    <img src="{{ $barang['barang_gambar'] }}" class="img-thumbnail" width="200"
+                                        alt="Gambar Barang">
                                 @else
                                     <span class="text-muted">Tidak ada gambar</span>
                                 @endif
@@ -79,11 +79,11 @@
                                     <div class="d-flex flex-column align-items-start text-start">
                                         <img src="{{ $qrCodeUrl }}" width="80" height="80" class="mb-2"
                                             alt="QR Code">
-                                            <button type="button" class="btn btn-sm btn-danger btn-labeled" style="width: 80px;"
-                                            data-bs-toggle="modal" data-bs-target="#modalprintBarang{{ $barang['id'] }}">
+                                        <button type="button" class="btn btn-sm btn-danger btn-labeled"
+                                            style="width: 80px;" data-bs-toggle="modal"
+                                            data-bs-target="#modalprintBarang{{ $barang['id'] }}">
                                             <i class="ph-printer me-1"></i> Print
                                         </button>
-
                                     </div>
                                 @else
                                     <span class="text-muted">Tidak tersedia</span>
@@ -92,22 +92,22 @@
                             <td>
                                 <div class="d-inline-flex">
                                     @can('view_barang')
-                                    <a href="#" class="text-info me-2" data-bs-toggle="modal"
-                                        data-bs-target="#detailBarang{{ $barang['id'] }}" title="Detail">
-                                        <i class="ph-eye"></i>
-                                    </a>
+                                        <a href="#" class="text-info me-2" data-bs-toggle="modal"
+                                            data-bs-target="#detailBarang{{ $barang['id'] }}" title="Detail">
+                                            <i class="ph-eye"></i>
+                                        </a>
                                     @endcan
                                     @can('update_barang')
-                                    <a href="#" class="text-primary me-2" data-bs-toggle="modal"
-                                        data-bs-target="#editBarangModal{{ $barang['id'] }}" title="Edit">
-                                        <i class="ph-pencil"></i>
-                                    </a>
+                                        <a href="#" class="text-primary me-2" data-bs-toggle="modal"
+                                            data-bs-target="#modalEditBarang{{ $barang['id'] }}" title="Edit">
+                                            <i class="ph-pencil"></i>
+                                        </a>
                                     @endcan
                                     @can('delete_barang')
-                                    <a href="#" class="text-danger" data-bs-toggle="modal"
-                                        data-bs-target="#deleteBarangModal{{ $barang['id'] }}">
-                                        <i class="ph-trash"></i>
-                                    </a>
+                                        <a href="#" class="text-danger" data-bs-toggle="modal"
+                                            data-bs-target="#deleteBarangModal{{ $barang['id'] }}">
+                                            <i class="ph-trash"></i>
+                                        </a>
                                     @endcan
                                 </div>
                             </td>

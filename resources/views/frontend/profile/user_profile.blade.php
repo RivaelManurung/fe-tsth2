@@ -1,122 +1,95 @@
-<!DOCTYPE html>
-<html lang="en" dir="ltr">
+@extends('frontend.profile.layout.template')
+@section('contentprofile')
 
-<head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <title>Limitless - Responsive Web Application Kit by Eugene Kopyov</title>
-
-    <!-- Global stylesheets -->
-    <link href="{{ asset('template/assets/fonts/inter/inter.css') }}" rel="stylesheet" type="text/css">
-    <link href="{{ asset('template/assets/icons/phosphor/styles.min.css') }}" rel="stylesheet" type="text/css">
-    <link href="{{ asset('assets/css/ltr/all.min.css') }}" id="stylesheet" rel="stylesheet" type="text/css">
-
-    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet">
-
-    <!-- /global stylesheets -->
-
-    <!-- Core JS files -->
-    <script src="{{ asset('template/assets/demo/demo_configurator.js') }}"></script>
-    <script src="{{ asset('template/assets/js/bootstrap/bootstrap.bundle.min.js') }}"></script>
-    <!-- /core JS files -->
-
-    <!-- Theme JS files -->
-    <script src="{{ asset('template/assets/js/vendor/visualization/d3/d3.min.js') }}"></script>
-    <script src="{{ asset('template/assets/js/vendor/visualization/d3/d3_tooltip.js') }}"></script>
-
-    <script src="{{ asset('assets/js/app.js') }}"></script>
-    <script src="{{ asset('template/assets/demo/pages/dashboard.js') }}"></script>
-    <script src="{{ asset('template/assets/demo/charts/pages/dashboard/streamgraph.js') }}"></script>
-    <script src="{{ asset('template/assets/demo/charts/pages/dashboard/sparklines.js') }}"></script>
-    <script src="{{ asset('template/assets/demo/charts/pages/dashboard/lines.js') }}"></script>
-    <script src="{{ asset('template/assets/demo/charts/pages/dashboard/areas.js') }}"></script>
-    <script src="{{ asset('template/assets/demo/charts/pages/dashboard/donuts.js') }}"></script>
-    <script src="{{ asset('template/assets/demo/charts/pages/dashboard/bars.js') }}"></script>
-    <script src="{{ asset('template/assets/demo/charts/pages/dashboard/progress.js') }}"></script>
-    <script src="{{ asset('template/assets/demo/charts/pages/dashboard/heatmaps.js') }}"></script>
-    <script src="{{ asset('template/assets/demo/charts/pages/dashboard/pies.js') }}"></script>
-    <script src="{{ asset('template/assets/demo/data/dashboard/bullets.json') }}"></script>
-    <!-- /theme JS files -->
-
-</head>
-
-<body>
-
-    <!-- Main navbar -->
-    @include('layouts.navbar')
-
-    <!-- /main navbar -->
-
-
-    <!-- Page content -->
-    <div class="page-content">
-
-        <!-- Main sidebar -->
-        <div class="sidebar sidebar-dark sidebar-main sidebar-expand-lg">
-
-            <!-- Sidebar content -->
-            @include('layouts.sidebar')
-
-            <!-- /sidebar content -->
-
-        </div>
-        <!-- /main sidebar -->
-
-
-        <!-- Main content -->
-        <div class="content-wrapper">
-
-            <!-- Inner content -->
-            <div class="content-inner">
-
-
-                <!-- Content area -->
-                <div class="content">
-
-                    <!-- Main charts -->
-                    <div class="row">
-                        <div class="col-xl-5">
-
-
-                        </div>
-                    </div>
-                    <!-- /main charts -->
-
-                    <!-- Dashboard content -->
-                    @include('layouts.dashboard_content')
-
-                    <!-- /dashboard content -->
-
-                </div>
-                <!-- /content area -->
-
-                <!-- Footer -->
-                @include('layouts.footer')
-
-                <!-- /footer -->
-
-            </div>
-            <!-- /inner content -->
-
-        </div>
-        <!-- /main content -->
-
+<!-- Card Profil -->
+<div class="col-md-12">
+  <div class="card shadow-sm border-0 rounded-4 p-4 ">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+      <h5 class="fw-bold text-muted form-label mb-0">
+        <i class="bi bi-person-circle me-2 text-muted text-primary form-label"></i> Profil Pengguna
+      </h5>
     </div>
-    <!-- /page content -->
 
+    <div class="row g-3">
+      <div class="col-md-12">
+        <label class="form-label text-muted">Nama Lengkap</label>
+        <div class="form-control bg-light border-0 shadow-sm">{{ $user['name'] }}</div>
+      </div>
+      <div class="col-md-12">
+        <label class="form-label text-muted">Email</label>
+        <div class="form-control bg-light border-0 shadow-sm">{{ $user['email'] }}</div>
+        <small class="text-muted mt-1 d-block">Klik tombol di bawah untuk mengganti email.</small>
+      </div>
+      <div class="col-md-12">
+        <label class="form-label text-muted">Nomor Telepon</label>
+        <div class="form-control bg-light border-0 shadow-sm">{{ $user['phone'] ?? '-' }}</div>
+      </div>
+    </div>
 
-    <!-- Notifications -->
-    @include('layouts.components.notifications')
+    <div class="text-end mt-4">
+      <button class="btn btn-primary rounded-pill px-4 me-2" data-bs-toggle="modal" data-bs-target="#editInfoModal">
+        <i class="bi bi-pencil me-1"></i> Edit Profil
+      </button>
+      <button class="btn btn-outline-dark rounded-pill px-4" data-bs-toggle="modal" data-bs-target="#changeEmailModal">
+        <i class="bi bi-envelope me-1"></i> Ubah Email
+      </button>
+    </div>
+  </div>
+</div>
 
-    <!-- /notifications -->
+<!-- Modal Edit Profil -->
+<div class="modal fade" id="editInfoModal" tabindex="-1">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content rounded-4 border-0 shadow">
+      <form method="POST">
+        @csrf
+        <div class="modal-header text-muted text-primary form-label border-0 form-label">
+          <h5 class="modal-title text-muted "><i class="bi bi-pencil-square me-1 text-primary"></i> Edit Profil</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+        </div>
+        <div class="modal-body">
+          <div class="row g-3">
+            <div class="col-md-12">
+              <label class="form-label">Nama Lengkap</label>
+              <input type="text" class="form-control bg-light border-0 shadow-sm" name="name" value="{{ $user['name'] }}">
+            </div>
+            <div class="col-md-12">
+              <label class="form-label">Nomor Telepon</label>
+              <input type="text" class="form-control bg-light border-0 shadow-sm" name="phone" value="{{ $user['phone'] ?? '' }}">
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer border-0">
+          <button type="button" class="btn btn-light rounded-pill px-4" data-bs-dismiss="modal">Batal</button>
+          <button type="submit" class="btn btn-success rounded-pill px-4">Simpan</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
 
+<!-- Modal Ubah Email -->
+<div class="modal fade" id="changeEmailModal" tabindex="-1">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content rounded-4 border-0 shadow">
+      <form method="POST">
+        @csrf
+        <div class="modal-header text-muted text-primary form-label border-0">
+          <h5 class="modal-title"><i class="bi bi-envelope-at me-1 text-warning"></i> Ubah Email</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+        </div>
+        <div class="modal-body">
+          <label class="form-label">Email Baru</label>
+          <input type="email" class="form-control bg-light border-0 shadow-sm" name="new_email" placeholder="nama@email.com" required>
+          <small class="text-muted mt-1 d-block">Kami akan mengirimkan konfirmasi ke email baru.</small>
+        </div>
+        <div class="modal-footer border-0">
+          <button type="button" class="btn btn-light rounded-pill px-4" data-bs-dismiss="modal">Batal</button>
+          <button type="submit" class="btn btn-warning rounded-pill px-4">Kirim</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
 
-    <!-- Demo config -->
-    @include('layouts.components.demo_config')
-
-    <!-- /demo config -->
-
-</body>
-
-</html>
+@endsection

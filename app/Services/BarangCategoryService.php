@@ -27,6 +27,18 @@ class BarangCategoryService
         return collect();
     }
 
+    public function count()
+    {
+        $token = session('token');
+        $response = $this->repository->getAll($token);
+
+        if ($response->successful()) {
+            return count($response->json('data') ?? []);
+        }
+
+        return 0;
+    }
+
     public function find($id, $token): ?BarangCategoryResource
     {
         $response = $this->repository->getById($id, $token);

@@ -4,30 +4,40 @@ namespace App\Http\Middleware;
 
 use Closure;
 use Illuminate\Http\Request;
+use App\Services\AuthService;
 use Symfony\Component\HttpFoundation\Response;
 
 class CheckPermission
 {
-    /**
-     * Handle an incoming request.
-     *
-     * @param  \Illuminate\Http\Request   $request
-     * @param  \Closure                   $next
-     * @param  string                     $permission    The permission slug you passed on the route
-     * @return \Symfony\Component\HttpFoundation\Response
-     */
+    protected $authService;
+
+    public function __construct(AuthService $authService)
+    {
+        $this->authService = $authService;
+    }
+
     public function handle(Request $request, Closure $next, string $permission): Response
     {
-        // Ambil permissions dari session
-        $permissions = session('permissions', []);
+        $token = session('token');
 
-        // Periksa apakah permission yang dibutuhkan ada di session
+        if (!$token) {
+            abort(401, 'Unauthorized');
+        }
+
+        $userInfo = $this->authService->getUserInfo($token);
+
+        if (!$userInfo) {
+            abort(403, 'Permission denied.');
+        }
+
+        $permissions = $userInfo['permissions'] ?? [];
+
         if (!in_array($permission, $permissions)) {
-            // Jika tidak ada, kembalikan error 403
             return response()->view('error.403', [], 403);
         }
 
+        $request->merge(['auth_user' => $userInfo]);
+
         return $next($request);
     }
-
 }

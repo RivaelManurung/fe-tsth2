@@ -4,18 +4,18 @@
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <title>Limitless - Responsive Web Application Kit by Eugene Kopyov</title>
+    <link rel="icon" href="{{ asset($web['web_logo']) }}" type="image/png">
+    <title>{{ $web['web_nama'] }}</title>
 
     <!-- Responsive Scan Stylesheets-->
-    <link href="{{ asset('template/assets/css/style.css') }}" rel="stylesheet" type="text/css">
     <!-- Global stylesheets -->
     <link href="{{ asset('template/assets/fonts/inter/inter.css') }}" rel="stylesheet" type="text/css">
     <link href="{{ asset('template/assets/icons/phosphor/styles.min.css') }}" rel="stylesheet" type="text/css">
     <link href="{{ asset('assets/css/ltr/all.min.css') }}" id="stylesheet" rel="stylesheet" type="text/css">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.11.4/css/lightbox.min.css" rel="stylesheet" />
     <link rel="stylesheet" href="https://code.jquery.com/ui/1.13.2/themes/base/jquery-ui.css">
-
     <!-- /global stylesheets -->
 
     <!-- Core JS files -->
@@ -24,8 +24,8 @@
     <!-- /core JS files -->
 
     <!-- Theme JS files -->
-    <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.min.js"></script>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.min.js"></script>
     <script src="{{ asset('template/assets/js/vendor/notifications/noty.min.js') }}"></script>
     {{-- <script src="{{asset('template/assets/demo/pages/extra_sweetalert.js')}}"></script> --}}
     <script src="{{ asset('template/assets/js/vendor/notifications/sweet_alert.min.js') }}"></script>
@@ -40,8 +40,8 @@
 
     <link href="{{ asset('template/assets/icons/icomoon/styles.min.css') }}" rel="stylesheet" type="text/css">
     <link href="{{ asset('template/assets/icons/material/styles.min.css') }}" rel="stylesheet" type="text/css">
-    <script src="{{ asset('template/assets/js/vendor/visualization/d3/d3.min.js') }}"></script>
-    <script src="{{ asset('template/assets/js/vendor/visualization/d3/d3_tooltip.js') }}"></script>
+    {{-- <script src="{{ asset('template/assets/js/vendor/visualization/d3/d3.min.js') }}"></script> --}}
+    {{-- <script src="{{ asset('template/assets/js/vendor/visualization/d3/d3_tooltip.js') }}"></script> --}}
     <script src="{{ asset('template/assets/js/vendor/ui/fullcalendar/main.min.js') }}"></script>
     <script src="{{ asset('template/assets/demo/pages/datatables_extension_key_table.js') }}"></script>
     <script src="{{ asset('template/assets/js/vendor/tables/datatables/extensions/key_table.min.js') }}"></script>
@@ -50,14 +50,14 @@
     <script src="{{ asset('assets/js/app.js') }}"></script>
     <script src="{{ asset('template/assets/demo/pages/dashboard.js') }}"></script>
     <script src="{{ asset('template/assets/demo/charts/pages/dashboard/streamgraph.js') }}"></script>
-    <script src="{{ asset('template/assets/demo/charts/pages/dashboard/sparklines.js') }}"></script>
-    <script src="{{ asset('template/assets/demo/charts/pages/dashboard/lines.js') }}"></script>
-    <script src="{{ asset('template/assets/demo/charts/pages/dashboard/areas.js') }}"></script>
-    <script src="{{ asset('template/assets/demo/charts/pages/dashboard/donuts.js') }}"></script>
-    <script src="{{ asset('template/assets/demo/charts/pages/dashboard/bars.js') }}"></script>
+    {{-- <script src="{{ asset('template/assets/demo/charts/pages/dashboard/sparklines.js') }}"></script> --}}
+    {{-- <script src="{{ asset('template/assets/demo/charts/pages/dashboard/lines.js') }}"></script> --}}
+    {{-- <script src="{{ asset('template/assets/demo/charts/pages/dashboard/areas.js') }}"></script> --}}
+    {{-- <script src="{{ asset('template/assets/demo/charts/pages/dashboard/donuts.js') }}"></script> --}}
+    {{-- <script src="{{ asset('template/assets/demo/charts/pages/dashboard/bars.js') }}"></script> --}}
     <script src="{{ asset('template/assets/demo/charts/pages/dashboard/progress.js') }}"></script>
     <script src="{{ asset('template/assets/demo/charts/pages/dashboard/heatmaps.js') }}"></script>
-    <script src="{{ asset('template/assets/demo/charts/pages/dashboard/pies.js') }}"></script>
+    {{-- <script src="{{ asset('template/assets/demo/charts/pages/dashboard/pies.js') }}"></script> --}}
     <script src="{{ asset('template/assets/demo/data/dashboard/bullets.json') }}"></script>
     <!-- /theme JS files -->
     <script src="https://cdn.jsdelivr.net/npm/parsleyjs@2.9.3/dist/parsley.min.js"></script>

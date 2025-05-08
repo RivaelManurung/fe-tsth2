@@ -39,8 +39,8 @@
                         <div class="card shadow-lg border-0 rounded-4" style="min-width: 360px;">
                             <div class="card-body p-4">
                                 <div class="text-center mb-4">
-                                    <img src="{{ asset('template/assets/images/logo_icon.svg') }}" class="h-48px mb-2" alt="">
-                                    <h5 class="fw-semibold mb-0">Login to your account</h5>
+                                    <img src="{{ asset('template/assets/images/logo_icon.png') }}" class="h-48px mb-2" alt="Logo">
+                                    <h3 class="fw-semibold mb-0">Login</h3>
                                     <small class="text-muted">Enter your credentials below</small>
                                 </div>
 
@@ -61,11 +61,12 @@
                                     </div>
                                 @endif
 
-                                <!-- Email -->
+                                <!-- Name -->
                                 <div class="mb-3">
-                                    <label class="form-label">Email</label>
+                                    <label class="form-label" for="name">Name</label>
                                     <div class="form-control-feedback form-control-feedback-start">
-                                        <input type="email" name="email" class="form-control rounded-3" placeholder="Masukkan email.." required>
+                                        <input type="text" id="name" name="name" class="form-control rounded-3"
+                                            placeholder="Masukkan nama.." required>
                                         <div class="form-control-feedback-icon">
                                             <i class="ph-user-circle text-muted"></i>
                                         </div>
@@ -73,17 +74,33 @@
                                 </div>
 
                                 <!-- Password -->
-                                <div class="mb-3">
-                                    <label class="form-label">Password</label>
+                                <div class="mb-2">
+                                    <label class="form-label" for="passwordInput">Password</label>
                                     <div class="form-control-feedback form-control-feedback-start position-relative">
-                                        <input type="password" name="password" id="passwordInput" class="form-control rounded-3" placeholder="•••••••••••" required>
+                                        <input type="password" name="password" id="passwordInput"
+                                            class="form-control rounded-3" placeholder="•••••••••••" required>
                                         <div class="form-control-feedback-icon">
                                             <i class="ph-lock text-muted"></i>
                                         </div>
-                                        <button type="button" onclick="togglePassword()" class="position-absolute end-0 top-50 translate-middle-y me-3 p-0 bg-transparent border-0" style="z-index: 10;">
+                                        <button type="button" onclick="togglePassword()"
+                                            class="position-absolute end-0 top-50 translate-middle-y me-3 p-0 bg-transparent border-0"
+                                            style="z-index: 10;">
                                             <i id="toggleIcon" class="ph-eye text-muted fs-5"></i>
                                         </button>
                                     </div>
+                                </div>
+
+                                <!-- Forgot password -->
+                                <div class="d-flex justify-content-end mb-3">
+                                    <a href="" class="text-decoration-none small text-muted">
+                                        Lupa password?
+                                    </a>
+                                </div>
+
+                                <!-- Remember me -->
+                                <div class="mb-3 form-check">
+                                    <input type="checkbox" class="form-check-input" id="remember" name="remember">
+                                    <label class="form-check-label" for="remember">Ingat saya</label>
                                 </div>
 
                                 <!-- Submit -->
@@ -123,7 +140,5 @@
             }
         }
     </script>
-
 </body>
-
 </html>
