@@ -40,7 +40,8 @@
                             <div class="card-body p-4">
                                 <div class="text-center mb-4">
 
-                                    <img src="{{ asset('template/assets/images/logo_icon.png') }}" class="h-48px mb-2" alt="Logo">
+                                    <img src="{{ asset('template/assets/images/logo_icon.png') }}" class="h-48px mb-2"
+                                        alt="Logo">
                                     <h3 class="fw-semibold mb-0">Login</h3>
                                     <small class="text-muted">Enter your credentials below</small>
                                 </div>
@@ -66,13 +67,8 @@
                                 <div class="mb-3">
                                     <label class="form-label" for="name">Name</label>
                                     <div class="form-control-feedback form-control-feedback-start">
-<<<<<<< HEAD
-                                        <input type="email" name="email" class="form-control rounded-3"
-                                            placeholder="Masukkan email.." required>
-=======
-                                        <input type="text" id="name" name="name" class="form-control rounded-3"
-                                            placeholder="Masukkan nama.." required>
->>>>>>> 23ddbcc59bd8065cca74042368d9fffb3695608c
+                                        <input type="text" id="name" name="name"
+                                            class="form-control rounded-3" placeholder="Masukkan nama.." required>
                                         <div class="form-control-feedback-icon">
                                             <i class="ph-user-circle text-muted"></i>
                                         </div>
@@ -95,13 +91,6 @@
                                         </button>
                                     </div>
                                 </div>
-
-<<<<<<< HEAD
-                                <!-- Remember me -->
-                                <div class="mb-3 form-check">
-                                    <input type="checkbox" class="form-check-input" id="remember" name="remember">
-                                    <label class="form-check-label" for="remember">Remember me</label>
-=======
                                 <!-- Forgot password -->
                                 <div class="d-flex justify-content-end mb-3">
                                     <a href="" class="text-decoration-none small text-muted">
@@ -113,7 +102,6 @@
                                 <div class="mb-3 form-check">
                                     <input type="checkbox" class="form-check-input" id="remember" name="remember">
                                     <label class="form-check-label" for="remember">Ingat saya</label>
->>>>>>> 23ddbcc59bd8065cca74042368d9fffb3695608c
                                 </div>
 
                                 <!-- Submit -->
@@ -154,4 +142,5 @@
         }
     </script>
 </body>
+
 </html>
