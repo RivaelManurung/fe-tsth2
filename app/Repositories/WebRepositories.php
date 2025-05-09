@@ -1,8 +1,5 @@
 <?php
-<<<<<<< HEAD
-=======
 
->>>>>>> 23ddbcc59bd8065cca74042368d9fffb3695608c
 namespace App\Repositories;
 
 use Illuminate\Support\Facades\Http;
@@ -16,16 +13,7 @@ class WebRepositories
         $this->baseUrl = config('api.base_url') . '/webs';
     }
 
-<<<<<<< HEAD
-    public function getAll($token)
-    {
-        return Http::withToken($token)->get($this->baseUrl)->json('data');
-    }
 
-    public function update($token, $id, $data)
-    {
-        return Http::withToken($token)->put("{$this->baseUrl}/{$id}", $data)->json();
-=======
     // Mengambil semua data dari API
     public function getById($token, $id = 1)
     {
@@ -49,6 +37,5 @@ class WebRepositories
             // Log error atau return null jika gagal
             return null;
         }
->>>>>>> 23ddbcc59bd8065cca74042368d9fffb3695608c
     }
 }
