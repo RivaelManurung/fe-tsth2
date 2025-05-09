@@ -260,17 +260,14 @@
             }
         }
 
-        // Fungsi untuk menangani submit form transaksi dengan fetch
         document.getElementById('transaction-form').addEventListener('submit', function(e) {
-            e.preventDefault(); // Mencegah default submit form
+            e.preventDefault();
 
             const transactionTypeId = document.getElementById('transaction-type').value;
 
-            // Ambil data dari tabel barang berdasarkan atribut data-barang-kode.
             let items = [];
             document.querySelectorAll('[data-barang-kode]').forEach(row => {
                 const kode = row.getAttribute('data-barang-kode');
-                // Pastikan elemen yang menampilkan jumlah memiliki kelas "quantity"
                 const qtyElem = row.querySelector('.quantity');
                 if (qtyElem) {
                     const qty = parseInt(qtyElem.innerText);
@@ -284,7 +281,7 @@
             });
 
             if (items.length === 0) {
-                alert('Tidak ada barang yang ditambahkan.');
+                showFlashMessage('danger', 'Tidak ada barang yang ditambahkan.');
                 return;
             }
 
@@ -312,9 +309,7 @@
                 .catch(error => {
                     const errorMessage = error?.message || 'Gagal menyimpan transaksi.';
                     showFlashMessage('danger', errorMessage);
-
                 });
-
         });
 
         function showFlashMessage(type, message) {
