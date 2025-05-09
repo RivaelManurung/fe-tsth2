@@ -18,22 +18,39 @@ class WebController extends Controller
 
     public function index(Request $request)
     {
-        $token = $request->bearerToken();
-        // dd($token);
-        $webs = $this->webService->getAll($token);
-        // dd($webs);
-        return view('frontend.web.index',compact('webs'));
+
+        $token = session('token');
+        $response = $this->webService->getById($token, 1);
+
+        $web = (array) ($response->data ?? $response);
+
+        return view('frontend.web.index', ['web' => $web, 'webId' => 1]);
     }
 
     public function update(Request $request, $id)
     {
-        $token = $request->bearerToken();
-        $data = $request->only(['web_nama', 'web_logo', 'web_deskripsi']);
-        $updated = $this->webService->update($token, $id, $data);
+        $token = session('token');
 
-        return response()->gitjson([
-            'message' => 'Data berhasil diperbarui.',
-            'data' => new WebResource((object) $updated)
-        ]);
+        // Ambil hanya field yang kita butuhkan (nama, deskripsi, dan base64 dari JS)
+        $data = $request->only(['web_nama', 'web_deskripsi', 'web_logo']);
+
+        // Pastikan web_logo itu string base64, bukan UploadedFile
+        if ($request->filled('web_logo')) {
+            $base64 = $data['web_logo'];
+            if (!strpos($base64, ',')) {
+                return back()->withErrors('Format base64 tidak valid');
+            }
+            // tidak perlu decode di frontend; frontend service akan menulis ke backend_api
+        } else {
+            // jika tidak ada perubahan logo, jangan kirim field ini ke API
+            unset($data['web_logo']);
+        }
+
+        // Panggil service untuk update via API
+        $this->webService->update($token, $id, $data);
+
+        return redirect()
+            ->route('webs.index')
+            ->with('success', 'Data berhasil diperbarui.');
     }
 }

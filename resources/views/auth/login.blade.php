@@ -39,8 +39,8 @@
                         <div class="card shadow-lg border-0 rounded-4" style="min-width: 360px;">
                             <div class="card-body p-4">
                                 <div class="text-center mb-4">
-                                    <img src="{{ asset('template/assets/images/logo_icon.png') }}" class="h-48px mb-2"
-                                        alt="">
+
+                                    <img src="{{ asset('template/assets/images/logo_icon.png') }}" class="h-48px mb-2" alt="Logo">
                                     <h3 class="fw-semibold mb-0">Login</h3>
                                     <small class="text-muted">Enter your credentials below</small>
                                 </div>
@@ -62,12 +62,17 @@
                                     </div>
                                 @endif
 
-                                <!-- Email -->
+                                <!-- Name -->
                                 <div class="mb-3">
-                                    <label class="form-label">Email</label>
+                                    <label class="form-label" for="name">Name</label>
                                     <div class="form-control-feedback form-control-feedback-start">
+<<<<<<< HEAD
                                         <input type="email" name="email" class="form-control rounded-3"
                                             placeholder="Masukkan email.." required>
+=======
+                                        <input type="text" id="name" name="name" class="form-control rounded-3"
+                                            placeholder="Masukkan nama.." required>
+>>>>>>> 23ddbcc59bd8065cca74042368d9fffb3695608c
                                         <div class="form-control-feedback-icon">
                                             <i class="ph-user-circle text-muted"></i>
                                         </div>
@@ -75,8 +80,8 @@
                                 </div>
 
                                 <!-- Password -->
-                                <div class="mb-3">
-                                    <label class="form-label">Password</label>
+                                <div class="mb-2">
+                                    <label class="form-label" for="passwordInput">Password</label>
                                     <div class="form-control-feedback form-control-feedback-start position-relative">
                                         <input type="password" name="password" id="passwordInput"
                                             class="form-control rounded-3" placeholder="•••••••••••" required>
@@ -91,10 +96,24 @@
                                     </div>
                                 </div>
 
+<<<<<<< HEAD
                                 <!-- Remember me -->
                                 <div class="mb-3 form-check">
                                     <input type="checkbox" class="form-check-input" id="remember" name="remember">
                                     <label class="form-check-label" for="remember">Remember me</label>
+=======
+                                <!-- Forgot password -->
+                                <div class="d-flex justify-content-end mb-3">
+                                    <a href="" class="text-decoration-none small text-muted">
+                                        Lupa password?
+                                    </a>
+                                </div>
+
+                                <!-- Remember me -->
+                                <div class="mb-3 form-check">
+                                    <input type="checkbox" class="form-check-input" id="remember" name="remember">
+                                    <label class="form-check-label" for="remember">Ingat saya</label>
+>>>>>>> 23ddbcc59bd8065cca74042368d9fffb3695608c
                                 </div>
 
                                 <!-- Submit -->
@@ -134,7 +153,5 @@
             }
         }
     </script>
-
 </body>
-
 </html>

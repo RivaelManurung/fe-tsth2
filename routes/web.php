@@ -13,6 +13,8 @@ use App\Http\Controllers\SatuanController;
 use App\Http\Controllers\TransactionController;
 use App\Http\Controllers\TransactionTypeController;
 use App\Http\Controllers\UserController;
+
+use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\WebController;
 use Illuminate\Support\Facades\Route;
 
@@ -36,12 +38,8 @@ Route::middleware('auth.session')->group(function () {
         return 'Middleware OK';
     })->middleware('refresh.permissions');
 
-    Route::get('/user_profile', function () {
-        return view('frontend.profile.user_profile');
-    })->name('profile.user_profile');
-    Route::get('/user_profile/change-password', function () {
-        return view('frontend.profile.ganti_password');
-    })->name('profile.ganti-password');
+    Route::get('/user_profile', [ProfileController::class, 'index'])->name('profile.user_profile');
+    Route::get('/user_profile/change-password', [ProfileController::class, 'changePassword'])->name('profile.ganti-password');
 
     Route::get('laporan-transaksi', [LaporanController::class, 'laporanTrans'])->name('laporan.transaksi');
     Route::get('laporan-transaksi/export-pdf', [LaporanController::class, 'exportPDF'])->name('laporan.transaksi.exportPDF');

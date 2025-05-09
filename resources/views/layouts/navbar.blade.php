@@ -9,8 +9,8 @@
 
         <div class="navbar-brand flex-1 flex-lg-0">
             <a href="index.html" class="d-inline-flex align-items-center">
-                <img src="{{ asset('template/assets/images/logo_icon.png') }}" alt="" style="height: 24px;">
-                <h6 class="ms-2 mb-0 text-light ultra-regular" style="line-height: 1;">TSTH2 WHAREHOUSE</h6>
+                <img src="{{ $web['web_logo'] }}" alt="" style="height: 24px;">
+                <h6 class="ms-2 mb-0 text-light ultra-regular" style="line-height: 1;">{{ $web['web_nama'] }}</h6>
             </a>
         </div>
 
@@ -36,11 +36,11 @@
             <li class="nav-item nav-item-dropdown-lg dropdown ms-lg-2">
                 <a href="#" class="navbar-nav-link align-items-center rounded-pill p-1" data-bs-toggle="dropdown">
                     <div class="status-indicator-container">
-                        <img src="{{ Avatar::create(session('user')['name'])->toBase64() }}"
-                        class="w-32px h-32px rounded-pill" alt="">
+                        <img src="{{ Avatar::create($user['name'])->toBase64() }}" class="w-32px h-32px rounded-pill"
+                            alt="">
                         <span class="status-indicator bg-success"></span>
                     </div>
-                    <span class="d-none d-lg-inline-block mx-lg-2"> {{ session('user')['name'] }}</span>
+                    <span class="d-none d-lg-inline-block mx-lg-2"> {{ $user['name'] }}</span>
                 </a>
 
                 <div class="dropdown-menu dropdown-menu-end">

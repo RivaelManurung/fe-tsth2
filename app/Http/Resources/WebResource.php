@@ -17,7 +17,7 @@ class WebResource extends JsonResource
         return [
             'id' => $this->id,
             'web_nama' => $this->web_nama,
-            'web_logo' => $this->web_logo,
+            'web_logo' => asset('storage/' . $this->web_logo),
             'web_deskripsi' => $this->web_deskripsi,
             'user' => [
                 'id' => $this->user['id'],

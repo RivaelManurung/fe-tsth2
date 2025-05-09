@@ -44,36 +44,35 @@ class UserController extends Controller
     {
         try {
             $response = $this->userService->createUser($request->only([
-                'name',
-                'email',
-                'password',
-                'password_confirmation',
-                'roles'
+                'name', 'email', 'password', 'password_confirmation', 'roles'
             ]));
 
             if ($response->successful()) {
                 return redirect()->route('users.index')->with('success', 'User berhasil ditambahkan!');
             }
 
-            $responseBody = $response->json();
-            return back()->withErrors([
-                'message' => $responseBody['error'] ?? 'Gagal menyimpan user.'
-            ]);
-        } catch (\Exception $e) {
-            return back()->withErrors(['message' => $e->getMessage()]);
-        }
+        $responseBody = $response->json();
+        return back()->withErrors([
+            'message' => $responseBody['error'] ?? 'Gagal menyimpan user.'
+        ]);
+    } catch (\Exception $e) {
+        return back()->withErrors(['message' => $e->getMessage()]);
     }
+}
 
     public function update(Request $request, $id)
     {
         try {
-            $response = $this->userService->updateUser($request->only([
+            // Mendapatkan data yang diterima dari form, termasuk roles yang dikirim sebagai array
+            $data = $request->only([
                 'name',
-                'email',
                 'password',
                 'password_confirmation',
                 'roles'
-            ]), $id);
+            ]);
+
+            // Proses update user menggunakan service
+            $response = $this->userService->updateUser($data, $id);
 
             if ($response->successful()) {
                 return redirect()->route('users.index')->with('success', 'User berhasil diperbarui!');
@@ -87,7 +86,6 @@ class UserController extends Controller
             return back()->withErrors(['message' => $e->getMessage()]);
         }
     }
-
     public function destroy($id)
     {
         try {

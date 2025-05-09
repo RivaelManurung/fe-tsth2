@@ -260,6 +260,7 @@
             }
         }
 
+
         document.getElementById('transaction-form').addEventListener('submit', function(e) {
             e.preventDefault();
 
@@ -268,6 +269,7 @@
             let items = [];
             document.querySelectorAll('[data-barang-kode]').forEach(row => {
                 const kode = row.getAttribute('data-barang-kode');
+
                 const qtyElem = row.querySelector('.quantity');
                 if (qtyElem) {
                     const qty = parseInt(qtyElem.innerText);
@@ -282,6 +284,7 @@
 
             if (items.length === 0) {
                 showFlashMessage('danger', 'Tidak ada barang yang ditambahkan.');
+
                 return;
             }
 
@@ -310,6 +313,7 @@
                     const errorMessage = error?.message || 'Gagal menyimpan transaksi.';
                     showFlashMessage('danger', errorMessage);
                 });
+
         });
 
         function showFlashMessage(type, message) {

@@ -49,4 +49,16 @@ class AuthService
         }
         return false;
     }
+    public function getUserInfo(): ?array
+{
+    $token = session('token');
+    if (!$token) return null;
+
+    $response = $this->repository->getUserInfo($token);
+    if ($response->successful()) {
+        return $response->json()['data'];
+    }
+
+    return null;
+}
 }
