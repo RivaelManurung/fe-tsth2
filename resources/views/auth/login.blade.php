@@ -36,7 +36,7 @@
                     <form class="login-form" action="{{ route('auth.login') }}" method="POST">
                         @csrf
 
-                        <div class="card shadow-lg border-0 rounded-4" style="min-width: 360px;">
+                        <div class="card shadow-lg border-0 rounded-4" style="min-width: 360px; max-width: 420px; width: 100%;">
                             <div class="card-body p-4">
                                 <div class="text-center mb-4">
                                     <img src="{{ asset('template/assets/images/logo_icon.png') }}" class="h-48px mb-2" alt="">
@@ -44,31 +44,26 @@
                                     <small class="text-muted">Enter your credentials below</small>
                                 </div>
 
-                                <!-- Flash messages -->
-                                @if (session('error_message'))
-                                    <div class="alert alert-danger text-center">
-                                        {{ session('error_message') }}
-                                    </div>
-                                @endif
-                                @if (session('login_success'))
-                                    <div class="alert alert-success text-center">
-                                        {{ session('login_success') }}
-                                    </div>
-                                @endif
+                                <!-- Global login error -->
                                 @if ($errors->has('login_error'))
                                     <div class="alert alert-danger text-center">
                                         {{ $errors->first('login_error') }}
                                     </div>
                                 @endif
 
-                                <!-- Email -->
+                                <!-- Username -->
                                 <div class="mb-3">
-                                    <label class="form-label">Email</label>
+                                    <label class="form-label">Username</label>
                                     <div class="form-control-feedback form-control-feedback-start">
-                                        <input type="email" name="email" class="form-control rounded-3" placeholder="Masukkan email.." required>
+                                        <input type="text" name="name" value="{{ old('name') }}" class="form-control rounded-3 @error('name') is-invalid @enderror" placeholder="Masukkan Username.." required>
                                         <div class="form-control-feedback-icon">
                                             <i class="ph-user-circle text-muted"></i>
                                         </div>
+                                        @error('name')
+                                            <div class="invalid-feedback">
+                                                {{ $message }}
+                                            </div>
+                                        @enderror
                                     </div>
                                 </div>
 
@@ -76,13 +71,18 @@
                                 <div class="mb-3">
                                     <label class="form-label">Password</label>
                                     <div class="form-control-feedback form-control-feedback-start position-relative">
-                                        <input type="password" name="password" id="passwordInput" class="form-control rounded-3" placeholder="•••••••••••" required>
+                                        <input type="password" name="password" id="passwordInput" class="form-control rounded-3 @error('password') is-invalid @enderror" placeholder="•••••••••••" required>
                                         <div class="form-control-feedback-icon">
                                             <i class="ph-lock text-muted"></i>
                                         </div>
                                         <button type="button" onclick="togglePassword()" class="position-absolute end-0 top-50 translate-middle-y me-3 p-0 bg-transparent border-0" style="z-index: 10;">
                                             <i id="toggleIcon" class="ph-eye text-muted fs-5"></i>
                                         </button>
+                                        @error('password')
+                                            <div class="invalid-feedback d-block mt-1">
+                                                {{ $message }}
+                                            </div>
+                                        @enderror
                                     </div>
                                 </div>
 
@@ -97,6 +97,10 @@
                                     <button type="submit" class="btn btn-primary w-100 rounded-3">
                                         Login
                                     </button>
+                                </div>
+                                 <!-- Optional: Link to Register / Forgot Password -->
+                                 <div class="text-center">
+                                    <a  class="text-muted">Forgot your password?</a>
                                 </div>
                             </div>
                         </div>
@@ -114,6 +118,67 @@
 
     </div>
     <!-- /Page content -->
+    <!-- Demo config -->
+	<div class="offcanvas offcanvas-end" tabindex="-1" id="demo_config">
+		<div class="position-absolute top-50 end-100 visible">
+			<button type="button" class="btn btn-primary btn-icon translate-middle-y rounded-end-0" data-bs-toggle="offcanvas" data-bs-target="#demo_config">
+				<i class="ph-gear"></i>
+			</button>
+		</div>
+
+		<div class="offcanvas-header border-bottom py-0">
+			<h5 class="offcanvas-title py-3">Demo configuration</h5>
+			<button type="button" class="btn btn-light btn-sm btn-icon border-transparent rounded-pill" data-bs-dismiss="offcanvas">
+				<i class="ph-x"></i>
+			</button>
+		</div>
+
+		<div class="offcanvas-body">
+			<div class="fw-semibold mb-2">Color mode</div>
+			<div class="list-group mb-3">
+				<label class="list-group-item list-group-item-action form-check border-width-1 rounded mb-2">
+					<div class="d-flex flex-fill my-1">
+						<div class="form-check-label d-flex me-2">
+							<i class="ph-sun ph-lg me-3"></i>
+							<div>
+								<span class="fw-bold">Light theme</span>
+								<div class="fs-sm text-muted">Set light theme or reset to default</div>
+							</div>
+						</div>
+						<input type="radio" class="form-check-input cursor-pointer ms-auto" name="main-theme" value="light" checked>
+					</div>
+				</label>
+
+				<label class="list-group-item list-group-item-action form-check border-width-1 rounded mb-2">
+					<div class="d-flex flex-fill my-1">
+						<div class="form-check-label d-flex me-2">
+							<i class="ph-moon ph-lg me-3"></i>
+							<div>
+								<span class="fw-bold">Dark theme</span>
+								<div class="fs-sm text-muted">Switch to dark theme</div>
+							</div>
+						</div>
+						<input type="radio" class="form-check-input cursor-pointer ms-auto" name="main-theme" value="dark">
+					</div>
+				</label>
+
+				<label class="list-group-item list-group-item-action form-check border-width-1 rounded mb-0">
+					<div class="d-flex flex-fill my-1">
+						<div class="form-check-label d-flex me-2">
+							<i class="ph-translate ph-lg me-3"></i>
+							<div>
+								<span class="fw-bold">Auto theme</span>
+								<div class="fs-sm text-muted">Set theme based on system mode</div>
+							</div>
+						</div>
+						<input type="radio" class="form-check-input cursor-pointer ms-auto" name="main-theme" value="auto">
+					</div>
+				</label>
+			</div>
+
+
+	</div>
+	<!-- /demo config -->
 
     <!-- Password Toggle Script -->
     <script>

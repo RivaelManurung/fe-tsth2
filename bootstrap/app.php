@@ -18,6 +18,9 @@ return Application::configure(basePath: dirname(__DIR__))
             'check.permission' => \App\Http\Middleware\CheckPermission::class,
             'refresh.permissions' => RefreshPermissionMiddleware::class, // Menambahkan middleware refresh-permission
         ]);
+        // $middleware->group('web', [
+        //     'refresh.permissions', // Menambahkan middleware refresh-permission ke grup web
+        // ]);
     })
     ->withExceptions(function (Exceptions $exceptions) {
         //

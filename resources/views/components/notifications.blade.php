@@ -11,7 +11,7 @@
         <div class="offcanvas-body p-0">
             <div class="bg-light fw-medium py-2 px-3">New notifications</div>
             <div class="p-3">
-                <div class="d-flex align-items-start mb-3">
+                {{-- <div class="d-flex align-items-start mb-3">
                     <a href="#" class="status-indicator-container me-3">
                         <img src="{{ asset('template/assets/images/demo/users/face1.jpg') }}"
                             class="w-40px h-40px rounded-pill" alt="">
@@ -199,7 +199,7 @@
                         <span class="visually-hidden">Loading...</span>
                     </div>
                 </div>
-            </div>
+            </div> --}}
         </div>
     </div>
     <!-- /notifications -->

@@ -1,5 +1,4 @@
 <?php
-
 namespace App\Http\Middleware;
 
 use Closure;
@@ -12,9 +11,11 @@ class RefreshPermissionMiddleware
 {
     public function handle(Request $request, Closure $next)
     {
+           // Cek apakah token ada di session
         if (Session::has('token')) {
             try {
                 $token = Session::get('token');
+                dd($token); // Debugging token
 
                 // Jika belum ada permissions di session atau mau selalu refresh
                 if (!Session::has('permissions')) {
@@ -35,6 +36,7 @@ class RefreshPermissionMiddleware
             }
         }
 
-        return $next($request);
+        return $next($request); 
+
     }
 }

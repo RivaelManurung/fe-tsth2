@@ -21,10 +21,7 @@ class Barang extends Model
         'barang_harga',
         'barang_gambar',
         'user_id'
-
     ];
-
-
 
     public function jenisBarang()
     {

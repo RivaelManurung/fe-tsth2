@@ -53,7 +53,7 @@
     {{-- <script src="{{ asset('template/assets/demo/charts/pages/dashboard/lines.js') }}"></script> --}}
     {{-- <script src="{{ asset('template/assets/demo/charts/pages/dashboard/areas.js') }}"></script> --}}
     {{-- <script src="{{ asset('template/assets/demo/charts/pages/dashboard/donuts.js') }}"></script> --}}
-    {{-- <script src="{{ asset('template/assets/demo/charts/pages/dashboard/bars.js') }}"></script> --}}
+    {{-- <script src="{{ asset('template/assets/demo/charts/pages/deashboard/bars.js') }}"></script> --}}
     <script src="{{ asset('template/assets/demo/charts/pages/dashboard/progress.js') }}"></script>
     <script src="{{ asset('template/assets/demo/charts/pages/dashboard/heatmaps.js') }}"></script>
     {{-- <script src="{{ asset('template/assets/demo/charts/pages/dashboard/pies.js') }}"></script> --}}
@@ -132,6 +132,7 @@
     </div>
     <!-- /page content -->
 
+    @include('components.demo_config')
 
     <!-- Notifications -->
     @include('components.notifications')
@@ -140,7 +141,6 @@
 
 
     <!-- Demo config -->
-    @include('components.demo_config')
 
     <!-- /demo config -->
 

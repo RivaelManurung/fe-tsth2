@@ -31,7 +31,7 @@ class WebController extends Controller
         $data = $request->only(['web_nama', 'web_logo', 'web_deskripsi']);
         $updated = $this->webService->update($token, $id, $data);
 
-        return response()->gitjson([
+        return response()->json([
             'message' => 'Data berhasil diperbarui.',
             'data' => new WebResource((object) $updated)
         ]);

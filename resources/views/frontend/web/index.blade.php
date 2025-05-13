@@ -34,7 +34,7 @@
               <label for="logo" class="form-label">Logo</label>
               <input type="file" class="form-control" id="logo">
             </div>
-            <div class="mb-3">
+            <div class="mb-3">l
               <label for="judul" class="form-label">Judul Website</label>
               <input type="text" class="form-control" id="judul" value="TSTH2 WHAREHOUSE">
             </div>

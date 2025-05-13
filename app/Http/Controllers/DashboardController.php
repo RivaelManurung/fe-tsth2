@@ -64,6 +64,40 @@ class DashboardController extends Controller
         $roles = $this->role_service->count();
         $barang_category = $this->kategori_barang_service->count();
         $transactionType = $this->transactionType_service->count();
-        return view('frontend.dashboard', compact('transactionType','barangs','barang_category', 'jenisbarangs', 'satuans', 'users', 'gudangs','transaksis','roles'));
-    }
+
+        $token = session('token');
+        $allTransactions = $this->transaksi_service->getAllTransactions($token);
+        $transactionTypes = $this->transactionType_service->all($token);
+
+        $summaryByType = [];
+        foreach ($transactionTypes as $type) {
+            $summaryByType[$type['name']] = [];
+        }
+
+        foreach ($allTransactions as $trx) {
+            $date = substr($trx['created_at'], 0, 10); // pakai created_at
+            $typeName = $trx['transaction_type']['name'] ?? 'Unknown';
+
+            if (!isset($summaryByType[$typeName][$date])) {
+                $summaryByType[$typeName][$date] = 0;
+            }
+
+            $summaryByType[$typeName][$date]++;
+        }
+
+        $allDates = collect($allTransactions)->pluck('created_at')->map(fn($d) => substr($d, 0, 10))->unique()->sort()->values();
+        return view('frontend.dashboard', compact(
+            'transactionType',
+            'barangs',
+            'barang_category',
+            'jenisbarangs',
+            'satuans',
+            'users',
+            'gudangs',
+            'transaksis',
+            'roles',
+            'summaryByType',
+            'allDates'
+        ));    }
+
 }
