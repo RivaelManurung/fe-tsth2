@@ -104,11 +104,11 @@
 }
 .select2-container[data-color-theme=dark], [data-color-theme=dark] .select2-container:not([data-color-theme]), html[data-color-theme=dark] .select2-container {
   color-scheme: dark;
-  --s2-bg: #2c2d33;
-  --s2-menu-bg: #32333a;
+  --s2-bg: #0a1332;
+  --s2-menu-bg: #080f25;
   --s2-menu-border-color: rgba(var(--black-rgb), 0.25);
-  --s2-search-bg: #2c2d33;
-  --s2-search-focus-bg: #2c2d33;
+  --s2-search-bg: #0a1332;
+  --s2-search-focus-bg: #0a1332;
 }
 
 .select2-selection--single {
@@ -636,7 +636,7 @@
 }
 .multiselect-native-select[data-color-theme=dark], [data-color-theme=dark] .multiselect-native-select:not([data-color-theme]), html[data-color-theme=dark] .multiselect-native-select {
   color-scheme: dark;
-  --multiselect-bg: #2c2d33;
+  --multiselect-bg: #0a1332;
 }
 .multiselect-native-select select {
   border: 0 !important;
@@ -768,7 +768,7 @@
 }
 .autoComplete_wrapper[data-color-theme=dark], [data-color-theme=dark] .autoComplete_wrapper:not([data-color-theme]), html[data-color-theme=dark] .autoComplete_wrapper {
   color-scheme: dark;
-  --ac-bg: #32333a;
+  --ac-bg: #080f25;
   --ac-border-color: rgba(var(--black-rgb), 0.25);
 }
 
@@ -918,9 +918,9 @@
 }
 .tokenfield[data-color-theme=dark], [data-color-theme=dark] .tokenfield:not([data-color-theme]), html[data-color-theme=dark] .tokenfield {
   color-scheme: dark;
-  --tf-bg: #2c2d33;
-  --tf-focus-bg: #2c2d33;
-  --tf-menu-bg: #32333a;
+  --tf-bg: #0a1332;
+  --tf-focus-bg: #0a1332;
+  --tf-menu-bg: #080f25;
   --tf-menu-border-color: rgba(var(--black-rgb), 0.25);
 }
 
@@ -1128,8 +1128,8 @@
 }
 .dual-listbox[data-color-theme=dark], [data-color-theme=dark] .dual-listbox:not([data-color-theme]), html[data-color-theme=dark] .dual-listbox {
   color-scheme: dark;
-  --dlb-input-bg: #2c2d33;
-  --dlb-input-focus-bg: #2c2d33;
+  --dlb-input-bg: #0a1332;
+  --dlb-input-focus-bg: #0a1332;
 }
 .dual-listbox .dual-listbox__container {
   display: flex;
@@ -1320,7 +1320,7 @@
 }
 .wizard[data-color-theme=dark], [data-color-theme=dark] .wizard:not([data-color-theme]), html[data-color-theme=dark] .wizard {
   color-scheme: dark;
-  --wizard-step-number-bg: #2c2d33;
+  --wizard-step-number-bg: #0a1332;
 }
 .wizard > .steps .current-info,
 .wizard > .content > .title {
@@ -2023,7 +2023,7 @@
 }
 .ql-tooltip[data-color-theme=dark], [data-color-theme=dark] .ql-tooltip:not([data-color-theme]), html[data-color-theme=dark] .ql-tooltip {
   color-scheme: dark;
-  --ql-tooltip-bg: #32333a;
+  --ql-tooltip-bg: #080f25;
 }
 .ql-tooltip:before {
   content: "Visit URL:";
@@ -2220,7 +2220,7 @@
 }
 .ql-picker-options[data-color-theme=dark], [data-color-theme=dark] .ql-picker-options:not([data-color-theme]), html[data-color-theme=dark] .ql-picker-options {
   color-scheme: dark;
-  --ql-dropdown-bg: #32333a;
+  --ql-dropdown-bg: #080f25;
   --ql-dropdown-border-color: rgba(var(--black-rgb), 0.25);
 }
 .ql-picker-options .ql-picker-item {
@@ -2472,15 +2472,15 @@
 }
 .ck[data-color-theme=dark], [data-color-theme=dark] .ck:not([data-color-theme]), html[data-color-theme=dark] .ck {
   color-scheme: dark;
-  --ck-color-base-background: #2c2d33;
-  --ck-color-toolbar-background: #2c2d33;
-  --ck-color-list-background: #32333a;
-  --ck-color-dropdown-panel-background: #32333a;
+  --ck-color-base-background: #0a1332;
+  --ck-color-toolbar-background: #0a1332;
+  --ck-color-list-background: #080f25;
+  --ck-color-dropdown-panel-background: #080f25;
   --ck-color-tooltip-text: var(--black);
   --ck-color-tooltip-background: var(--white);
-  --ck-color-panel-background: #32333a;
+  --ck-color-panel-background: #080f25;
   --ck-color-panel-border: rgba(var(--black-rgb), 0.25);
-  --ck-color-input-background: #2c2d33;
+  --ck-color-input-background: #0a1332;
 }
 
 .ck.ck-editor__editable {
@@ -2642,7 +2642,7 @@ body [dir=rtl] .ck.ck-labeled-field-view.ck-labeled-field-view_empty:not(.ck-lab
 }
 [data-color-theme=dark] .document-editor {
   --ck-doc-container-bg: rgba(var(--black-rgb), .25);
-  --ck-doc-content-bg: #2c2d33;
+  --ck-doc-content-bg: #0a1332;
 }
 
 .document-editor-container {
@@ -2707,8 +2707,8 @@ body [dir=rtl] .ck.ck-labeled-field-view.ck-labeled-field-view_empty:not(.ck-lab
 }
 .trumbowyg-box[data-color-theme=dark], [data-color-theme=dark] .trumbowyg-box:not([data-color-theme]), html[data-color-theme=dark] .trumbowyg-box {
   color-scheme: dark;
-  --tw-bg: #2c2d33;
-  --tw-dropdown-bg: #32333a;
+  --tw-bg: #0a1332;
+  --tw-dropdown-bg: #080f25;
   --tw-dropdown-border-color: rgba(var(--black-rgb), 0.25);
 }
 
@@ -2942,7 +2942,7 @@ body [dir=rtl] .ck.ck-labeled-field-view.ck-labeled-field-view_empty:not(.ck-lab
 }
 .trumbowyg-modal-box[data-color-theme=dark], [data-color-theme=dark] .trumbowyg-modal-box:not([data-color-theme]), html[data-color-theme=dark] .trumbowyg-modal-box {
   color-scheme: dark;
-  --tw-modal-bg: #2c2d33;
+  --tw-modal-bg: #0a1332;
 }
 .trumbowyg-modal-box .trumbowyg-modal-title {
   font-size: 1rem;
@@ -3021,8 +3021,8 @@ body [dir=rtl] .ck.ck-labeled-field-view.ck-labeled-field-view_empty:not(.ck-lab
 }
 .trumbowyg-modal-box form .trumbowyg-input-html input[data-color-theme=dark], [data-color-theme=dark] .trumbowyg-modal-box form .trumbowyg-input-html input:not([data-color-theme]), html[data-color-theme=dark] .trumbowyg-modal-box form .trumbowyg-input-html input {
   color-scheme: dark;
-  --tw-input-bg: #2c2d33;
-  --tw-input-focus-bg: #2c2d33;
+  --tw-input-bg: #0a1332;
+  --tw-input-focus-bg: #0a1332;
 }
 .trumbowyg-modal-box form .trumbowyg-input-html input:focus {
   outline: 0;
@@ -3270,7 +3270,7 @@ body.trumbowyg-body-fullscreen {
 }
 .daterangepicker[data-color-theme=dark], [data-color-theme=dark] .daterangepicker:not([data-color-theme]), html[data-color-theme=dark] .daterangepicker {
   color-scheme: dark;
-  --drp-bg: #32333a;
+  --drp-bg: #080f25;
   --drp-border-color: rgba(var(--black-rgb), 0.25);
 }
 
@@ -3532,7 +3532,7 @@ body.trumbowyg-body-fullscreen {
 }
 .datepicker[data-color-theme=dark], [data-color-theme=dark] .datepicker:not([data-color-theme]), html[data-color-theme=dark] .datepicker {
   color-scheme: dark;
-  --dp-bg: #32333a;
+  --dp-bg: #080f25;
   --dp-border-color: rgba(var(--black-rgb), 0.25);
 }
 
@@ -3788,7 +3788,7 @@ body.trumbowyg-body-fullscreen {
 }
 .sp-container[data-color-theme=dark], [data-color-theme=dark] .sp-container:not([data-color-theme]), html[data-color-theme=dark] .sp-container {
   color-scheme: dark;
-  --spectrum-bg: #32333a;
+  --spectrum-bg: #080f25;
   --spectrum-border-color: rgba(var(--black-rgb), 0.25);
 }
 
@@ -5125,7 +5125,7 @@ a.plupload_disabled {
 [data-color-theme=dark] .dropzone .dz-preview .dz-success-mark:not([data-color-theme]),
 html[data-color-theme=dark] .dropzone .dz-preview .dz-success-mark {
   color-scheme: dark;
-  background-color: #2c2d33;
+  background-color: #0a1332;
 }
 .dropzone .dz-preview .dz-error-mark:after,
 .dropzone .dz-preview .dz-success-mark:after {
@@ -5539,7 +5539,7 @@ html[data-color-theme=dark] .dropzone .dz-preview .dz-success-mark {
 }
 .noty_theme__limitless.noty_type__confirm[data-color-theme=dark], [data-color-theme=dark] .noty_theme__limitless.noty_type__confirm:not([data-color-theme]), html[data-color-theme=dark] .noty_theme__limitless.noty_type__confirm {
   color-scheme: dark;
-  --noty-bg: #2c2d33;
+  --noty-bg: #0a1332;
 }
 
 /* ------------------------------------------------------------------------------
@@ -5590,7 +5590,7 @@ html[data-color-theme=dark] .dropzone .dz-preview .dz-success-mark {
 }
 .swal2-container[data-color-theme=dark], [data-color-theme=dark] .swal2-container:not([data-color-theme]), html[data-color-theme=dark] .swal2-container {
   color-scheme: dark;
-  --swal-bg: #2c2d33;
+  --swal-bg: #0a1332;
   --swal-progress-color: rgba(var(--white-rgb), 0.25);
 }
 .swal2-container.swal2-backdrop-show, .swal2-container.swal2-noanimation {
@@ -7595,7 +7595,7 @@ img.fancytree-icon {
 }
 .fancytree-checkbox[data-color-theme=dark], [data-color-theme=dark] .fancytree-checkbox:not([data-color-theme]), html[data-color-theme=dark] .fancytree-checkbox {
   color-scheme: dark;
-  --ft-check-bg: #2c2d33;
+  --ft-check-bg: #0a1332;
 }
 .fancytree-checkbox:after {
   content: "";
@@ -7844,8 +7844,8 @@ img.fancytree-icon {
 }
 .fc[data-color-theme=dark], [data-color-theme=dark] .fc:not([data-color-theme]), html[data-color-theme=dark] .fc {
   color-scheme: dark;
-  --fc-bg: #2c2d33;
-  --fc-popover-bg: #32333a;
+  --fc-bg: #0a1332;
+  --fc-popover-bg: #080f25;
 }
 .fc table {
   border-collapse: collapse;
@@ -10104,8 +10104,8 @@ iframe.wait-autoplay {
 }
 .gridjs-input[data-color-theme=dark], [data-color-theme=dark] .gridjs-input:not([data-color-theme]), html[data-color-theme=dark] .gridjs-input {
   color-scheme: dark;
-  --gridjs-input-bg: #2c2d33;
-  --gridjs-input-focus-bg: #2c2d33;
+  --gridjs-input-bg: #0a1332;
+  --gridjs-input-focus-bg: #0a1332;
 }
 @media (prefers-reduced-motion: reduce) {
   .gridjs-input {
@@ -10282,7 +10282,7 @@ iframe.wait-autoplay {
 }
 .gridjs-table .gridjs-th-fixed[data-color-theme=dark], [data-color-theme=dark] .gridjs-table .gridjs-th-fixed:not([data-color-theme]), html[data-color-theme=dark] .gridjs-table .gridjs-th-fixed {
   color-scheme: dark;
-  --gridjs-header-bg: #2c2d33;
+  --gridjs-header-bg: #0a1332;
 }
 .gridjs-table .gridjs-th-fixed:after {
   content: "";
@@ -10628,7 +10628,7 @@ iframe.wait-autoplay {
 [data-color-theme=dark] .dtfc-fixed-right:not([data-color-theme]),
 html[data-color-theme=dark] .dtfc-fixed-right {
   color-scheme: dark;
-  --dtfc-bg: #2c2d33;
+  --dtfc-bg: #0a1332;
 }
 
 .dataTable tr > .dtfc-fixed-left,
@@ -10685,7 +10685,7 @@ html[data-color-theme=dark] .dtfc-fixed-right {
 }
 .dt-autofill-list[data-color-theme=dark], [data-color-theme=dark] .dt-autofill-list:not([data-color-theme]), html[data-color-theme=dark] .dt-autofill-list {
   color-scheme: dark;
-  --dtaf-bg: #2c2d33;
+  --dtaf-bg: #0a1332;
 }
 .dt-autofill-list ul {
   margin: 0;
@@ -10821,7 +10821,7 @@ html[data-color-theme=dark] .dtfc-fixed-right {
 }
 .dataTable tbody .select-checkbox[data-color-theme=dark], [data-color-theme=dark] .dataTable tbody .select-checkbox:not([data-color-theme]), html[data-color-theme=dark] .dataTable tbody .select-checkbox {
   color-scheme: dark;
-  --dt-check-bg: #2c2d33;
+  --dt-check-bg: #0a1332;
 }
 .dataTable tbody .select-checkbox:after {
   display: inline-block;
@@ -11045,7 +11045,7 @@ html[data-color-theme=dark] .dtfc-fixed-right {
  *
  *  # Responsive extension
  *
- *  Optimise the table's layout for different screen sizes through the dynamic 
+ *  Optimise the table's layout for different screen sizes through the dynamic
  *  insertion and removal of columns from the table
  *
  * ---------------------------------------------------------------------------- */

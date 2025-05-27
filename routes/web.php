@@ -7,12 +7,14 @@ use App\Http\Controllers\BarangController;
 use App\Http\Controllers\GudangController;
 use App\Http\Controllers\JenisBarangController;
 use App\Http\Controllers\LaporanController;
+use App\Http\Controllers\NotifikasiController;
 use App\Http\Controllers\PermissionController;
 use App\Http\Controllers\RoleController;
 use App\Http\Controllers\SatuanController;
 use App\Http\Controllers\TransactionController;
 use App\Http\Controllers\TransactionTypeController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\WebController;
 use Illuminate\Support\Facades\Route;
 
@@ -36,12 +38,8 @@ Route::middleware('auth.session')->group(function () {
         return 'Middleware OK';
     })->middleware('refresh.permissions');
 
-    Route::get('/user_profile', function () {
-        return view('frontend.profile.user_profile');
-    })->name('profile.user_profile');
-    Route::get('/user_profile/change-password', function () {
-        return view('frontend.profile.ganti_password');
-    })->name('profile.ganti-password');
+    Route::get('/user_profile', [ProfileController::class, 'index'])->name('profile.user_profile');
+    Route::get('/user_profile/change-password', [ProfileController::class, 'changePassword'])->name('profile.ganti-password');
 
     Route::get('laporan-transaksi', [LaporanController::class, 'laporanTrans'])->name('laporan.transaksi');
     Route::get('laporan-transaksi/export-pdf', [LaporanController::class, 'exportPDF'])->name('laporan.transaksi.exportPDF');
@@ -73,6 +71,7 @@ Route::middleware('auth.session')->group(function () {
     Route::resource('transaction-types', TransactionTypeController::class);
     Route::resource('roles', RoleController::class)->middleware('check.permission:view_role');
     Route::resource('users', UserController::class)->middleware('check.permission:view_user');
+    Route::put('profile/update-email', [ProfileController::class, 'updateEmail'])->name('profile.update-email');
 
     Route::resource('transactions', TransactionController::class);
     Route::resource('webs', WebController::class);
@@ -84,8 +83,12 @@ Route::middleware('auth.session')->group(function () {
     Route::get('/select-role', [PermissionController::class, 'selectRole'])->name('permissions.index');
     Route::get('select-role/permissions', [PermissionController::class, 'show'])->name('permissions.show');
     Route::post('/permissions/toggle', [PermissionController::class, 'toggle'])->name('permissions.toggle');
+
+
+    Route::get('notifikasi',[NotifikasiController::class, 'getUnreadNotifications'])->name('getnotifikasi');
 });
 
+\
 Route::get('/error', function () {
     return view('error.error');
 })->name('error');

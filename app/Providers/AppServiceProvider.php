@@ -5,6 +5,9 @@ namespace App\Providers;
 use Illuminate\Support\Facades\Blade;
 use Illuminate\Support\Facades\View;
 use Illuminate\Support\ServiceProvider;
+use App\Services\WebService;
+use Illuminate\Support\Facades\Auth; // Tambahkan jika pakai Auth
+use App\Services\AuthService; // Pastikan ini sesuai lokasi service-mu
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -21,12 +24,19 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        // if(config('app.env') === 'local') {
-        //     \Illuminate\Support\Facades\URL::forceScheme('https');
-        // }
         View::composer('*', function ($view) {
-            $permissions = session('permissions', []);
+            // Ambil informasi user
+            $authService = app(AuthService::class); // Panggil service
+            $user = $authService->getUserInfo();     // Ambil user info
+
+            // Pastikan permission ada di dalam array $user, misal $user['permissions']
+            $permissions = $user['permissions'] ?? []; // Menggunakan array untuk akses permissions
             // dd($permissions);
+            // Daftar permission keys
+            $webService = app(WebService::class);
+            $token = session('token'); // atau bisa juga $authService->getToken() jika ada
+            $web = $webService->getById($token, 1); // panggil berdasarkan ID
+
             $keys = [
                 'manage_permissions',
                 'create_user',
@@ -65,13 +75,18 @@ class AppServiceProvider extends ServiceProvider
                 'delete_category_barang',
             ];
 
+            // Generate permission flags berdasarkan permissions yang diambil dari user
             $flags = generatePermissionsFlags($permissions, $keys);
-            $view->with($flags);
+            $view->with(array_merge(['user' => $user, 'web' => $web], $flags));
+            // Kirim $user dan $flags ke semua view
+            $view->with(array_merge(['user' => $user], $flags));
         });
 
         Blade::if('can', function ($permission) {
-            $permissions = session('permissions', []);
-            return in_array($permission, $permissions);
+            // Ambil informasi user untuk permission
+            $user = app(AuthService::class)->getUserInfo();
+            // Periksa apakah user memiliki permission yang diberikan
+            return in_array($permission, $user['permissions'] ?? []);
         });
     }
 }

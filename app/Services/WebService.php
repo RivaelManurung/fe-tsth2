@@ -13,13 +13,14 @@ class WebService
         $this->webRepo = $webRepo;
     }
 
-    public function getAll($token)
+
+    public function getById($token, $id = 1)
     {
-        return $this->webRepo->getAll($token);
+        return $this->webRepo->getById($token, $id);
     }
 
     public function update($token, $id, $data)
     {
-        return $this->  webRepo->update($token, $id, $data);
+        return $this->webRepo->update($token, $id, $data);
     }
 }

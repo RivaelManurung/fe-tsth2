@@ -16505,7 +16505,7 @@ html[data-color-theme=dark] [data-color-theme] {
     --dark-rgb: 8, 9, 10;
     --light: #383940;
     --light-rgb: 56, 57, 64;
-    --body-bg: #202125;
+    --body-bg: #0a1332;
     --body-color: #fff;
     --body-color-rgb: 255, 255, 255;
     --border-color: #4d4d51;
@@ -16771,7 +16771,7 @@ a.text-body[data-bs-toggle=collapse]:not(.collapsed) {
 [data-color-theme=dark] .list-feed:not([data-color-theme]),
 html[data-color-theme=dark] .list-feed {
     color-scheme: dark;
-    --feed-circle-bg: #2c2d33
+    --feed-circle-bg: #0a1332
 }
 
 .list-feed-item {
@@ -17308,8 +17308,8 @@ html[data-color-theme=dark] .table-dark {
 [data-color-theme=dark] .form-control:not([data-color-theme]),
 html[data-color-theme=dark] .form-control {
     color-scheme: dark;
-    --input-bg: #2c2d33;
-    --input-focus-bg: #2c2d33
+    --input-bg: #1e293b;
+    --input-focus-bg: #0a1332
 }
 
 .form-control[data-color-theme=dark]:not([list])::-webkit-calendar-picker-indicator,
@@ -17469,7 +17469,7 @@ html[data-color-theme=dark] .form-control:not([list])::-webkit-calendar-picker-i
 [data-color-theme=dark] .form-select:not([data-color-theme]),
 html[data-color-theme=dark] .form-select {
     color-scheme: dark;
-    --form-select-bg: #2c2d33;
+    --form-select-bg: #0a1332;
     background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3e%3cpath fill='none' stroke='rgba%28255, 255, 255, 0.5%29' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M2 5l6 6 6-6'/%3e%3c/svg%3e")
 }
 
@@ -17515,7 +17515,7 @@ html[data-color-theme=dark] .form-select {
 [data-color-theme=dark] .form-check-input:not([data-color-theme]),
 html[data-color-theme=dark] .form-check-input {
     color-scheme: dark;
-    --form-check-input-bg: #2c2d33
+    --form-check-input-bg: #0a1332
 }
 
 .form-switch .form-check-input[data-color-theme=dark],
@@ -17961,7 +17961,7 @@ html[data-color-theme=dark] .btn-outline-dark {
 [data-color-theme=dark] .dropdown-menu:not([data-color-theme]),
 html[data-color-theme=dark] .dropdown-menu {
     color-scheme: dark;
-    --dropdown-bg: #32333a;
+    --dropdown-bg: #080f25;
     --dropdown-border-color: rgba(var(--black-rgb), 0.25)
 }
 
@@ -18214,8 +18214,8 @@ html[data-color-theme=dark] .dropdown-menu-dark {
 [data-color-theme=dark] .nav-tabs:not(.nav-tabs-underline):not(.nav-tabs-overline):not(.nav-tabs-solid):not([data-color-theme]),
 html[data-color-theme=dark] .nav-tabs:not(.nav-tabs-underline):not(.nav-tabs-overline):not(.nav-tabs-solid) {
     color-scheme: dark;
-    --nav-tabs-link-active-bg: #2c2d33;
-    --nav-tabs-link-active-border-color: var(--border-color) var(--border-color) #2c2d33
+    --nav-tabs-link-active-bg: #0a1332;
+    --nav-tabs-link-active-border-color: var(--border-color) var(--border-color) #0a1332
 }
 
 .dropdown-menu .nav-tabs {
@@ -18569,7 +18569,7 @@ html[data-color-theme=dark] .nav-tabs:not(.nav-tabs-underline):not(.nav-tabs-ove
 [data-color-theme=dark] .navbar:not([data-color-theme]),
 html[data-color-theme=dark] .navbar {
     color-scheme: dark;
-    --navbar-bg: #32333a
+    --navbar-bg: #080f25
 }
 
 .navbar-nav .nav-tabs {
@@ -19120,7 +19120,7 @@ html[data-color-theme=dark] .navbar {
 [data-color-theme=dark] .navbar-dark:not([data-color-theme]),
 html[data-color-theme=dark] .navbar-dark {
     color-scheme: dark;
-    --navbar-bg: #141517
+    --navbar-bg: #080f25
 }
 
 .navbar-static {
@@ -19144,7 +19144,7 @@ html[data-color-theme=dark] .navbar-dark {
 [data-color-theme=dark] .card:not([data-color-theme]),
 html[data-color-theme=dark] .card {
     color-scheme: dark;
-    --card-bg: #2c2d33
+    --card-bg: #1e293b
 }
 
 .card-footer {
@@ -19446,8 +19446,8 @@ a.breadcrumb-item[aria-expanded=true] {
 [data-color-theme=dark] .pagination:not([data-color-theme]),
 html[data-color-theme=dark] .pagination {
     color-scheme: dark;
-    --pagination-bg: #2c2d33;
-    --pagination-disabled-bg: #2c2d33
+    --pagination-bg: #0a1332;
+    --pagination-disabled-bg: #0a1332
 }
 
 .page-link {
@@ -20178,7 +20178,7 @@ html[data-color-theme=dark] .toast-header .btn-close {
 [data-color-theme=dark] .modal:not([data-color-theme]),
 html[data-color-theme=dark] .modal {
     color-scheme: dark;
-    --modal-bg: #2c2d33
+    --modal-bg: #0a1332
 }
 
 .modal-header .btn-close[data-color-theme=dark],
@@ -20231,7 +20231,7 @@ html[data-color-theme=dark] .tooltip {
 [data-color-theme=dark] .popover:not([data-color-theme]),
 html[data-color-theme=dark] .popover {
     color-scheme: dark;
-    --popover-bg: #32333a
+    --popover-bg: #080f25
 }
 
 .bs-popover-auto[data-popper-placement^=bottom]>.popover-arrow::after,
@@ -20291,7 +20291,7 @@ html[data-color-theme=dark] .popover {
 [data-color-theme=dark] .offcanvas:not([data-color-theme]),
 html[data-color-theme=dark] .offcanvas {
     color-scheme: dark;
-    --offcanvas-bg: #2c2d33
+    --offcanvas-bg: #1e293b
 }
 
 .offcanvas-header .btn-close[data-color-theme=dark],
@@ -20607,11 +20607,11 @@ html[data-color-theme=dark] .offcanvas-header .btn-close {
 [data-color-theme=dark] .select2-container:not([data-color-theme]),
 html[data-color-theme=dark] .select2-container {
     color-scheme: dark;
-    --s2-bg: #2c2d33;
-    --s2-menu-bg: #32333a;
+    --s2-bg: #0a1332;
+    --s2-menu-bg: #080f25;
     --s2-menu-border-color: rgba(var(--black-rgb), 0.25);
-    --s2-search-bg: #2c2d33;
-    --s2-search-focus-bg: #2c2d33
+    --s2-search-bg: #0a1332;
+    --s2-search-focus-bg: #0a1332
 }
 
 .select2-selection--single {
@@ -21219,7 +21219,7 @@ html[data-color-theme=dark] .select2-selection--single .select2-selection__arrow
 [data-color-theme=dark] .multiselect-native-select:not([data-color-theme]),
 html[data-color-theme=dark] .multiselect-native-select {
     color-scheme: dark;
-    --multiselect-bg: #2c2d33
+    --multiselect-bg: #0a1332
 }
 
 .multiselect-native-select select {
@@ -21369,7 +21369,7 @@ html[data-color-theme=dark] .multiselect-native-select {
 [data-color-theme=dark] .autoComplete_wrapper:not([data-color-theme]),
 html[data-color-theme=dark] .autoComplete_wrapper {
     color-scheme: dark;
-    --ac-bg: #32333a;
+    --ac-bg: #080f25;
     --ac-border-color: rgba(var(--black-rgb), 0.25)
 }
 
@@ -21519,9 +21519,9 @@ html[data-color-theme=dark] .autoComplete_wrapper {
 [data-color-theme=dark] .tokenfield:not([data-color-theme]),
 html[data-color-theme=dark] .tokenfield {
     color-scheme: dark;
-    --tf-bg: #2c2d33;
-    --tf-focus-bg: #2c2d33;
-    --tf-menu-bg: #32333a;
+    --tf-bg: #0a1332;
+    --tf-focus-bg: #0a1332;
+    --tf-menu-bg: #080f25;
     --tf-menu-border-color: rgba(var(--black-rgb), 0.25)
 }
 
@@ -21780,8 +21780,8 @@ fieldset[disabled] .tokenfield-mode-tokens {
 [data-color-theme=dark] .dual-listbox:not([data-color-theme]),
 html[data-color-theme=dark] .dual-listbox {
     color-scheme: dark;
-    --dlb-input-bg: #2c2d33;
-    --dlb-input-focus-bg: #2c2d33
+    --dlb-input-bg: #0a1332;
+    --dlb-input-focus-bg: #0a1332
 }
 
 .dual-listbox .dual-listbox__container {
@@ -22026,7 +22026,7 @@ html[data-color-theme=dark] .dual-listbox {
 [data-color-theme=dark] .wizard:not([data-color-theme]),
 html[data-color-theme=dark] .wizard {
     color-scheme: dark;
-    --wizard-step-number-bg: #2c2d33
+    --wizard-step-number-bg: #0a1332
 }
 
 .wizard>.content>.title,
@@ -22894,7 +22894,7 @@ html[data-color-theme=dark] .wizard {
 [data-color-theme=dark] .ql-tooltip:not([data-color-theme]),
 html[data-color-theme=dark] .ql-tooltip {
     color-scheme: dark;
-    --ql-tooltip-bg: #32333a
+    --ql-tooltip-bg: #080f25
 }
 
 .ql-tooltip:before {
@@ -23119,7 +23119,7 @@ html[data-color-theme=dark] .ql-tooltip {
 [data-color-theme=dark] .ql-picker-options:not([data-color-theme]),
 html[data-color-theme=dark] .ql-picker-options {
     color-scheme: dark;
-    --ql-dropdown-bg: #32333a;
+    --ql-dropdown-bg: #080f25;
     --ql-dropdown-border-color: rgba(var(--black-rgb), 0.25)
 }
 
@@ -23413,15 +23413,15 @@ html[data-color-theme=dark] .ql-picker-options {
 [data-color-theme=dark] .ck:not([data-color-theme]),
 html[data-color-theme=dark] .ck {
     color-scheme: dark;
-    --ck-color-base-background: #2c2d33;
-    --ck-color-toolbar-background: #2c2d33;
-    --ck-color-list-background: #32333a;
-    --ck-color-dropdown-panel-background: #32333a;
+    --ck-color-base-background: #0a1332;
+    --ck-color-toolbar-background: #0a1332;
+    --ck-color-list-background: #080f25;
+    --ck-color-dropdown-panel-background: #080f25;
     --ck-color-tooltip-text: var(--black);
     --ck-color-tooltip-background: var(--white);
-    --ck-color-panel-background: #32333a;
+    --ck-color-panel-background: #080f25;
     --ck-color-panel-border: rgba(var(--black-rgb), 0.25);
-    --ck-color-input-background: #2c2d33
+    --ck-color-input-background: #0a1332
 }
 
 .ck.ck-editor__editable {
@@ -23621,7 +23621,7 @@ body [dir=rtl] .ck.ck-labeled-field-view.ck-labeled-field-view_empty:not(.ck-lab
 
 [data-color-theme=dark] .document-editor {
     --ck-doc-container-bg: rgba(var(--black-rgb), .25);
-    --ck-doc-content-bg: #2c2d33
+    --ck-doc-content-bg: #0a1332
 }
 
 .document-editor-container {
@@ -23686,8 +23686,8 @@ body [dir=rtl] .ck.ck-labeled-field-view.ck-labeled-field-view_empty:not(.ck-lab
 [data-color-theme=dark] .trumbowyg-box:not([data-color-theme]),
 html[data-color-theme=dark] .trumbowyg-box {
     color-scheme: dark;
-    --tw-bg: #2c2d33;
-    --tw-dropdown-bg: #32333a;
+    --tw-bg: #0a1332;
+    --tw-dropdown-bg: #080f25;
     --tw-dropdown-border-color: rgba(var(--black-rgb), 0.25)
 }
 
@@ -23961,7 +23961,7 @@ html[data-color-theme=dark] .trumbowyg-box {
 [data-color-theme=dark] .trumbowyg-modal-box:not([data-color-theme]),
 html[data-color-theme=dark] .trumbowyg-modal-box {
     color-scheme: dark;
-    --tw-modal-bg: #2c2d33
+    --tw-modal-bg: #0a1332
 }
 
 .trumbowyg-modal-box .trumbowyg-modal-title {
@@ -24057,8 +24057,8 @@ html[data-color-theme=dark] .trumbowyg-modal-box {
 [data-color-theme=dark] .trumbowyg-modal-box form .trumbowyg-input-html input:not([data-color-theme]),
 html[data-color-theme=dark] .trumbowyg-modal-box form .trumbowyg-input-html input {
     color-scheme: dark;
-    --tw-input-bg: #2c2d33;
-    --tw-input-focus-bg: #2c2d33
+    --tw-input-bg: #0a1332;
+    --tw-input-focus-bg: #0a1332
 }
 
 .trumbowyg-modal-box form .trumbowyg-input-html input:focus {
@@ -24325,7 +24325,7 @@ body.trumbowyg-body-fullscreen {
 [data-color-theme=dark] .daterangepicker:not([data-color-theme]),
 html[data-color-theme=dark] .daterangepicker {
     color-scheme: dark;
-    --drp-bg: #32333a;
+    --drp-bg: #080f25;
     --drp-border-color: rgba(var(--black-rgb), 0.25)
 }
 
@@ -24658,7 +24658,7 @@ html[data-color-theme=dark] .daterangepicker {
 [data-color-theme=dark] .datepicker:not([data-color-theme]),
 html[data-color-theme=dark] .datepicker {
     color-scheme: dark;
-    --dp-bg: #32333a;
+    --dp-bg: #080f25;
     --dp-border-color: rgba(var(--black-rgb), 0.25)
 }
 
@@ -24962,7 +24962,7 @@ html[data-color-theme=dark] .datepicker {
 [data-color-theme=dark] .sp-container:not([data-color-theme]),
 html[data-color-theme=dark] .sp-container {
     color-scheme: dark;
-    --spectrum-bg: #32333a;
+    --spectrum-bg: #080f25;
     --spectrum-border-color: rgba(var(--black-rgb), 0.25)
 }
 
@@ -26429,7 +26429,7 @@ html[data-color-theme=dark] .file-preview .btn-close {
 html[data-color-theme=dark] .dropzone .dz-preview .dz-error-mark,
 html[data-color-theme=dark] .dropzone .dz-preview .dz-success-mark {
     color-scheme: dark;
-    background-color: #2c2d33
+    background-color: #0a1332
 }
 
 .dropzone .dz-preview .dz-error-mark:after,
@@ -26957,7 +26957,7 @@ html[data-color-theme=dark] .noty_layout {
 [data-color-theme=dark] .noty_theme__limitless.noty_type__confirm:not([data-color-theme]),
 html[data-color-theme=dark] .noty_theme__limitless.noty_type__confirm {
     color-scheme: dark;
-    --noty-bg: #2c2d33
+    --noty-bg: #0a1332
 }
 
 .swal2-shown.swal2-no-backdrop .swal2-container {
@@ -27005,7 +27005,7 @@ html[data-color-theme=dark] .noty_theme__limitless.noty_type__confirm {
 [data-color-theme=dark] .swal2-container:not([data-color-theme]),
 html[data-color-theme=dark] .swal2-container {
     color-scheme: dark;
-    --swal-bg: #2c2d33;
+    --swal-bg: #0a1332;
     --swal-progress-color: rgba(var(--white-rgb), 0.25)
 }
 
@@ -29379,7 +29379,7 @@ img.fancytree-icon {
 [data-color-theme=dark] .fancytree-checkbox:not([data-color-theme]),
 html[data-color-theme=dark] .fancytree-checkbox {
     color-scheme: dark;
-    --ft-check-bg: #2c2d33
+    --ft-check-bg: #0a1332
 }
 
 .fancytree-checkbox:after {
@@ -29661,8 +29661,8 @@ html[data-color-theme=dark] .fancytree-checkbox {
 [data-color-theme=dark] .fc:not([data-color-theme]),
 html[data-color-theme=dark] .fc {
     color-scheme: dark;
-    --fc-bg: #2c2d33;
-    --fc-popover-bg: #32333a
+    --fc-bg: #0a1332;
+    --fc-popover-bg: #080f25
 }
 
 .fc table {
@@ -32392,8 +32392,8 @@ iframe.wait-autoplay {
 [data-color-theme=dark] .gridjs-input:not([data-color-theme]),
 html[data-color-theme=dark] .gridjs-input {
     color-scheme: dark;
-    --gridjs-input-bg: #2c2d33;
-    --gridjs-input-focus-bg: #2c2d33
+    --gridjs-input-bg: #0a1332;
+    --gridjs-input-focus-bg: #0a1332
 }
 
 @media (prefers-reduced-motion:reduce) {
@@ -32604,7 +32604,7 @@ html[data-color-theme=dark] .gridjs-sort {
 [data-color-theme=dark] .gridjs-table .gridjs-th-fixed:not([data-color-theme]),
 html[data-color-theme=dark] .gridjs-table .gridjs-th-fixed {
     color-scheme: dark;
-    --gridjs-header-bg: #2c2d33
+    --gridjs-header-bg: #0a1332
 }
 
 .gridjs-table .gridjs-th-fixed:after {
@@ -32979,7 +32979,7 @@ html[data-color-theme=dark] .gridjs-table .gridjs-th-fixed {
 html[data-color-theme=dark] .dtfc-fixed-left,
 html[data-color-theme=dark] .dtfc-fixed-right {
     color-scheme: dark;
-    --dtfc-bg: #2c2d33
+    --dtfc-bg: #0a1332
 }
 
 .dataTable tr>.dtfc-fixed-left,
@@ -33039,7 +33039,7 @@ html[data-color-theme=dark] .dtfc-fixed-right {
 [data-color-theme=dark] .dt-autofill-list:not([data-color-theme]),
 html[data-color-theme=dark] .dt-autofill-list {
     color-scheme: dark;
-    --dtaf-bg: #2c2d33
+    --dtaf-bg: #0a1332
 }
 
 .dt-autofill-list ul {
@@ -33189,7 +33189,7 @@ html[data-color-theme=dark] .dt-autofill-list {
 [data-color-theme=dark] .dataTable tbody .select-checkbox:not([data-color-theme]),
 html[data-color-theme=dark] .dataTable tbody .select-checkbox {
     color-scheme: dark;
-    --dt-check-bg: #2c2d33
+    --dt-check-bg: #0a1332
 }
 
 .dataTable tbody .select-checkbox:after {
@@ -35421,7 +35421,7 @@ html[data-color-theme=dark] .glyphs>div>div:hover {
 [data-color-theme=dark] .page-header-light:not([data-color-theme]),
 html[data-color-theme=dark] .page-header-light {
     color-scheme: dark;
-    --page-header-bg: #2c2d33
+    --page-header-bg: #0a1332
 }
 
 .page-header-dark {
@@ -35567,7 +35567,7 @@ body {
 [data-color-theme=dark] .sidebar:not([data-color-theme]),
 html[data-color-theme=dark] .sidebar {
     color-scheme: dark;
-    --sidebar-bg: #2c2d33
+    --sidebar-bg: #0a1332
 }
 
 .sidebar .nav-tabs:not(.nav-tabs-underline):not(.nav-tabs-overline) .nav-link.active {
@@ -35643,8 +35643,8 @@ html[data-color-theme=dark] .sidebar {
 [data-color-theme=dark] .btn-sidebar-expand:not([data-color-theme]),
 html[data-color-theme=dark] .btn-sidebar-expand {
     color-scheme: dark;
-    --btn-bg: #2c2d33;
-    --btn-hover-bg: #202125;
+    --btn-bg: #0a1332;
+    --btn-hover-bg: #0a1332;
     --btn-active-bg: #1a1b1e
 }
 
@@ -35853,7 +35853,7 @@ html[data-color-theme=dark] .btn-sidebar-expand {
 [data-color-theme=dark] .sidebar-dark:not([data-color-theme]),
 html[data-color-theme=dark] .sidebar-dark {
     color-scheme: dark;
-    --sidebar-bg: #141517
+    --sidebar-bg: #010a26
 }
 
 .sidebar-dark .nav-sidebar {
@@ -35877,8 +35877,8 @@ html[data-color-theme=dark] .sidebar-dark {
 [data-color-theme=dark] .sidebar-dark .btn-sidebar-expand:not([data-color-theme]),
 html[data-color-theme=dark] .sidebar-dark .btn-sidebar-expand {
     color-scheme: dark;
-    --btn-bg: #141517;
-    --btn-hover-bg: #202125;
+    --btn-bg: #080f25;
+    --btn-hover-bg: #0a1332;
     --btn-active-bg: #26272c
 }
 

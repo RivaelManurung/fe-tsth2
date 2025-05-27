@@ -65,8 +65,8 @@
                                     <tr>
                                         <td>{{ $item['barang']['nama'] }}</td>
                                         <td>{{ $item['quantity'] }} {{ $item['barang']['satuan'] }}</td>
-                                    </tr>
-                                @endforeach
+                                        </tr>
+                                    @endforeach
                             </tbody>
                         </table>
                     </div>

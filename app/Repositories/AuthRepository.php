@@ -18,7 +18,10 @@ class AuthRepository
         return Http::post("{$this->apiBaseUrl}/auth/login", $credentials);
 
     }
-
+    public function getUserInfo(string $token)
+{
+    return Http::withToken($token)->get("{$this->apiBaseUrl}/auth/user");
+}
     public function logout(string $token)
     {
         return Http::withToken($token)->post("{$this->apiBaseUrl}/auth/logout");

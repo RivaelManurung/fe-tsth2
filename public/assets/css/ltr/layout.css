@@ -75,7 +75,7 @@
 }
 .page-header-light[data-color-theme=dark], [data-color-theme=dark] .page-header-light:not([data-color-theme]), html[data-color-theme=dark] .page-header-light {
   color-scheme: dark;
-  --page-header-bg: #2c2d33;
+  --page-header-bg: #0a1332;
 }
 
 .page-header-dark {
@@ -225,7 +225,7 @@ body {
 }
 .sidebar[data-color-theme=dark], [data-color-theme=dark] .sidebar:not([data-color-theme]), html[data-color-theme=dark] .sidebar {
   color-scheme: dark;
-  --sidebar-bg: #2c2d33;
+  --sidebar-bg: #0a1332;
 }
 .sidebar .nav-tabs:not(.nav-tabs-underline):not(.nav-tabs-overline) .nav-link.active {
   background-color: var(--sidebar-bg);
@@ -297,8 +297,8 @@ body {
 }
 .btn-sidebar-expand[data-color-theme=dark], [data-color-theme=dark] .btn-sidebar-expand:not([data-color-theme]), html[data-color-theme=dark] .btn-sidebar-expand {
   color-scheme: dark;
-  --btn-bg: #2c2d33;
-  --btn-hover-bg: #202125;
+  --btn-bg: #0a1332;
+  --btn-hover-bg: #0a1332;
   --btn-active-bg: #1a1b1e;
 }
 .sidebar-main .btn-sidebar-expand, .sidebar-secondary .btn-sidebar-expand {
@@ -464,14 +464,14 @@ body {
 }
 
 .sidebar-dark {
-  --sidebar-bg: #252b36;
+  --sidebar-bg: #010a26;
   --sidebar-color: #fff;
   --sidebar-border-color: transparent;
   color-scheme: dark;
 }
 .sidebar-dark[data-color-theme=dark], [data-color-theme=dark] .sidebar-dark:not([data-color-theme]), html[data-color-theme=dark] .sidebar-dark {
   color-scheme: dark;
-  --sidebar-bg: #141517;
+  --sidebar-bg: #010a26;
 }
 .sidebar-dark .nav-sidebar {
   --nav-sidebar-divider-color: rgba(255, 255, 255, 0.125);
@@ -490,8 +490,8 @@ body {
 }
 .sidebar-dark .btn-sidebar-expand[data-color-theme=dark], [data-color-theme=dark] .sidebar-dark .btn-sidebar-expand:not([data-color-theme]), html[data-color-theme=dark] .sidebar-dark .btn-sidebar-expand {
   color-scheme: dark;
-  --btn-bg: #141517;
-  --btn-hover-bg: #202125;
+  --btn-bg: #080f25;
+  --btn-hover-bg: #0a1332;
   --btn-active-bg: #26272c;
 }
 

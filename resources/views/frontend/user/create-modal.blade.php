@@ -8,7 +8,6 @@
             </div>
             <div class="modal-body">
                 <x-form.group label="Nama" name="name" required />
-                <x-form.group label="Email" name="email" type="email" required />
                 <x-form.group label="Password" name="password" type="password" required />
                 <x-form.group label="Konfirmasi Password" name="password_confirmation" type="password" required />
                 <div class="mb-3">

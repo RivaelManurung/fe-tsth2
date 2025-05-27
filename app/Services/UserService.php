@@ -19,6 +19,7 @@ class UserService
         return $this->userRepository->all();
     }
 
+
     public function count(){
         return $this->userRepository->count();
     }
@@ -36,9 +37,7 @@ class UserService
     public function updateUser(array $data, $id)
     {
         return $this->userRepository->update($data, $id);
-
     }
-
     public function deleteUser($id)
     {
         return $this->userRepository->delete($id);

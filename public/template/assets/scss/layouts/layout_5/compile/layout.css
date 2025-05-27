@@ -75,7 +75,7 @@
 }
 .page-header-light[data-color-theme=dark], [data-color-theme=dark] .page-header-light:not([data-color-theme]), html[data-color-theme=dark] .page-header-light {
   color-scheme: dark;
-  --page-header-bg: #2c2d33;
+  --page-header-bg: #0a1332;
 }
 
 .page-header-dark {
@@ -83,7 +83,7 @@
 }
 .page-header-dark[data-color-theme=dark], [data-color-theme=dark] .page-header-dark:not([data-color-theme]), html[data-color-theme=dark] .page-header-dark {
   color-scheme: dark;
-  --page-header-bg: #141517;
+  --page-header-bg: #080f25;
 }
 
 .page-header-static {
@@ -262,7 +262,7 @@ body {
 }
 .sidebar[data-color-theme=dark], [data-color-theme=dark] .sidebar:not([data-color-theme]), html[data-color-theme=dark] .sidebar {
   color-scheme: dark;
-  --sidebar-bg: #2c2d33;
+  --sidebar-bg: #0a1332;
 }
 .sidebar .nav-tabs:not(.nav-tabs-underline):not(.nav-tabs-overline) .nav-link.active {
   background-color: var(--sidebar-bg);
@@ -468,7 +468,7 @@ body {
 }
 .sidebar-dark[data-color-theme=dark], [data-color-theme=dark] .sidebar-dark:not([data-color-theme]), html[data-color-theme=dark] .sidebar-dark {
   color-scheme: dark;
-  --sidebar-bg: #141517;
+  --sidebar-bg: #080f25;
 }
 .sidebar-dark .nav-sidebar {
   --nav-sidebar-divider-color: rgba(255, 255, 255, 0.125);

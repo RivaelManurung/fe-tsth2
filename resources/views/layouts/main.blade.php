@@ -6,16 +6,71 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <title>Limitless - Responsive Web Application Kit by Eugene Kopyov</title>
-
+    <link rel="icon" href="{{ asset($web['web_logo']) }}" type="image/png">
+    <title>{{ $web['web_nama'] }}</title>
+    @stack('css')
     <!-- Responsive Scan Stylesheets-->
     <!-- Global stylesheets -->
+    <link href='https://cdn.jsdelivr.net/npm/fullcalendar@6.1.11/main.min.css' rel='stylesheet' />
     <link href="{{ asset('template/assets/fonts/inter/inter.css') }}" rel="stylesheet" type="text/css">
     <link href="{{ asset('template/assets/icons/phosphor/styles.min.css') }}" rel="stylesheet" type="text/css">
     <link href="{{ asset('assets/css/ltr/all.min.css') }}" id="stylesheet" rel="stylesheet" type="text/css">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.11.4/css/lightbox.min.css" rel="stylesheet" />
     <link rel="stylesheet" href="https://code.jquery.com/ui/1.13.2/themes/base/jquery-ui.css">
     <!-- /global stylesheets -->
+    <link href="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.11/index.global.min.css" rel="stylesheet" />
+    <link href="https://unpkg.com/tippy.js@6/themes/light.css" rel="stylesheet" />
+
+
+    <style>
+.loader-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.loader {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    background: #fff;
+    border-radius: 4px;
+}
+.loader:before {
+    content: '';
+    position: absolute;
+    width: 54%;
+    height: 19%;
+    left: 50%;
+    top: 0;
+    background-image:
+        radial-gradient(ellipse at center, #0000 24%, #de3500 25%, #de3500 64%, #0000 65%),
+        linear-gradient(to bottom, #0000 34%, #de3500 35%);
+    background-size: 12%;
+    background-repeat: no-repeat;
+    background-position: center top;
+    transform: translate(-50%, -65%);
+    box-shadow: 0 -3px rgba(0, 0, 0, 0.25) inset;
+}
+.loader:after {
+    content: '';
+    position: absolute;
+    left: 50%;
+    top: 20%;
+    transform: translateX(-50%);
+    width: 66%;
+    height: 60%;
+    background: linear-gradient(to bottom, #f79577 30%, #0000 31%);
+    background-size: 100% 15%;
+    animation: writeDown 2s ease-out infinite;
+}
+@keyframes writeDown {
+    0% { height: 0%; opacity: 0; }
+    20% { height: 0%; opacity: 1; }
+    80% { height: 65%; opacity: 1; }
+    100% { height: 65%; opacity: 0; }
+}
+   </style>
 
     <!-- Core JS files -->
     <script src="{{ asset('template/assets/demo/demo_configurator.js') }}"></script>
@@ -45,6 +100,7 @@
     <script src="{{ asset('template/assets/demo/pages/datatables_extension_key_table.js') }}"></script>
     <script src="{{ asset('template/assets/js/vendor/tables/datatables/extensions/key_table.min.js') }}"></script>
     <script src="{{ asset('template/assets/demo/pages/fullcalendar_styling.js') }}"></script>
+    <link href="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.7/index.global.min.css" rel="stylesheet" />
 
     <script src="{{ asset('assets/js/app.js') }}"></script>
     <script src="{{ asset('template/assets/demo/pages/dashboard.js') }}"></script>
@@ -64,10 +120,33 @@
     {{-- font awesome  --}}
     <link href="{{ asset('template/assets/icons/fontawesome/styles.min.css') }}" rel="stylesheet" type="text/css">
 
+    {{-- <script src="https://js.pusher.com/7.2/pusher.min.js"></script> --}}
+    <script src=""></script>
+
+    {{-- <script>
+        window.Echo = new Echo({
+            broadcaster: 'pusher',
+            key: 'reverb',
+            wsHost: '127.0.0.1',
+            wsPort: 6001,
+            forceTLS: false,
+            disableStats: true,
+            enabledTransports: ['ws', 'wss'],
+        });
+
+        window.Echo.channel('stock-channel')
+            .listen('.stock.minimum', (e) => {
+                alert(e.title + ": " + e.message);
+            });
+    </script> --}}
 </head>
 
 <body>
-
+    <div id="page-loader" style="position: fixed; z-index: 9999; background-color: #010a26; width: 100%; height: 100%; display: flex; justify-content: center; align-items: center;">
+        <div class="loader-container" style="width: 80px; height: 104px;">
+            <span class="loader"></span>
+        </div>
+    </div>
     <!-- Main navbar -->
     @include('layouts.navbar')
 
@@ -204,7 +283,7 @@
         });
     }
 </script>
-<script>
+{{-- <script>
     document.addEventListener('DOMContentLoaded', function() {
         fetch("http://localhost:8090/api/auth/refresh-permission", {
                 headers: {
@@ -221,7 +300,34 @@
                 console.error('Failed to refresh permission:', error);
             });
     });
+</script> --}}
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    const loader = document.getElementById('page-loader');
+    if (loader) {
+        // Hide loader when all resources are loaded
+        window.addEventListener('load', function () {
+            loader.style.transition = 'opacity 0.3s ease'; /* Reduced to 0.3s */
+            loader.style.opacity = '0';
+            setTimeout(() => {
+                loader.style.display = 'none';
+            }, 300); // Matches transition duration (300ms)
+        });
+
+        // Fallback: Hide loader after 1 second (700ms + 300ms)
+        setTimeout(() => {
+            if (loader.style.display !== 'none') {
+                loader.style.transition = 'opacity 0.3s ease'; /* Reduced to 0.3s */
+                loader.style.opacity = '0';
+                setTimeout(() => {
+                    loader.style.display = 'none';
+                }, 300);
+            }
+        }, 700); // 700ms + 300ms fade-out = 1000ms (1 second)
+    }
+});
 </script>
+
 @stack('js')
 
 </html>

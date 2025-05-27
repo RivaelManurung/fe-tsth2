@@ -428,7 +428,7 @@ $position-values: (
 
 $body-bg:                   #f1f4f9;
 $body-color:                $gray-900;
-$body-darkmode-bg:          #202125;
+$body-darkmode-bg:          #0a1332;
 $body-darkmode-color:       $white;
 
 $body-text-align:           null;
@@ -1205,7 +1205,7 @@ $navbar-padding-x:                  calc(var(--#{$prefix}spacer) * .5);
 
 $navbar-nav-link-padding-x:         $nav-link-padding-x;
 
-$navbar-link-padding-y:             .625rem !default; 
+$navbar-link-padding-y:             .625rem !default;
 $navbar-link-padding-x:             .9375rem !default;
 
 $navbar-link-padding-y-lg:          .75rem !default;
@@ -1595,7 +1595,7 @@ $alert-darkmode-color-scale:        50% !default;
 // Progress bars
 //
 
-$progress-height:                   1.25rem; 
+$progress-height:                   1.25rem;
 $progress-font-size:                calc(var(--#{$prefix}body-font-size) * .85);
 $progress-bg:                       var(--#{$prefix}gray-200);
 $progress-border-radius:            var(--#{$prefix}border-radius);
@@ -1682,7 +1682,7 @@ $breadcrumb-item-hover-color:       var(--#{$prefix}link-color) !default;
 //
 
 $carousel-control-color:             $white;
-$carousel-control-width:             6.25rem; 
+$carousel-control-width:             6.25rem;
 $carousel-control-opacity:           .5;
 $carousel-control-hover-opacity:     .9;
 $carousel-control-transition:        opacity .15s ease;

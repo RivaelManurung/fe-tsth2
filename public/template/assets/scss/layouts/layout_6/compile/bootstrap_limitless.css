@@ -57,7 +57,7 @@ html[data-color-theme=dark] [data-color-theme] {
   --dark-rgb: 8, 9, 10;
   --light: #383940;
   --light-rgb: 56, 57, 64;
-  --body-bg: #202125;
+  --body-bg: #0a1332;
   --body-color: #fff;
   --body-color-rgb: 255, 255, 255;
   --border-color: #4d4d51;
@@ -286,7 +286,7 @@ a.text-body:hover, a.text-body:focus, a.text-body:active, a.text-body.active, a.
 }
 .list-feed[data-color-theme=dark], [data-color-theme=dark] .list-feed:not([data-color-theme]), html[data-color-theme=dark] .list-feed {
   color-scheme: dark;
-  --feed-circle-bg: #2c2d33;
+  --feed-circle-bg: #0a1332;
 }
 
 .list-feed-item {
@@ -771,8 +771,8 @@ tbody > .table-border-double > *, tfoot > .table-border-double > * {
 }
 .form-control[data-color-theme=dark], [data-color-theme=dark] .form-control:not([data-color-theme]), html[data-color-theme=dark] .form-control {
   color-scheme: dark;
-  --input-bg: #2c2d33;
-  --input-focus-bg: #2c2d33;
+  --input-bg: #1e293b;
+  --input-focus-bg: #0a1332;
 }
 .form-control[data-color-theme=dark]:not([list])::-webkit-calendar-picker-indicator, [data-color-theme=dark] .form-control:not([data-color-theme]):not([list])::-webkit-calendar-picker-indicator, html[data-color-theme=dark] .form-control:not([list])::-webkit-calendar-picker-indicator {
   filter: invert(1);
@@ -914,7 +914,7 @@ tbody > .table-border-double > *, tfoot > .table-border-double > * {
  * ---------------------------------------------------------------------------- */
 .form-select[data-color-theme=dark], [data-color-theme=dark] .form-select:not([data-color-theme]), html[data-color-theme=dark] .form-select {
   color-scheme: dark;
-  --form-select-bg: #2c2d33;
+  --form-select-bg: #0a1332;
   background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3e%3cpath fill='none' stroke='rgba%28255, 255, 255, 0.5%29' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M2 5l6 6 6-6'/%3e%3c/svg%3e");
 }
 .form-select[multiple], .form-select[size]:not([size="1"]) {
@@ -956,7 +956,7 @@ tbody > .table-border-double > *, tfoot > .table-border-double > * {
 }
 .form-check-input[data-color-theme=dark], [data-color-theme=dark] .form-check-input:not([data-color-theme]), html[data-color-theme=dark] .form-check-input {
   color-scheme: dark;
-  --form-check-input-bg: #2c2d33;
+  --form-check-input-bg: #0a1332;
 }
 
 .form-switch .form-check-input[data-color-theme=dark], [data-color-theme=dark] .form-switch .form-check-input:not([data-color-theme]), html[data-color-theme=dark] .form-switch .form-check-input {
@@ -1379,7 +1379,7 @@ html[data-color-theme=dark] .btn-flat-light {
 }
 .dropdown-menu[data-color-theme=dark], [data-color-theme=dark] .dropdown-menu:not([data-color-theme]), html[data-color-theme=dark] .dropdown-menu {
   color-scheme: dark;
-  --dropdown-bg: #32333a;
+  --dropdown-bg: #080f25;
   --dropdown-border-color: rgba(var(--black-rgb), 0.25);
 }
 
@@ -1600,8 +1600,8 @@ html[data-color-theme=dark] .btn-flat-light {
 
 .nav-tabs:not(.nav-tabs-underline):not(.nav-tabs-overline):not(.nav-tabs-solid)[data-color-theme=dark], [data-color-theme=dark] .nav-tabs:not(.nav-tabs-underline):not(.nav-tabs-overline):not(.nav-tabs-solid):not([data-color-theme]), html[data-color-theme=dark] .nav-tabs:not(.nav-tabs-underline):not(.nav-tabs-overline):not(.nav-tabs-solid) {
   color-scheme: dark;
-  --nav-tabs-link-active-bg: #2c2d33;
-  --nav-tabs-link-active-border-color: var(--border-color) var(--border-color) #2c2d33;
+  --nav-tabs-link-active-bg: #0a1332;
+  --nav-tabs-link-active-border-color: var(--border-color) var(--border-color) #0a1332;
 }
 .dropdown-menu .nav-tabs {
   --nav-tabs-link-active-bg: var(--dropdown-bg) !important;
@@ -1901,7 +1901,7 @@ html[data-color-theme=dark] .btn-flat-light {
 }
 .navbar[data-color-theme=dark], [data-color-theme=dark] .navbar:not([data-color-theme]), html[data-color-theme=dark] .navbar {
   color-scheme: dark;
-  --navbar-bg: #32333a;
+  --navbar-bg: #080f25;
 }
 
 .navbar-nav .nav-tabs {
@@ -2343,7 +2343,7 @@ html[data-color-theme=dark] .btn-flat-light {
 }
 .navbar-dark[data-color-theme=dark], [data-color-theme=dark] .navbar-dark:not([data-color-theme]), html[data-color-theme=dark] .navbar-dark {
   color-scheme: dark;
-  --navbar-bg: #141517;
+  --navbar-bg: #080f25;
 }
 
 .navbar-static {
@@ -2367,7 +2367,7 @@ html[data-color-theme=dark] .btn-flat-light {
 }
 .card[data-color-theme=dark], [data-color-theme=dark] .card:not([data-color-theme]), html[data-color-theme=dark] .card {
   color-scheme: dark;
-  --card-bg: #2c2d33;
+  --card-bg: #1e293b;
 }
 
 .card-footer {
@@ -2606,8 +2606,8 @@ a.breadcrumb-item:hover, a.breadcrumb-item:focus, a.breadcrumb-item[aria-expande
 }
 .pagination[data-color-theme=dark], [data-color-theme=dark] .pagination:not([data-color-theme]), html[data-color-theme=dark] .pagination {
   color-scheme: dark;
-  --pagination-bg: #2c2d33;
-  --pagination-disabled-bg: #2c2d33;
+  --pagination-bg: #0a1332;
+  --pagination-disabled-bg: #0a1332;
 }
 
 .page-link {
@@ -3165,7 +3165,7 @@ html[data-color-theme=dark] .toast-body .btn-close {
  * ---------------------------------------------------------------------------- */
 .modal[data-color-theme=dark], [data-color-theme=dark] .modal:not([data-color-theme]), html[data-color-theme=dark] .modal {
   color-scheme: dark;
-  --modal-bg: #2c2d33;
+  --modal-bg: #0a1332;
 }
 
 .modal-header .btn-close[data-color-theme=dark], [data-color-theme=dark] .modal-header .btn-close:not([data-color-theme]), html[data-color-theme=dark] .modal-header .btn-close {
@@ -3219,7 +3219,7 @@ html[data-color-theme=dark] .toast-body .btn-close {
  * ---------------------------------------------------------------------------- */
 .popover[data-color-theme=dark], [data-color-theme=dark] .popover:not([data-color-theme]), html[data-color-theme=dark] .popover {
   color-scheme: dark;
-  --popover-bg: #32333a;
+  --popover-bg: #080f25;
 }
 
 .bs-popover-auto[data-popper-placement^=bottom] > .popover-arrow::after,
@@ -3287,7 +3287,7 @@ html[data-color-theme=dark] .toast-body .btn-close {
  * ---------------------------------------------------------------------------- */
 .offcanvas[data-color-theme=dark], [data-color-theme=dark] .offcanvas:not([data-color-theme]), html[data-color-theme=dark] .offcanvas {
   color-scheme: dark;
-  --offcanvas-bg: #2c2d33;
+  --offcanvas-bg: #1e293b;
 }
 
 .offcanvas-header .btn-close[data-color-theme=dark], [data-color-theme=dark] .offcanvas-header .btn-close:not([data-color-theme]), html[data-color-theme=dark] .offcanvas-header .btn-close {

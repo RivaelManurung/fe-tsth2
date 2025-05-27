@@ -1,4 +1,13 @@
-import axios from 'axios';
-window.axios = axios;
+import Echo from 'laravel-echo';
 
-window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
+console.log('Bootstrap loaded'); // Debugging
+
+window.Echo = new Echo({
+    broadcaster: 'reverb',
+    key: 'tsth2-key',
+    wsHost: '127.0.0.1',
+    wsPort: 6001,
+    forceTLS: false,
+    enabledTransports: ['ws'],
+    disableStats: true
+});
