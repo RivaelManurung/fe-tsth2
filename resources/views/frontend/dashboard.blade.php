@@ -219,7 +219,7 @@
                     mode: 'nearest',
                     intersect: false,
                     callbacks: {
-                        label: ctx => `${ctx.dataset.label}: ${ctx.parsed.y}`
+                        label: ctx => ${ctx.dataset.label}: ${ctx.parsed.y}
                     }
                 }
             },
@@ -288,11 +288,11 @@
 
                 // Buat konten tooltip
                 const tooltipContent =
-                    `<strong>Kode:</strong> ${kode}<br>` +
-                    `<strong>Barang:</strong> ${barang}<br>` +
-                    `<strong>Jumlah:</strong> ${jumlah}<br>` +
-                    `<strong>Gudang:</strong> ${gudang}<br>` +
-                    `<strong>Tipe:</strong> ${type}`;
+                    <strong>Kode:</strong> ${kode}<br> +
+                    <strong>Barang:</strong> ${barang}<br> +
+                    <strong>Jumlah:</strong> ${jumlah}<br> +
+                    <strong>Gudang:</strong> ${gudang}<br> +
+                    <strong>Tipe:</strong> ${type};
 
                 // Jika tippy.js tersedia, gunakan tooltip yang lebih bagus
                 if (window.tippy) {

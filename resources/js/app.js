@@ -1,16 +1,17 @@
-import './bootstrap';
-import echo from './echo';
-import Toastify from 'toastify-js';
-import "toastify-js/src/toastify.css";
+import { io } from "socket.io-client";
 
-echo.channel('stock-channel')
-    .listen('.stock.minimum', (e) => {
-        Toastify({
-            text: `${e.title}: ${e.message}`,
-            duration: 5000,
-            close: true,
-            gravity: "top",
-            position: "right",
-            backgroundColor: "linear-gradient(to right, #00b09b, #96c93d)",
-        }).showToast();
-    });
+const socket = io('ws://127.0.0.1:6001', {
+  auth: {
+    key: 'tsth2-key',
+    secret: '8f2a9d15e43bd8a29c2e6b93d0e3a1e9',
+  }
+});
+
+socket.on('connect', () => {
+  console.log('Connected to Reverb WebSocket server');
+});
+
+socket.on('stock-channel:stock.minimum', (data) => {
+  console.log('Received event:', data);
+  alert(`Notif: ${data.title} - ${data.message}`);
+});

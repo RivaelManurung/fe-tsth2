@@ -1,16 +1,14 @@
+import Echo from 'laravel-echo';
 import Pusher from 'pusher-js';
+
 window.Pusher = Pusher;
 
-import Echo from 'laravel-echo';
-
-const echo = new Echo({
-    broadcaster: 'pusher',
-    key: import.meta.env.VITE_PUSHER_APP_KEY, // atau hardcode 'tsth2-key'
-    wsHost: import.meta.env.VITE_PUSHER_HOST || window.location.hostname,
-    wsPort: import.meta.env.VITE_PUSHER_PORT || 6001,
+window.Echo = new Echo({
+    broadcaster: 'reverb',
+    key: 'tsth2-key', // Sesuai dengan REVERB_APP_KEY di .env BE
+    wsHost: '127.0.0.1',
+    wsPort: 6001,
+    wssPort: 6001,
     forceTLS: false,
-    disableStats: true,
     enabledTransports: ['ws', 'wss'],
 });
-
-export default echo;

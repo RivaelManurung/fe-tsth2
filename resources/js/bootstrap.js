@@ -1,13 +1,14 @@
 import Echo from 'laravel-echo';
+import { io } from 'socket.io-client';
 
-console.log('Bootstrap loaded'); // Debugging
+window.io = io;
 
 window.Echo = new Echo({
     broadcaster: 'reverb',
     key: 'tsth2-key',
-    wsHost: '127.0.0.1',
+    wsHost: window.location.hostname,
     wsPort: 6001,
     forceTLS: false,
+    encrypted: false,
     enabledTransports: ['ws'],
-    disableStats: true
 });
