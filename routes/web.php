@@ -88,7 +88,7 @@ Route::middleware('auth.session')->group(function () {
     Route::get('notifikasi',[NotifikasiController::class, 'getUnreadNotifications'])->name('getnotifikasi');
 });
 
-\
+
 Route::get('/error', function () {
     return view('error.error');
 })->name('error');
