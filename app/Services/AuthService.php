@@ -50,15 +50,26 @@ class AuthService
         return false;
     }
     public function getUserInfo(): ?array
-{
-    $token = session('token');
-    if (!$token) return null;
+    {
+        Log::info('getUserInfo called', ['caller' => debug_backtrace(DEBUG_BACKTRACE_IGNORE_ARGS, 2)[1]]);
+        if (Session::has('user_info')) {
+            return Session::get('user_info');
+        }
 
-    $response = $this->repository->getUserInfo($token);
-    if ($response->successful()) {
-        return $response->json()['data'];
+        $token = session('token');
+        if (!$token) {
+            Log::info('No token found, skipping getUserInfo');
+            return null;
+        }
+
+        $response = $this->repository->getUserInfo($token);
+        if ($response->successful()) {
+            $userInfo = $response->json()['data'];
+            Session::put('user_info', $userInfo);
+            return $userInfo;
+        }
+
+        Log::warning('Failed to get user info', ['status' => $response->status()]);
+        return null;
     }
-
-    return null;
-}
 }
