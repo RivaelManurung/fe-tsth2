@@ -1,69 +1,77 @@
 <?php
 
-use App\Http\Controllers\DashboardController;
-use App\Http\Controllers\AuthController;
-use App\Http\Controllers\BarangCategoryController;
-use App\Http\Controllers\BarangController;
-use App\Http\Controllers\GudangController;
-use App\Http\Controllers\JenisBarangController;
-use App\Http\Controllers\LaporanController;
-use App\Http\Controllers\NotifikasiController;
-use App\Http\Controllers\PermissionController;
-use App\Http\Controllers\RoleController;
-use App\Http\Controllers\SatuanController;
-use App\Http\Controllers\TransactionController;
-use App\Http\Controllers\TransactionTypeController;
-use App\Http\Controllers\UserController;
-use App\Http\Controllers\ProfileController;
-use App\Http\Controllers\WebController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\{
+    AuthController,
+    BarangCategoryController,
+    BarangController,
+    DashboardController,
+    GudangController,
+    JenisBarangController,
+    LaporanController,
+    NotifikasiController,
+    PermissionController,
+    ProfileController,
+    RoleController,
+    SatuanController,
+    TransactionController,
+    TransactionTypeController,
+    UserController,
+    WebController
+};
 
+// Routes untuk halaman login (guest only)
 Route::middleware('auth.token')->group(function () {
     Route::get('/login', [AuthController::class, 'showLoginForm'])->name('auth.login')->middleware('guest');
     Route::post('/login', [AuthController::class, 'handleLogin'])->name('post.login')->middleware('guest');
 });
 
-
-
+// Routes untuk user yang sudah login
 Route::middleware('auth.session')->group(function () {
+
+    // Auth & Dashboard
     Route::post('/logout', [AuthController::class, 'handleLogout'])->name('auth.logout');
     Route::get('/', [DashboardController::class, 'index'])->name('dashboard');
 
-    Route::get('/scan-result', function () {
-        $data = request()->query('data');
-        return view('scan-result', compact('data'));
-    });
+    // Scan Result
+    Route::get('/scan-result', fn () => view('scan-result', ['data' => request()->query('data')]));
 
-    Route::get('/middleware-test', function () {
-        return 'Middleware OK';
-    })->middleware('refresh.permissions');
+    Route::get('/middleware-test', fn () => 'Middleware OK')->middleware('refresh.permissions');
 
+    // Profile
     Route::get('/user_profile', [ProfileController::class, 'index'])->name('profile.user_profile');
     Route::get('/user_profile/change-password', [ProfileController::class, 'changePassword'])->name('profile.ganti-password');
+    Route::put('profile/update-email', [ProfileController::class, 'updateEmail'])->name('profile.update-email');
 
-    Route::get('laporan-transaksi', [LaporanController::class, 'laporanTrans'])->name('laporan.transaksi');
-    Route::get('laporan-transaksi/export-pdf', [LaporanController::class, 'exportPDF'])->name('laporan.transaksi.exportPDF');
+    // Laporan
+    Route::prefix('laporan-transaksi')->group(function () {
+        Route::get('/', [LaporanController::class, 'laporanTrans'])->name('laporan.transaksi');
+        Route::get('/export-pdf', [LaporanController::class, 'exportPDF'])->name('laporan.transaksi.exportPDF');
+        Route::get('/export-pdf/{id}', [LaporanController::class, 'exportLaporanTransaksiPDFByType'])->name('transactions.exportPdfByType');
+        Route::get('/export-excel', [LaporanController::class, 'generateAllTransaksiexcel']);
+        Route::get('/export-excel/{id}', [LaporanController::class, 'generateTransaksiTypeReportexcel']);
+    });
 
-    Route::get('laporan-stok', [LaporanController::class, 'laporanStok'])->name('laporan.stok');
+    Route::prefix('laporan-stok')->group(function () {
+        Route::get('/', [LaporanController::class, 'laporanStok'])->name('laporan.stok');
+        Route::get('/pdf', [LaporanController::class, 'exportStokPdf'])->name('laporan.stok.exportPDF');
+        Route::get('/excel', [LaporanController::class, 'exportStokExcel']);
+    });
 
-
+    // Barang
     Route::resource('barangs', BarangController::class);
     Route::get('/export-barang-pdf', [BarangController::class, 'exportPDFALL'])->name('barangs.exportPDFALL');
     Route::get('/barangs/export-pdf/{id}', [BarangController::class, 'exportPDF'])->name('barangs.exportPDF');
-
-    Route::get('laporantransaksi', [LaporanController::class, 'laporantransaksi']);
-    Route::get('/laporan-transaksi/export-pdf', [LaporanController::class, 'generateTransaksiReportPdf'])->name('transactions.exportPdf');
-    Route::get('/laporan-transaksi/export-pdf/{id}', [LaporanController::class, 'exportLaporanTransaksiPDFByType'])->name('transactions.exportPdfByType');
-    Route::get('/laporan-transaksi/export-excel/{id}', [LaporanController::class, 'generateTransaksiTypeReportexcel']);
-    Route::get('/laporan-transaksi/export-excel', [LaporanController::class, 'generateAllTransaksiexcel']);
-
-    Route::get('laporanstok', [LaporanController::class, 'laporanstok']);
-    Route::get('laporan-stok/pdf', [LaporanController::class, 'exportStokPdf'])->name('laporan.stok.exportPDF');
-    Route::get('laporan-stok/excel', [LaporanController::class, 'exportStokExcel']);
-
     Route::get('/barang/refresh-qrcodes', [BarangController::class, 'refreshQRCodes'])->name('barang.refresh-qrcodes');
-    Route::get('/search-barang', [TransactionController::class, 'searchBarang'])->name('search.barang');
 
+    // Transaction
+    Route::resource('transactions', TransactionController::class);
+    Route::get('/search-barang', [TransactionController::class, 'searchBarang'])->name('search.barang');
+    Route::post('/kode-barang/check', [TransactionController::class, 'check'])->name('kode_barang.check');
+    Route::get('/kode-barang/reset', [TransactionController::class, 'reset'])->name('kode_barang.reset');
+    Route::post('/kode-barang/remove', [TransactionController::class, 'remove'])->name('kode_barang.remove');
+
+    // Resources lainnya dengan permission middleware
     Route::resource('satuans', SatuanController::class)->middleware('check.permission:view_satuan');
     Route::resource('gudangs', GudangController::class)->middleware('check.permission:view_gudang');
     Route::resource('jenis-barangs', JenisBarangController::class)->middleware('check.permission:view_jenis_barang');
@@ -71,24 +79,16 @@ Route::middleware('auth.session')->group(function () {
     Route::resource('transaction-types', TransactionTypeController::class);
     Route::resource('roles', RoleController::class)->middleware('check.permission:view_role');
     Route::resource('users', UserController::class)->middleware('check.permission:view_user');
-    Route::put('profile/update-email', [ProfileController::class, 'updateEmail'])->name('profile.update-email');
-
-    Route::resource('transactions', TransactionController::class);
     Route::resource('webs', WebController::class);
 
-    Route::post('/kode-barang/check', [TransactionController::class, 'check'])->name('kode_barang.check');
-    Route::get('/kode-barang/reset', [TransactionController::class, 'reset'])->name('kode_barang.reset');
-    Route::post('/kode-barang/remove', [TransactionController::class, 'remove'])->name('kode_barang.remove');
-
+    // Permission Management
     Route::get('/select-role', [PermissionController::class, 'selectRole'])->name('permissions.index');
     Route::get('select-role/permissions', [PermissionController::class, 'show'])->name('permissions.show');
     Route::post('/permissions/toggle', [PermissionController::class, 'toggle'])->name('permissions.toggle');
 
-
-    Route::get('notifikasi',[NotifikasiController::class, 'getUnreadNotifications'])->name('getnotifikasi');
+    // Notifikasi
+    Route::get('notifikasi', [NotifikasiController::class, 'getUnreadNotifications'])->name('getnotifikasi');
 });
 
-
-Route::get('/error', function () {
-    return view('error.error');
-})->name('error');
+// Route halaman error
+Route::get('/error', fn () => view('error.error'))->name('error');

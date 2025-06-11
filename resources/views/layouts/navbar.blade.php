@@ -8,7 +8,7 @@
         </div>
 
         <div class="navbar-brand flex-1 flex-lg-0">
-            <a href="index.html" class="d-inline-flex align-items-center">
+            <a href="{{ route('dashboard') }}" class="d-inline-flex align-items-center">
                 <img src="{{$web['web_logo'] }}" alt="" style="height: 24px;">
                 <h6 class="ms-2 mb-0 text-light ultra-regular" style="line-height: 1;">{{ $web['web_nama'] }}</h6>
             </a>

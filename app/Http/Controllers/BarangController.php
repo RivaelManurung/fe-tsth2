@@ -29,19 +29,27 @@ class BarangController extends Controller
         $this->kategori_barang_service = $barang_category_service;
         $this->satuan_service = $satuan_service;
     }
+    // In app/Http/Controllers/BarangController.php
     public function index()
     {
         try {
             $token = session('token');
 
             $barangs = $this->barang_service->getAllBarang();
-            logger()->info('Barang Index Fetch:', $barangs);
+            logger()->info('getAllBarang Fetched', ['count' => count($barangs)]);
+
             $jenis_barangs = JenisBarangResource::collection(collect($this->jenis_barang_service->all($token)));
+            logger()->info('jenis_barang_service Fetched', ['count' => $jenis_barangs->count()]);
+
             $satuans = SatuanResource::collection(collect($this->satuan_service->all($token)));
+            logger()->info('satuan_service Fetched', ['count' => $satuans->count()]);
+
             $kategori_barangs = $this->kategori_barang_service->all($token);
+            logger()->info('kategori_barang_service Fetched', ['count' => is_array($kategori_barangs) ? count($kategori_barangs) : 'N/A']);
 
             return view('frontend.barang.index', compact('barangs', 'jenis_barangs', 'kategori_barangs', 'satuans'));
         } catch (\Throwable $th) {
+            logger()->error('Barang Index Error: ' . $th->getMessage(), ['trace' => $th->getTraceAsString()]);
             return back()->with('error', 'Gagal memuat data barang: ' . $th->getMessage());
         }
     }
