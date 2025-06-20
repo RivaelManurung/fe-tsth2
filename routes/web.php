@@ -34,9 +34,9 @@ Route::middleware('auth.session')->group(function () {
     Route::get('/', [DashboardController::class, 'index'])->name('dashboard');
 
     // Scan Result
-    Route::get('/scan-result', fn () => view('scan-result', ['data' => request()->query('data')]));
+    Route::get('/scan-result', fn() => view('scan-result', ['data' => request()->query('data')]));
 
-    Route::get('/middleware-test', fn () => 'Middleware OK')->middleware('refresh.permissions');
+    Route::get('/middleware-test', fn() => 'Middleware OK')->middleware('refresh.permissions');
 
     // Profile
     Route::get('/user_profile', [ProfileController::class, 'index'])->name('profile.user_profile');
@@ -65,11 +65,13 @@ Route::middleware('auth.session')->group(function () {
     Route::get('/barang/refresh-qrcodes', [BarangController::class, 'refreshQRCodes'])->name('barang.refresh-qrcodes');
 
     // Transaction
-    Route::resource('transactions', TransactionController::class);
+    // Transaction
+    Route::resource('transactions', TransactionController::class)->only(['index', 'create', 'store', 'update']);
     Route::get('/search-barang', [TransactionController::class, 'searchBarang'])->name('search.barang');
-    Route::post('/kode-barang/check', [TransactionController::class, 'check'])->name('kode_barang.check');
-    Route::get('/kode-barang/reset', [TransactionController::class, 'reset'])->name('kode_barang.reset');
-    Route::post('/kode-barang/remove', [TransactionController::class, 'remove'])->name('kode_barang.remove');
+    Route::post('/transaksi/{id}/add-item', [TransactionController::class, 'addItem'])->name('transaksi.add-item');
+    Route::post('/transaksi/{id}/remove-item', [TransactionController::class, 'removeItem'])->name('transaksi.remove-item');
+    Route::post('/transaksi/{id}/reset-items', [TransactionController::class, 'resetItems'])->name('transaksi.reset-items');
+    Route::post('/update-barang/{id}', [TransactionController::class, 'updateBarang'])->name('transaksi.update-barang');
 
     // Resources lainnya dengan permission middleware
     Route::resource('satuans', SatuanController::class)->middleware('check.permission:view_satuan');
@@ -91,4 +93,4 @@ Route::middleware('auth.session')->group(function () {
 });
 
 // Route halaman error
-Route::get('/error', fn () => view('error.error'))->name('error');
+Route::get('/error', fn() => view('error.error'))->name('error');

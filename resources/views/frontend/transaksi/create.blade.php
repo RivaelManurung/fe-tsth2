@@ -312,10 +312,6 @@
                 .catch(error => {
                     const errorMessage = error?.message || 'Gagal menyimpan transaksi.';
                     showFlashMessage('danger', errorMessage);
-<<<<<<< HEAD
-=======
-
->>>>>>> 939ad08735dbbbfda5c1e4b3c8422ab2c9e4261a
                 });
 
         });

@@ -32,7 +32,7 @@
                         ({{ $transactionTypes->firstWhere('id', request('transaction_type_id'))['name'] ?? 'Per Jenis' }})
                     </a>
                 @else
-                    <a href="{{ route('transactions.exportPdf') }}"
+                    <a href="{{ route('laporan.transaksi.exportPDF') }}"
                         class="btn btn-outline-danger btn-sm w-100 w-sm-auto mb-2 mb-sm-0" target="_blank">
                         <i class="ph-file-pdf"></i> Laporan PDF (Semua)
                     </a>
